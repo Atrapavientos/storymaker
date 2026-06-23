@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# Imágenes de SD (no van en git; se publican como Release asset)
+*.img
+*.img.xz
+
+# Sistema
+.DS_Store
+Thumbs.db
