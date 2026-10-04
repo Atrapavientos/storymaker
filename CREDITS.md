@@ -1,7 +1,7 @@
 # Créditos
 
-> **Nota:** El wording exacto de estos créditos está pendiente de confirmación con
-> Héctor antes de la publicación definitiva.
+> **Nota:** la redacción exacta de estos créditos está pendiente de confirmación
+> con la Asociación Atrapavientos antes de la publicación definitiva.
 
 **Creado por:** Asociación Atrapavientos (Zaragoza).
 
