@@ -1,9 +1,12 @@
 # Python
 __pycache__/
 *.pyc
+*.pyo
+venv/
 
-# Logs
+# Logs y copias de seguridad
 *.log
+*.bak
 
 # Imágenes de SD (no van en git; se publican como Release asset)
 *.img
@@ -12,3 +15,6 @@ __pycache__/
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Ajustes locales de herramientas
+.claude/
