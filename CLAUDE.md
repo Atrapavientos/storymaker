@@ -25,8 +25,11 @@ Resumen en `/README.licensing.md`. **Pendiente: OK formal de Atrapavientos** ant
 `hardware/` · `firmware/` · `envolvente/` · `artes-graficas/` · `docs/`
 (`envolvente/` y `artes-graficas/` las definen centros externos: placeholders por ahora.)
 
+`firmware/` y `docs/` ya tienen contenido real. `hardware/` sigue vacío.
+
 ## Referencia
-- `docs/ARRANQUE.md` — plan ejecutable de montaje del esqueleto
+- `hoja-de-ruta.md` — qué falta por publicar y en qué orden
+- `docs/README.md` — índice de la documentación
 - `docs/troubleshooting.md` — errores conocidos / qué evitar
 
 ## Nombre
