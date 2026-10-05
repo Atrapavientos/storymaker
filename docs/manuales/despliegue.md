@@ -87,8 +87,9 @@ más reciente (`vAAAA-MM-DD`) y descarga los dos ficheros:
 - `storymaker-AAAA-MM-DD.img.xz` — la imagen (alrededor de 1 GB)
 - `storymaker-AAAA-MM-DD.img.xz.sha256` — su huella
 
-**Codeberg es el único sitio de descarga.** El espejo de GitHub replica el
-código, no los adjuntos de las releases.
+**Codeberg es el único sitio de descarga.** Si algún día este repositorio se
+replica en otra forja, la imagen se seguirá bajando de aquí: los espejos de git
+copian el código y los tags, no los adjuntos de las releases.
 
 > **📷 Captura pendiente — `galeria/despliegue-02-release.png`**
 > Página de la release en Codeberg, con los dos adjuntos visibles y el número

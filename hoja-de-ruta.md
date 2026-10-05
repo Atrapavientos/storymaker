@@ -18,7 +18,7 @@ desarrollo. Esto es sólo **qué le falta a la publicación**.
 | `hardware/` | ⬜ Vacío | BOM, esquemas, PCB |
 | `envolvente/` | ⬜ Externo | Lo define el centro de CAD |
 | `artes-graficas/` | ⬜ Externo | Lo define el centro responsable |
-| *Releases* | ⬜ Sin publicar | La imagen distribuible todavía no cuelga de este repositorio |
+| *Releases* | ✅ Publicado | `v2026-10-03`, con la imagen y su checksum |
 
 ---
 
@@ -77,15 +77,18 @@ Lo que sí toca es **pedirlo y acordar la licencia**.
 
 ## 4. Publicación
 
-- [ ] **Mover las releases a este repositorio.** La imagen distribuible se
-      publica todavía desde el repositorio de desarrollo. Su sitio es éste, que
-      es el que se enseña.
+- [x] **Releases en este repositorio.** `v2026-10-03` cuelga ya de aquí, con la
+      imagen y su `.sha256`. El firmware de ese tag es idéntico byte a byte al
+      que lleva la imagen dentro. El repositorio de desarrollo pasó a privado el
+      2026-10-05, así que **éste es el único sitio de descarga**.
 - [ ] **Confirmar los créditos.** [`CREDITS.md`](CREDITS.md) lleva una nota de
       pendiente y un `[centro]` sin rellenar en el apartado de artes gráficas.
 - [ ] **Visto bueno formal de Atrapavientos** al esquema de licencias, como
       titular del proyecto. Es condición previa a anunciar el repositorio.
-- [ ] **Decidir si el repositorio tiene espejo.** El de desarrollo lo tiene en
-      GitHub; éste no. Un espejo ayuda a que lo encuentre quien busque allí.
+- [ ] **Decidir si este repositorio tiene espejo.** Ahora mismo no tiene. Un
+      espejo en GitHub ayudaría a que lo encuentre quien busque allí, pero los
+      push-mirrors replican refs de git y **no los adjuntos de release**: la
+      imagen seguiría descargándose sólo desde Codeberg.
 - [ ] Rellenar el [`CHANGELOG.md`](CHANGELOG.md) con la primera versión
       publicable.
 
