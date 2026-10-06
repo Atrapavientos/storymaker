@@ -283,8 +283,8 @@ Todo lo que sigue se ejecuta desde una copia de este repositorio en tu
 ordenador:
 
 ```bash
-git clone https://codeberg.org/Profektor/storymaker_pub.git
-cd storymaker_pub
+git clone https://codeberg.org/atrapavientos/storymaker.git
+cd storymaker
 ```
 
 ### 3.1 Grabar Raspberry Pi OS Lite

@@ -8,6 +8,10 @@ con salida por pantalla e-ink, impresora térmica y audio.
 Pulsas un botón y sale el arranque de una historia que alguien tiene que
 continuar.
 
+> **¿Has llegado aquí escaneando un QR?** Es el de la máquina, el que sale al
+> apagarla o en el tique de despedida. Estás en el sitio correcto: aquí está
+> todo lo necesario para construir una.
+
 > **Estado:** firmware y documentación publicados; hardware y envolventes en
 > preparación. Ver la [hoja de ruta](hoja-de-ruta.md).
 >

@@ -3,7 +3,7 @@
 ## v2026-10-03 — imagen distribuible
 
 Primera release publicada desde este repositorio:
-[`v2026-10-03`](https://codeberg.org/Profektor/storymaker_pub/releases/tag/v2026-10-03),
+[`v2026-10-03`](https://codeberg.org/atrapavientos/storymaker/releases/tag/v2026-10-03),
 con la imagen de tarjeta y su checksum SHA256.
 
 La imagen se generó el 3 de octubre desde el repositorio de desarrollo. El
@@ -11,7 +11,7 @@ firmware de este árbol es idéntico byte a byte al que lleva dentro, de modo qu
 el tag corresponde de verdad a lo que se descarga.
 
 Qué trae la imagen, en las [notas de la
-release](https://codeberg.org/Profektor/storymaker_pub/releases/tag/v2026-10-03).
+release](https://codeberg.org/atrapavientos/storymaker/releases/tag/v2026-10-03).
 
 Desde el 2026-10-05, **Codeberg y este repositorio son el único sitio de
 descarga**: el repositorio de desarrollo pasó a privado.
