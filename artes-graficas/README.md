@@ -9,6 +9,20 @@ para vestir la misma máquina.
 
 ---
 
+## Muestrario
+
+Prototipos ya montados. Pulsa una foto para verla a tamaño completo.
+
+| Alicia | Arcade | Historia interminable · 1 |
+|:-:|:-:|:-:|
+| <a href="03%20mockups%20y%20prototipos/00%20Alicia/00_prototipo_cart%C3%B3n.jpg"><img src="../docs/galeria/artes-01-alicia.jpg" width="240" alt="Caja blanca con el rótulo «La asombrosa caja de contar historias» en letras de cuento"></a> | <a href="03%20mockups%20y%20prototipos/01%20Arcade/00_prototipo_cart%C3%B3n.jpg"><img src="../docs/galeria/artes-02-arcade.jpg" width="240" alt="Caja azul con aspecto de máquina recreativa: pantalla negra con el título y motivos de pixel art"></a> | <a href="03%20mockups%20y%20prototipos/03%20Historia%20interminable/00_prototipo_resina.jpg"><img src="../docs/galeria/artes-03-historia-interminable-1.jpg" width="240" alt="Caja negra con un dragón blanco sobre cielo nocturno y el título en letras claras"></a> |
+| **Historia interminable · 2** | **Jules Verne** | **Zootropo** |
+| <a href="03%20mockups%20y%20prototipos/03%20Historia%20interminable/01_prototipo_historia_interminable.jpg"><img src="../docs/galeria/artes-04-historia-interminable-2.jpg" width="240" alt="Cara de la caja con un dragón rojo ondulante sobre fondo amarillo anaranjado"></a> | <a href="03%20mockups%20y%20prototipos/04%20Jules%20Verne/00_prototipo_cart%C3%B3n.jpg"><img src="../docs/galeria/artes-05-jules-verne.jpg" width="240" alt="Caja gris de paneles metálicos remachados con un gran ojo de buey en el frontal"></a> | <a href="03%20mockups%20y%20prototipos/05%20Zootropo/01_prototipo_zootropo.jpg"><img src="../docs/galeria/artes-06-zootropo.jpg" width="240" alt="Cara de la caja con un zootropo grabado en blanco y negro y tres ratones en las ventanas"></a> |
+
+El modelo **Steampunk** se añadirá aquí cuando se publique.
+
+---
+
 ## Estructura
 
 | Carpeta | Contenido |
