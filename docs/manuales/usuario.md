@@ -68,10 +68,6 @@ Y el LED te dice en qué está:
 | Parpadeo rápido durante el arranque | Confirmado: ya puedes soltar |
 | Apagado | Apagándose, o apagada |
 
-> **📷 Captura pendiente — `galeria/usuario-01-boton-led.png`**
-> Foto del frontal con el botón y el LED encendido fijo. Cerca, para que se vea
-> bien cuál es cuál.
-
 ---
 
 ## 4. Generar premisas
@@ -89,12 +85,6 @@ para refrescarse entera, y la voz tarda lo que tarde en leer la frase.
 > durante un par de segundos antes de mostrar la premisa. No está rota: esta
 > tecnología no admite refrescos parciales. Mientras tanto, muestra el dibujo
 > de una pluma para que se note que está trabajando.
-
-> **📷 Captura pendiente — `galeria/usuario-02-eink-premisa.png`**
-> Pantalla e-ink mostrando una premisa completa. De frente y sin reflejos.
-
-> **📷 Captura pendiente — `galeria/usuario-03-tique.png`**
-> Tique impreso con una premisa, en la mano o sobre la mesa.
 
 ---
 
@@ -122,13 +112,6 @@ Si esa dirección no funciona, es que la red del centro no resuelve nombres
 - **A la izquierda:** la lista de perfiles y el botón de crear uno nuevo.
 - **En el centro:** las premisas del perfil que estés mirando, por categorías.
 
-> **📷 Captura pendiente — `galeria/usuario-04-panel.png`**
-> Panel principal completo en un ordenador, con un perfil abierto y premisas a
-> la vista.
-
-> **📷 Captura pendiente — `galeria/usuario-05-panel-movil.png`**
-> El mismo panel en un móvil, que es como se usa en clase.
-
 ---
 
 ## 6. Perfiles
@@ -145,10 +128,6 @@ y editar cualquiera sin cambiar el activo.
 **Crear uno nuevo:** **+ Nuevo perfil** abajo a la izquierda. Nace vacío, y hay
 que darle contenido antes de poder usarlo: **las tres categorías necesitan al
 menos una frase**. Con una sola vacía, el perfil no funciona.
-
-> **📷 Captura pendiente — `galeria/usuario-06-perfiles.png`**
-> Barra lateral con varios perfiles y el selector de perfil activo, señalando
-> que son dos cosas distintas. Es la confusión más común.
 
 ---
 
@@ -183,10 +162,6 @@ escribir los conflictos de forma neutra es lo que mejor funciona.
 
 Los cambios se guardan al momento.
 
-> **📷 Captura pendiente — `galeria/usuario-07-editar.png`**
-> Lista de detonantes abierta, con el campo de añadir abajo y el botón de
-> borrar visible en una de las frases.
-
 ---
 
 ## 8. Importar listas desde un `.txt`
@@ -219,13 +194,6 @@ importador se apaña con sus codificaciones.
 
 **Límites:** 3 MB por envío, 5000 frases por categoría y 300 caracteres por
 frase.
-
-> **📷 Captura pendiente — `galeria/usuario-08-importar-1.png`**
-> Primer paso del asistente de importación: elección de destino.
-
-> **📷 Captura pendiente — `galeria/usuario-09-importar-revision.png`**
-> Pantalla de revisión con el recuento de frases que entran y las que se
-> descartan. Es el paso que da confianza para usarlo.
 
 ---
 
@@ -271,9 +239,6 @@ También sirve para silenciar el altavoz en una sesión sin apagarlo.
 En esa misma pantalla, **PIN de acceso al portal**: de 4 a 8 dígitos. Si lo
 dejas en blanco, se queda el que había.
 
-> **📷 Captura pendiente — `galeria/usuario-10-hardware.png`**
-> Pantalla ⚙ Hardware con los tres interruptores y el campo del PIN.
-
 ---
 
 ## 11. Llevar la máquina a otro sitio
@@ -291,9 +256,6 @@ cuando ya está: suelta entonces.
 
 Recuerda que la Pi Zero 2W **sólo se conecta a redes de 2,4 GHz**. Si el router
 del sitio nuevo sólo da 5 GHz, no la verá.
-
-> **📷 Captura pendiente — `galeria/usuario-11-captivo.png`**
-> Página de selección de red WiFi tal como aparece en el móvil.
 
 ---
 

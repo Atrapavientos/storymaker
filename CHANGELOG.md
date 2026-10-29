@@ -32,9 +32,6 @@ descarga**: el repositorio de desarrollo pasó a privado.
   control, perfiles, importación de premisas y dudas frecuentes.
 - Referencia técnica: `docs/hardware.md`, `docs/sistema.md`,
   `docs/decisiones.md`.
-- `docs/galeria/README.md` con la convención de nombres y la lista de capturas
-  pendientes.
-- `hoja-de-ruta.md`: estado del repositorio y orden de trabajo.
 - **Artes gráficas** (`artes-graficas/`), del IES Pilar Lorengar: troqueles de
   la caja de cartón y cinco modelos (Alicia, Arcade, Historia interminable,
   Jules Verne y Zootropo), con fuentes `.ai`, PDF para imprimir y fotos de los
@@ -42,7 +39,5 @@ descarga**: el repositorio de desarrollo pasó a privado.
 
 ### Notas
 
-- Los manuales llevan marcadas las capturas pendientes con bloques
-  `📷 Captura pendiente`. Sustituirlos por la imagen al añadirla.
 - Estructura inicial del repositorio: esqueleto de carpetas, licencias y
   READMEs.

@@ -13,7 +13,7 @@ continuar.
 > todo lo necesario para construir una.
 
 > **Estado:** firmware, documentación y artes gráficas publicados; hardware y
-> envolventes en preparación. Ver la [hoja de ruta](hoja-de-ruta.md).
+> envolventes en preparación.
 >
 > Este es el repositorio de publicación curada; el desarrollo activo vive en un
 > repositorio separado (`storymaker_dev`).
@@ -31,7 +31,6 @@ Codename técnico interno: *StoryMaker*.
 | Entender cómo está hecho el firmware | [`firmware/README.md`](firmware/README.md) y [`docs/decisiones.md`](docs/decisiones.md) |
 | Replicar el hardware | [`docs/hardware.md`](docs/hardware.md) (los esquemas y el BOM están pendientes) |
 | Imprimir una caja de cartón | [`artes-graficas/`](artes-graficas/README.md) |
-| Echar una mano | [Hoja de ruta](hoja-de-ruta.md) |
 
 ---
 

@@ -15,11 +15,6 @@ Hay **dos caminos**, y conviene elegir antes de empezar:
 Si sólo quieres usar el dispositivo, **Ruta A**. La Ruta B existe porque el
 proyecto es libre y la imagen tiene que poder reconstruirse desde el código.
 
-> **📷 Captura pendiente — `galeria/despliegue-00-dispositivo.png`**
-> Foto del dispositivo terminado y encendido, con la pantalla e-ink mostrando
-> una premisa. Sirve de portada del manual: conviene que se vea entero, de
-> frente, con buena luz.
-
 ---
 
 ## 1. Material necesario
@@ -64,11 +59,6 @@ El botón va a masa con resistencia de *pull-up* interna: es activo a nivel bajo
 La impresora térmica **necesita su propia alimentación**; no tires de los 5 V de
 la Pi para moverla.
 
-> **📷 Captura pendiente — `galeria/despliegue-01-cableado.png`**
-> Foto cenital del cableado real, con la Pi y los tres periféricos conectados.
-> Que se distingan los colores de los cables y se lea la serigrafía de los
-> módulos. Si hay PCB, foto de la placa montada.
-
 ### Software en tu ordenador
 
 - **Ruta A:** [Raspberry Pi Imager](https://www.raspberrypi.com/software/).
@@ -90,10 +80,6 @@ más reciente (`vAAAA-MM-DD`) y descarga los dos ficheros:
 **Codeberg es el único sitio de descarga.** Si algún día este repositorio se
 replica en otra forja, la imagen se seguirá bajando de aquí: los espejos de git
 copian el código y los tags, no los adjuntos de las releases.
-
-> **📷 Captura pendiente — `galeria/despliegue-02-release.png`**
-> Página de la release en Codeberg, con los dos adjuntos visibles y el número
-> de versión legible.
 
 ### 2.2 Comprobar que la descarga está íntegra
 
@@ -129,14 +115,6 @@ No hace falta descomprimir el `.xz`: el Imager lo hace solo.
    rompe.
 6. Espera a que grabe y verifique (5–10 minutos).
 
-> **📷 Captura pendiente — `galeria/despliegue-03-imager.png`**
-> Ventana del Imager con los tres botones rellenos: modelo, "Usar imagen
-> personalizada" con el nombre del `.img.xz`, y la tarjeta seleccionada.
-
-> **📷 Captura pendiente — `galeria/despliegue-04-imager-no-personalizar.png`**
-> El diálogo que pregunta por la personalización, señalando la respuesta
-> correcta. Es el punto donde más gente se equivoca.
-
 ### 2.4 Primer arranque
 
 Mete la tarjeta en la Pi y conéctala a la corriente.
@@ -153,13 +131,6 @@ Cuando esté lista:
 - Si hay **impresora**, imprime un tique con esa misma dirección y su QR.
 - Si hay **altavoz**, lo dice en voz alta.
 
-> **📷 Captura pendiente — `galeria/despliegue-05-eink-bienvenida.png`**
-> Foto de la pantalla e-ink en el primer arranque, con el QR y la URL. Encuadre
-> cerrado a la pantalla, de frente para que no haya reflejos.
-
-> **📷 Captura pendiente — `galeria/despliegue-06-tique-bienvenida.png`**
-> Foto del tique impreso de bienvenida, sobre una superficie lisa.
-
 ### 2.5 Conectarse al dispositivo
 
 Como todavía no conoce ninguna red, la máquina levanta su propia WiFi.
@@ -170,9 +141,6 @@ Como todavía no conoce ninguna red, la máquina levanta su propia WiFi.
    hace, escribe a mano `http://10.42.0.1`.
 3. El móvil avisará de que "esta red no tiene acceso a internet". Es correcto:
    dile que la mantenga conectada.
-
-> **📷 Captura pendiente — `galeria/despliegue-07-wifi-ap.png`**
-> Lista de redes WiFi del móvil con `StoryMaker-Setup` visible.
 
 ### 2.6 Elegir la red WiFi del centro
 
@@ -190,12 +158,6 @@ la red ya seleccionada, lista para reintentar.
 Si va bien, aparece una pantalla de éxito con la dirección del panel de
 control: **`http://storymaker.local:5000`**. Apúntala.
 
-> **📷 Captura pendiente — `galeria/despliegue-08-captivo-redes.png`**
-> Portal cautivo con la lista de redes y el campo de contraseña. En móvil.
-
-> **📷 Captura pendiente — `galeria/despliegue-09-captivo-exito.png`**
-> Pantalla de éxito del portal cautivo, con la URL del panel bien legible.
-
 ### 2.7 Entrar al panel de control
 
 1. Vuelve a conectar el móvil o el portátil a **la WiFi normal del centro** (la
@@ -209,10 +171,6 @@ nombres `.local`. Busca la IP del dispositivo en el router y entra por
 La pantalla de acceso pide un PIN. **En el primer arranque, la propia página
 muestra arriba cuál es el PIN inicial** y avisa de que podrás cambiarlo en el
 paso siguiente.
-
-> **📷 Captura pendiente — `galeria/despliegue-10-login.png`**
-> Pantalla de acceso tal como sale en el primer arranque, con el aviso del PIN
-> inicial visible. Navegador completo.
 
 ### 2.8 Asistente de configuración inicial
 
@@ -243,11 +201,6 @@ por SSH, y no hay forma de recuperarla sin volver a grabar la tarjeta.
 
 Pulsa el botón de guardar. El servicio se reinicia solo y te deja en el panel.
 
-> **📷 Captura pendiente — `galeria/despliegue-11-asistente.png`**
-> Asistente de configuración inicial completo, con los tres interruptores de
-> hardware y los dos campos de credenciales. Si no cabe en una captura, dos:
-> `-11a` (hardware) y `-11b` (credenciales).
-
 ### 2.9 Comprobar que todo funciona
 
 En el panel, pulsa **GENERAR**. Debería ocurrir todo esto, según lo que tengas
@@ -263,10 +216,6 @@ Ahora prueba el **botón físico**: una pulsación corta hace exactamente lo mis
 Si algo no responde, vuelve al asistente (**⚙ Hardware** en la cabecera) y
 comprueba que esa salida está activada. Si lo está, mira la sección de
 problemas al final.
-
-> **📷 Captura pendiente — `galeria/despliegue-12-panel.png`**
-> Panel principal ya configurado, con el botón GENERAR, el selector de perfil y
-> las etiquetas de hardware activo en la cabecera.
 
 Con esto el dispositivo está listo. Para usarlo en el taller, sigue con el
 [manual de usuario](usuario.md).
@@ -327,10 +276,6 @@ de red WiFi.
 
 Para una red abierta, pasa la contraseña vacía: `"MiRed" ""`.
 
-> **📷 Captura pendiente — `galeria/despliegue-13-prepare-sd.png`**
-> Terminal con el resumen que imprime `prepare_sd.sh` antes de confirmar, y el
-> mensaje final de éxito. Tapa el SSID si es el de tu casa.
-
 ### 3.3 Primer arranque y acceso por SSH
 
 Mete la tarjeta en la Pi y enciéndela. Conecta sola a la WiFi que configuraste.
@@ -380,10 +325,6 @@ instalar la clave; a partir de ahí va solo:
 | 8/8 | Despliega el firmware, la configuración y los perfiles |
 
 Al final imprime una lista de comprobaciones y reinicia la Pi.
-
-> **📷 Captura pendiente — `galeria/despliegue-14-setup-final.png`**
-> Las comprobaciones finales de `setup_sd.sh`, todas en verde, más el aviso de
-> reinicio.
 
 ### 3.5 Comprobar
 

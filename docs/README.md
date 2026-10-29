@@ -22,11 +22,5 @@ Toda la documentación de este repositorio se publica bajo **CC BY-SA 4.0**
 
 ## Imágenes
 
-Las capturas y fotos viven en [`galeria/`](galeria/). Su
-[README](galeria/README.md) lleva la convención de nombres y **la lista de
-capturas que faltan**, por si quieres echar una mano.
-
-## Qué falta
-
-El estado de la documentación y el orden en que se va a completar están en
-[`../hoja-de-ruta.md`](../hoja-de-ruta.md).
+Las fotos y capturas que acompañan a la documentación están en
+[`galeria/`](galeria/).

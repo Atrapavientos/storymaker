@@ -43,14 +43,10 @@ en las tres.
 |---|---|---|---|
 | 00 | **Alicia** | Siluetas en blanco y negro de *Alicia en el país de las maravillas* | ✅ |
 | 01 | **Arcade** | Máquina recreativa en *pixel art*: pantalla, botones y guiños a videojuegos clásicos | ✅ |
-| 02 | **Steampunk** | Engranajes, relojes y pergamino envejecido | ⏳ En revisión |
+| 02 | **Steampunk** | Engranajes, relojes y pergamino envejecido | ⏳ Próximamente |
 | 03 | **Historia interminable** | Dos variantes: dragón blanco sobre cielo nocturno, y dragón rojo con cohete y astronauta | ✅ |
 | 04 | **Jules Verne** | Paneles metálicos remachados y ojo de buey | ✅ |
 | 05 | **Zootropo** | La caja como zootropo, con ratones en silueta que bailan al girar | ✅ |
-
-**Steampunk** se publicará en cuanto esté lista una versión más ligera de sus
-ficheros. La entrega original superaba el gigabyte por las imágenes que lleva
-incrustadas.
 
 ---
 
