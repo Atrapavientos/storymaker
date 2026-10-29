@@ -17,7 +17,7 @@ desarrollo. Esto es sólo **qué le falta a la publicación**.
 | `docs/` | 🟡 Parcial | Capturas, manual de montaje físico |
 | `hardware/` | ⬜ Vacío | BOM, esquemas, PCB |
 | `envolvente/` | ⬜ Externo | Lo define el centro de CAD |
-| `artes-graficas/` | ⬜ Externo | Lo define el centro responsable |
+| `artes-graficas/` | 🟡 Parcial | Cinco de los seis modelos publicados; falta Steampunk |
 | *Releases* | ✅ Publicado | `v2026-10-03`, con la imagen y su checksum |
 
 ---
@@ -70,8 +70,13 @@ Lo que sí toca es **pedirlo y acordar la licencia**.
 - [ ] `envolvente/` — archivos de caja. Formato esperado: fuente + exportado
       (STEP y STL para impresión 3D; SVG o DXF para corte láser), anotando
       grosor de material y *kerf*.
-- [ ] `artes-graficas/` — vinilos e ilustraciones, con sus créditos.
-- [ ] Licencia de ambas carpetas, a definir por quien las aporte.
+- [x] `artes-graficas/` — entrega del IES Pilar Lorengar: troqueles, fuentes,
+      PDF de producción y fotos de cinco modelos, bajo CC BY-SA 4.0 y con los
+      elementos de terceros señalados en su README.
+- [ ] `artes-graficas/` — **modelo Steampunk**. Sus fuentes superaban el
+      gigabyte por imágenes incrustadas a más resolución de la necesaria; el
+      centro está preparando una versión aligerada.
+- [ ] Licencia de `envolvente/`, a definir por quien la aporte.
 
 ---
 
@@ -82,7 +87,7 @@ Lo que sí toca es **pedirlo y acordar la licencia**.
       que lleva la imagen dentro. El repositorio de desarrollo pasó a privado el
       2026-10-05, así que **éste es el único sitio de descarga**.
 - [ ] **Confirmar los créditos.** [`CREDITS.md`](CREDITS.md) lleva una nota de
-      pendiente y un `[centro]` sin rellenar en el apartado de artes gráficas.
+      pendiente.
 - [ ] **Visto bueno formal de Atrapavientos** al esquema de licencias, como
       titular del proyecto. Es condición previa a anunciar el repositorio.
 - [ ] **Decidir si este repositorio tiene espejo.** Ahora mismo no tiene. Un

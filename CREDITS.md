@@ -19,5 +19,8 @@ Departamento de Educación, Cultura y Deporte.
 
 ## Artes gráficas
 
-Vinilos y decoraciones creados por la comunidad docente de [centro].
-Pendiente de atribución y licencia definitivas.
+Diseños de la caja de cartón (troqueles, ilustraciones y prototipos) del
+alumnado y profesorado de Artes Gráficas del **IES Pilar Lorengar**.
+
+Detalle por modelo, licencia y elementos de terceros en
+[`artes-graficas/README.md`](artes-graficas/README.md).

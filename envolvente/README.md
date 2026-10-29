@@ -7,3 +7,6 @@ Estructura y licencia a definir por el centro de CAD/diseño responsable.
 
 Formato esperado: fuente + export (STEP+STL para 3D; SVG/DXF para corte láser),
 anotando grosor de material y kerf.
+
+Los troqueles de la **caja de cartón** no están aquí: van con sus diseños
+gráficos en [`artes-graficas/00 troqueles y desarrollos/`](../artes-graficas/README.md).

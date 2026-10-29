@@ -17,15 +17,20 @@ El desarrollo activo vive en `storymaker_dev`. Aquí solo entra material revisad
 ## Licencias (una por tipo de material)
 - Código → **GPLv3** → `/LICENSE`
 - Hardware (PCB, esquemas) → **CERN-OHL-S v2** → `/hardware/LICENSE`
-- Docs, manuales, arte → **CC BY-SA 4.0** → `/docs/LICENSE`
+- Docs, manuales → **CC BY-SA 4.0** → `/docs/LICENSE`
+- Artes gráficas → **CC BY-SA 4.0**, salvo elementos de terceros → `/artes-graficas/LICENSE`
 
 Resumen en `/README.licensing.md`. **Pendiente: OK formal de Atrapavientos** antes de publicar.
 
 ## Estructura
 `hardware/` · `firmware/` · `envolvente/` · `artes-graficas/` · `docs/`
-(`envolvente/` y `artes-graficas/` las definen centros externos: placeholders por ahora.)
+(`envolvente/` y `artes-graficas/` las definen centros externos.)
 
-`firmware/` y `docs/` ya tienen contenido real. `hardware/` sigue vacío.
+`firmware/`, `docs/` y `artes-graficas/` tienen contenido real (en artes falta el
+modelo Steampunk). `envolvente/` es un placeholder y `hardware/` sigue vacío.
+
+Lo que llega de los centros se sanea antes de entrar: rutas de usuario en el
+XMP de PDF y `.ai`, EXIF y GPS en las fotos, nombres en Unicode NFC.
 
 ## Referencia
 - `hoja-de-ruta.md` — qué falta por publicar y en qué orden

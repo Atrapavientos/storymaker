@@ -12,8 +12,8 @@ continuar.
 > apagarla o en el tique de despedida. Estás en el sitio correcto: aquí está
 > todo lo necesario para construir una.
 
-> **Estado:** firmware y documentación publicados; hardware y envolventes en
-> preparación. Ver la [hoja de ruta](hoja-de-ruta.md).
+> **Estado:** firmware, documentación y artes gráficas publicados; hardware y
+> envolventes en preparación. Ver la [hoja de ruta](hoja-de-ruta.md).
 >
 > Este es el repositorio de publicación curada; el desarrollo activo vive en un
 > repositorio separado (`storymaker_dev`).
@@ -30,6 +30,7 @@ Codename técnico interno: *StoryMaker*.
 | Usarlo en un taller | [Manual de usuario](docs/manuales/usuario.md) |
 | Entender cómo está hecho el firmware | [`firmware/README.md`](firmware/README.md) y [`docs/decisiones.md`](docs/decisiones.md) |
 | Replicar el hardware | [`docs/hardware.md`](docs/hardware.md) (los esquemas y el BOM están pendientes) |
+| Imprimir una caja de cartón | [`artes-graficas/`](artes-graficas/README.md) |
 | Echar una mano | [Hoja de ruta](hoja-de-ruta.md) |
 
 ---
@@ -42,7 +43,7 @@ Codename técnico interno: *StoryMaker*.
 | `docs/` | Manuales, referencia técnica y galería de imágenes |
 | `hardware/` | Esquemas eléctricos, PCB (KiCad + JLCPCB) y BOM por versión *(pendiente)* |
 | `envolvente/` | Archivos de caja (3D, corte láser); los define un centro de diseño externo |
-| `artes-graficas/` | Vinilos e ilustraciones para la caja; los define un centro externo |
+| `artes-graficas/` | Diseños de la caja de cartón: troqueles, fuentes de Illustrator, PDF para imprimir y fotos de prototipos (IES Pilar Lorengar) |
 
 ---
 

@@ -1,0 +1,7 @@
+# Ficheros de diseño e imagen: nunca convertir finales de línea ni intentar diffs de texto.
+*.ai   binary
+*.pdf  binary
+*.jpg  binary
+*.jpeg binary
+*.png  binary
+*.stl  binary

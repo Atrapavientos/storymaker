@@ -35,6 +35,10 @@ descarga**: el repositorio de desarrollo pasó a privado.
 - `docs/galeria/README.md` con la convención de nombres y la lista de capturas
   pendientes.
 - `hoja-de-ruta.md`: estado del repositorio y orden de trabajo.
+- **Artes gráficas** (`artes-graficas/`), del IES Pilar Lorengar: troqueles de
+  la caja de cartón y cinco modelos (Alicia, Arcade, Historia interminable,
+  Jules Verne y Zootropo), con fuentes `.ai`, PDF para imprimir y fotos de los
+  prototipos. Steampunk llegará aparte.
 
 ### Notas
 
