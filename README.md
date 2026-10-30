@@ -14,9 +14,6 @@ continuar.
 
 > **Estado:** firmware, documentación y artes gráficas publicados; hardware y
 > envolventes en preparación.
->
-> Este es el repositorio de publicación curada; el desarrollo activo vive en un
-> repositorio separado (`storymaker_dev`).
 
 Codename técnico interno: *StoryMaker*.
 
