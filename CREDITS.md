@@ -27,6 +27,19 @@ Detalle por modelo, licencia y elementos de terceros en
 
 ---
 
+## Hardware
+
+El diseño de Fritzing de la placa base incluye dos piezas de terceros:
+
+- Amplificador **Adafruit MAX98357A** (producto 3006), de *ladyada*
+  (Adafruit).
+- **Módulo cargador de litio 4 en 1** (2 A, 5 V), de *RAPTOR7762*, modificada
+  por *vanepp*.
+
+Detalle de la placa y su licencia en [`hardware/README.md`](hardware/README.md).
+
+---
+
 ## Envolvente
 
 Cajas de madera y acrílico para corte láser, con las bisagras, esquineras y

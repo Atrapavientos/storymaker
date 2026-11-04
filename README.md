@@ -12,8 +12,9 @@ continuar.
 > apagarla o en el tique de despedida. Estás en el sitio correcto: aquí está
 > todo lo necesario para construir una.
 
-> **Estado:** firmware, documentación, artes gráficas y envolventes de corte
-> láser publicados; hardware y caja impresa en 3D en preparación.
+> **Estado:** firmware, documentación, placa base (PCB), artes gráficas y
+> envolventes de corte láser publicados; lista de materiales y caja impresa
+> en 3D en preparación.
 
 Codename técnico interno: *StoryMaker*.
 
@@ -26,7 +27,7 @@ Codename técnico interno: *StoryMaker*.
 | Montar y poner en marcha un dispositivo | [Manual de despliegue e instalación](docs/manuales/despliegue.md) |
 | Usarlo en un taller | [Manual de usuario](docs/manuales/usuario.md) |
 | Entender cómo está hecho el firmware | [`firmware/README.md`](firmware/README.md) y [`docs/decisiones.md`](docs/decisiones.md) |
-| Replicar el hardware | [`docs/hardware.md`](docs/hardware.md) (los esquemas y el BOM están pendientes) |
+| Fabricar la placa base y conectar los periféricos | [`hardware/`](hardware/README.md) (el BOM está pendiente) |
 | Imprimir una caja de cartón | [`artes-graficas/`](artes-graficas/README.md) |
 | Fabricar una caja de madera, acrílico o impresa en 3D | [`envolvente/`](envolvente/README.md) |
 
@@ -38,7 +39,7 @@ Codename técnico interno: *StoryMaker*.
 |---|---|
 | `firmware/` | Código Python que corre en el dispositivo, y los scripts de instalación |
 | `docs/` | Manuales, referencia técnica y galería de imágenes |
-| `hardware/` | Esquemas eléctricos, PCB (KiCad + JLCPCB) y BOM por versión *(pendiente)* |
+| `hardware/` | Placa base: esquema, Gerber para fabricarla y diseño editable en Fritzing. BOM *(pendiente)* |
 | `envolvente/` | Cajas de madera y acrílico para corte láser (IES Virgen del Pilar) y caja impresa en 3D *(próximamente)* |
 | `artes-graficas/` | Diseños de la caja de cartón: troqueles, fuentes de Illustrator, PDF para imprimir y fotos de prototipos (IES Pilar Lorengar) |
 
