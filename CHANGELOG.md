@@ -36,6 +36,11 @@ descarga**: el repositorio de desarrollo pasó a privado.
   la caja de cartón y cinco modelos (Alicia, Arcade, Historia interminable,
   Jules Verne y Zootropo), con fuentes `.ai`, PDF para imprimir y fotos de los
   prototipos. Steampunk llegará aparte.
+- **Envolvente** (`envolvente/`), del IES Virgen del Pilar: cajas de madera
+  y acrílico para corte láser (DXF e IGES); la de acrílico, con sus bisagras,
+  esquineras y marcos para impresión 3D (STL, IGES y fuentes de Inventor).
+  Modelos y vídeos del montaje. Las siete versiones de la caja impresa en 3D
+  llegarán aparte.
 
 ### Notas
 

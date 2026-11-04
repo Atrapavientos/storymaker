@@ -24,3 +24,14 @@ alumnado y profesorado de Artes Gráficas del **IES Pilar Lorengar**.
 
 Detalle por modelo, licencia y elementos de terceros en
 [`artes-graficas/README.md`](artes-graficas/README.md).
+
+---
+
+## Envolvente
+
+Cajas de madera y acrílico para corte láser, con las bisagras, esquineras y
+marcos impresos en 3D del modelo de acrílico, del alumnado y profesorado del
+**IES Virgen del Pilar**.
+
+Detalle por modelo, piezas y licencia en
+[`envolvente/README.md`](envolvente/README.md).

@@ -1,7 +1,17 @@
-# Ficheros de diseño e imagen: nunca convertir finales de línea ni intentar diffs de texto.
+# Ficheros de diseño, imagen y vídeo: nunca convertir finales de línea ni intentar diffs de texto.
 *.ai   binary
 *.pdf  binary
 *.jpg  binary
 *.jpeg binary
 *.png  binary
 *.stl  binary
+*.dxf  binary
+*.iges binary
+*.igs  binary
+*.step binary
+*.stp  binary
+*.3mf  binary
+*.ipt  binary
+*.iam  binary
+*.f3d  binary
+*.mp4  binary
