@@ -33,9 +33,9 @@ descarga**: el repositorio de desarrollo pasó a privado.
 - Referencia técnica: `docs/hardware.md`, `docs/sistema.md`,
   `docs/decisiones.md`.
 - **Artes gráficas** (`artes-graficas/`), del IES Pilar Lorengar: troqueles de
-  la caja de cartón y cinco modelos (Alicia, Arcade, Historia interminable,
-  Jules Verne y Zootropo), con fuentes `.ai`, PDF para imprimir y fotos de los
-  prototipos. Steampunk llegará aparte.
+  la caja de cartón y seis modelos (Alicia, Arcade, Steampunk, Historia
+  interminable, Jules Verne y Zootropo), con fuentes `.ai`, PDF para imprimir
+  y fotos de los prototipos.
 - **Envolvente** (`envolvente/`), del IES Virgen del Pilar: cajas de madera
   y acrílico para corte láser (DXF e IGES); la de acrílico, con sus bisagras,
   esquineras y marcos para impresión 3D (STL, IGES y fuentes de Inventor).
