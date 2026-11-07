@@ -27,7 +27,7 @@ proyecto es libre y la imagen tiene que poder reconstruirse desde el código.
 | Tarjeta microSD de 8 GB o más | Clase 10 o mejor |
 | Alimentación 5 V / 2,5 A | Por micro-USB |
 | Pantalla e-ink WeAct 4.2" B&N (SSD1683) | Opcional |
-| Impresora térmica QR701 UART | Opcional |
+| Impresora térmica QR701 UART o QR204 TTL | Opcional. La QR204 se conecta por TTL, no por USB |
 | Amplificador I2S MAX98357A + altavoz | Opcional |
 | Pulsador momentáneo | Botón de generar |
 | LED + resistencia | Indicador de estado |
@@ -180,7 +180,7 @@ bloques:
 **Pantalla e-ink** — actívala si la tienes conectada.
 
 **Impresora térmica** — actívala si la tienes. El *baudrate* por defecto (9600)
-vale para la QR701; cámbialo sólo si tu modelo pide otro.
+vale para la QR701 y la QR204; cámbialo sólo si tu modelo pide otro.
 
 **Altavoz I2S** — actívalo si lo tienes, y ajusta el volumen con el deslizador.
 

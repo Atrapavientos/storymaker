@@ -23,6 +23,7 @@ Raspberry Pi OS Lite 64-bit Bookworm (estable)
 ## Periféricos
 - **E-ink:** WeAct 4.2" B&W (SSD1683) — refresco parcial NO soportado
 - **Impresora:** QR701 UART térmica (ESC/POS, QR nativo GS(k) modelo 2)
+  - Compatible sin cambios: **QR204 TTL+USB**, conectada por TTL a 9600 bps (probada el 2026-11-07)
 - **Audio:** MAX98357A I2S — TTS edge-tts (es-ES-ElviraNeural) + mpg123
 - **Fallback TTS offline:** espeak (voz local, entra cuando no hay red)
 

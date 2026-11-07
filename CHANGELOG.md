@@ -45,6 +45,8 @@ descarga**: el repositorio de desarrollo pasó a privado.
   (PNG y SVG), Gerber listos para fabricar, diseño editable en Fritzing,
   fotos de la placa real, renders, trazado de pistas a escala 1:1 y tabla de
   conectores con su GPIO. El BOM llegará aparte.
+- **Impresora QR204 TTL+USB** probada como alternativa a la QR701: funciona
+  sin cambios en el firmware, conectada por TTL a 9600 bps.
 
 ### Notas
 
