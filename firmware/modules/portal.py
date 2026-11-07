@@ -12,6 +12,7 @@ Rutas:
 Se lanza en un hilo separado (daemon) para no bloquear main.py.
 """
 import html
+import logging
 import os
 import secrets
 import tempfile
@@ -20,6 +21,7 @@ import time
 from functools import wraps
 from flask import Flask, request, session, redirect, url_for, jsonify
 from modules.config_manager import cargar_config, guardar_config
+from modules.placas import PLACAS, placa_activa
 from modules import importador
 
 BASE_DIR     = os.path.join(os.path.dirname(__file__), '..')
@@ -30,10 +32,50 @@ PIN_DEFAULT  = "1234"
 # arranque obliga a cambiarla: así cada dispositivo tiene la suya y no comparten
 # todos la credencial que viaja dentro de la imagen publicada.
 PASS_FABRICA  = "storymaker"
-MIN_PASS_SSH  = 8
+MIN_PASS_SSH  = 6   # igual que MIN_LONGITUD en deploy/sistema/storymaker-setpass
 SETPASS_BIN   = "/usr/local/bin/storymaker-setpass"
+PERFIL_BIN    = "/usr/local/bin/storymaker-perfil.sh"
 
-app = Flask(__name__)
+# Marca que deja el portal antes de reiniciar historias.service tras guardar
+# el hardware. Va en /dev/shm (tmpfs): se borra sola al reiniciar la Pi, así
+# que un arranque real nunca la ve y siempre imprime la bienvenida.
+MARCA_REINICIO = "/dev/shm/storymaker-reinicio-portal"
+
+
+def _marcar_reinicio_portal(imprimir_bienvenida):
+    """Avisa al proceso siguiente de que el reinicio viene del portal."""
+    try:
+        with open(MARCA_REINICIO, "w") as f:
+            f.write("imprimir\n" if imprimir_bienvenida else "omitir\n")
+    except OSError as e:
+        print(f"[Portal] AVISO: no se ha podido dejar la marca de reinicio: {e}")
+
+
+def leer_marca_reinicio():
+    """True si hay que imprimir la bienvenida. Consume la marca.
+
+    Sin marca (arranque real, o reinicio que no viene del portal) se imprime.
+    """
+    try:
+        with open(MARCA_REINICIO) as f:
+            contenido = f.read().strip()
+        os.remove(MARCA_REINICIO)
+    except FileNotFoundError:
+        return True
+    except OSError as e:
+        print(f"[Portal] AVISO: marca de reinicio ilegible: {e}")
+        return True
+    return contenido != "omitir"
+
+class _SinSondeo(logging.Filter):
+    def filter(self, record):
+        return '/api/ultima_premisa' not in record.getMessage()
+
+logging.getLogger('werkzeug').addFilter(_SinSondeo())
+
+app = Flask(__name__, static_folder=os.path.join(BASE_DIR, 'static'))
+# Las fuentes no cambian entre despliegues: que el navegador las guarde un mes
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 30 * 24 * 3600
 # Secret temporal hasta que Portal.__init__ cargue el valor persistente de config.json
 app.secret_key = secrets.token_hex(32)
 
@@ -47,6 +89,26 @@ _callback_generar = None
 def registrar_callback_generar(cb):
     global _callback_generar
     _callback_generar = cb
+
+# Última premisa generada, venga del botón físico o del web. El panel la
+# consulta cada pocos segundos SOLO mientras está visible en pantalla (Page
+# Visibility API): con el móvil bloqueado o la pestaña en segundo plano no
+# pregunta, y lo generado entretanto no aparece al volver.
+# El id es un sello en milisegundos, no un contador: así sigue creciendo
+# aunque se reinicie el servicio con el panel abierto.
+_premisa_lock = threading.Lock()
+_ultima_premisa = {'id': 0, 'texto': None, 'perfil': None, 'tipo': 'premisa'}
+
+def publicar_premisa(texto, perfil=None, tipo='premisa'):
+    """main.py la llama al generar. tipo='aviso' para mensajes como el de
+    combinaciones agotadas, que el panel muestra con menos ceremonia."""
+    with _premisa_lock:
+        nuevo_id = max(_ultima_premisa['id'] + 1, time.time_ns() // 1_000_000)
+        _ultima_premisa.update(id=nuevo_id, texto=texto, perfil=perfil, tipo=tipo)
+
+def ultima_premisa_id():
+    with _premisa_lock:
+        return _ultima_premisa['id']
 
 _callback_despedida = None
 
@@ -136,6 +198,43 @@ def _fijar_pass_ssh(nueva):
     return True, ''
 
 
+def _aplicar_placa(placa):
+    """Aplica la placa al sistema (overlay de config.txt y asound.conf) con el
+    ayudante privilegiado. Surte efecto tras reiniciar la Pi.
+    Devuelve (ok, mensaje_de_error)."""
+    import subprocess
+    try:
+        r = subprocess.run(['sudo', '-n', PERFIL_BIN, placa],
+                           capture_output=True, text=True, timeout=30)
+    except FileNotFoundError:
+        return False, ("No se encuentra el ayudante del sistema que cambia la "
+                       "placa. Revisa la instalación del dispositivo.")
+    except Exception as e:
+        return False, f"No se ha podido aplicar la placa: {e}"
+    if r.returncode != 0:
+        lineas = (r.stderr or '').strip().splitlines()
+        pista  = lineas[-1] if lineas else f"código {r.returncode}"
+        return False, f"No se ha podido aplicar la placa ({pista}). La caja no se ha reiniciado."
+    return True, ''
+
+
+_reinicio_pendiente = False
+
+def reinicio_pendiente():
+    """True si el portal ha programado un reinicio de la Pi. main.py lo consulta
+    para no reiniciar el servicio entretanto: eso mataría el proceso, y con él
+    el hilo que va a lanzar el reinicio."""
+    return _reinicio_pendiente
+
+
+def _reiniciar_pi():
+    """Reinicia la Pi tras una pausa, para que la respuesta llegue antes al navegador."""
+    import subprocess
+    time.sleep(2)
+    subprocess.Popen(['sudo', '/usr/sbin/shutdown', '-r', 'now'],
+                     start_new_session=True)
+
+
 def login_requerido(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -172,6 +271,12 @@ def api_generar():
     except Exception as e:
         return jsonify({'ok': False, 'error': str(e)})
 
+@app.route('/api/ultima_premisa')
+@login_requerido
+def api_ultima_premisa():
+    with _premisa_lock:
+        return jsonify(dict(_ultima_premisa))
+
 @app.route('/logout')
 def logout():
     session.clear()
@@ -186,6 +291,10 @@ def setup():
     config = cargar_config()
     primer_arranque = not config.get('setup_completado', False)
     if request.method == 'POST':
+        placa = request.form.get('placa', '')
+        if placa not in PLACAS:
+            return _render_setup(config.get('hardware', {}), config,
+                                 "Elige la placa de este dispositivo.")
         # La contraseña se valida y se aplica ANTES de tocar config.json: si algo
         # falla, el usuario vuelve al formulario y no queda nada a medias.
         nueva_pass  = request.form.get('nueva_pass', '')
@@ -198,21 +307,54 @@ def setup():
             if not ok:
                 return _render_setup(config.get('hardware', {}), config, fallo)
         hw = config.setdefault('hardware', {})
-        eink_desactivada = 'eink' not in request.form
-        hw.setdefault('eink', {})['activada'] = 'eink' in request.form
-        hw.setdefault('impresora', {})['activada'] = 'impresora' in request.form
+        # Estado previo: decide la despedida de la e-ink y el ticket de prueba
+        eink_antes = hw.get('eink', {}).get('activada', False)
+        imp_antes  = hw.get('impresora', {}).get('activada', False)
+        baud_antes = hw.get('impresora', {}).get('baudrate', 9600)
+        # Las salidas que la placa no tiene quedan desactivadas aunque lleguen
+        # marcadas en el formulario; si sólo tiene una, va siempre activa.
+        salidas = PLACAS[placa]['salidas']
+        eink_desactivada = 'eink' not in request.form or 'eink' not in salidas
+        hw.setdefault('eink', {})['activada'] = not eink_desactivada
+        hw.setdefault('impresora', {})['activada'] = ('impresora' in request.form
+                                                      and 'impresora' in salidas)
         if request.form.get('baudrate'):
             hw['impresora']['baudrate'] = int(request.form['baudrate'])
-        hw.setdefault('audio', {})['activada'] = 'audio' in request.form
+        hw.setdefault('audio', {})['activada'] = ('audio' in request.form
+                                                  or salidas == {'audio'})
         if request.form.get('volumen'):
             hw['audio']['volumen'] = max(0, min(100, int(request.form['volumen'])))
         nuevo_pin = request.form.get('nuevo_pin', '').strip()
         if nuevo_pin and nuevo_pin.isdigit() and 4 <= len(nuevo_pin) <= 8:
             config['pin'] = nuevo_pin
+        # Sin la clave, el sistema tiene la configuración de la PCB: así sale la
+        # imagen. Cambiar de placa toca config.txt y exige reiniciar la Pi. El
+        # sistema se cambia antes de guardar: si falla, config.json no anuncia
+        # una placa cuyos pines no coinciden con el overlay activo.
+        cambia_placa = placa != config.get('placa', 'storymaker_pcb')
+        if cambia_placa:
+            ok, fallo = _aplicar_placa(placa)
+            if not ok:
+                return _render_setup(hw, config, fallo)
+            # Antes de guardar: el bucle de setup de main.py reacciona a
+            # setup_completado reiniciando el servicio
+            global _reinicio_pendiente
+            _reinicio_pendiente = True
+        config['placa'] = placa
         config['setup_completado'] = True
         guardar_config(config)
-        if eink_desactivada and _callback_despedida:
-            _callback_despedida()
+        # Solo la pantalla, y solo si se acaba de apagar: antes iba a todas las
+        # salidas y en cada guardado, y la impresora sacaba un QR de despedida
+        if eink_antes and eink_desactivada and _callback_despedida:
+            _callback_despedida(solo_eink=True)
+        if cambia_placa:
+            threading.Thread(target=_reiniciar_pi, daemon=True).start()
+            return _render_reinicio(placa)
+        # La bienvenida impresa solo hace de ticket de prueba: cuando la
+        # impresora se acaba de activar o cambia de velocidad
+        imp = hw['impresora']
+        _marcar_reinicio_portal(imp['activada'] and
+                                (not imp_antes or imp.get('baudrate', 9600) != baud_antes))
         import subprocess
         subprocess.Popen(
             ['sudo', 'systemctl', 'restart', 'historias.service'],
@@ -314,9 +456,12 @@ def guardar_hardware():
     data   = request.get_json()
     config = cargar_config()
     hw     = config.setdefault('hardware', {})
+    placa  = placa_activa(config)
     for clave in ['eink', 'impresora', 'audio']:
         if clave in data:
-            hw.setdefault(clave, {})['activada'] = bool(data[clave])
+            # Una salida que la placa no tiene no se puede activar
+            permitida = placa is None or clave in PLACAS[placa]['salidas']
+            hw.setdefault(clave, {})['activada'] = bool(data[clave]) and permitida
     guardar_config(config)
     return jsonify({'ok': True})
 
@@ -596,7 +741,21 @@ def _demasiado_grande(e):
 # ------------------------------------------------------------------ #
 # CSS compartido                                                      #
 # ------------------------------------------------------------------ #
-FONTS = '<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">'
+# Lora e Inter (SIL OFL 1.1, de Fontsource 5.3.0) servidas por la propia caja:
+# sin peticiones a terceros y con la misma letra en modo AP, sin internet.
+# Licencias junto a los ficheros, en static/fuentes/.
+def _font_face(familia, fichero, peso, estilo='normal'):
+    return (f"@font-face{{font-family:'{familia}';font-style:{estilo};"
+            f"font-weight:{peso};font-display:swap;"
+            f"src:url('/static/fuentes/{fichero}.woff2') format('woff2')}}")
+
+FONTS = "<style>" + "".join([
+    _font_face('Lora',  'lora-latin-400-normal', 400),
+    _font_face('Lora',  'lora-latin-600-normal', 600),
+    _font_face('Lora',  'lora-latin-400-italic', 400, 'italic'),
+    _font_face('Inter', 'inter-latin-400-normal', 400),
+    _font_face('Inter', 'inter-latin-500-normal', 500),
+]) + "</style>"
 
 CSS_VARS = """
 :root {
@@ -807,8 +966,9 @@ def _render_setup(hw, config, error=None):
     obliga_pass = not config.get('setup_completado', False)
     marca_obligatoria = (' <span style="color:var(--accent);font-weight:600">· obligatoria</span>'
                          if obliga_pass else '')
-    requerido        = ' required minlength="8"' if obliga_pass else ' minlength="8"'
-    placeholder_pass = ('Mínimo 8 caracteres' if obliga_pass
+    requerido        = (f' required minlength="{MIN_PASS_SSH}"' if obliga_pass
+                        else f' minlength="{MIN_PASS_SSH}"')
+    placeholder_pass = (f'Mínimo {MIN_PASS_SSH} caracteres' if obliga_pass
                         else 'Dejar vacío para no cambiar')
     nota_pass = (
         f"Mínimo {MIN_PASS_SSH} caracteres, sin espacios. Es la contraseña del "
@@ -827,6 +987,10 @@ def _render_setup(hw, config, error=None):
     vol_val   = hw.get('audio', {}).get('volumen', 80)
     baud_val  = hw.get('impresora', {}).get('baudrate', 9600)
     setup_ok  = config.get('setup_completado', False)
+    # Sin placa elegida no se marca ninguna: hay que elegirla expresamente
+    placa_sel = placa_activa(config) or ''
+    pcb_chk   = 'checked' if placa_sel == 'storymaker_pcb' else ''
+    vh_chk    = 'checked' if placa_sel == 'voicehat_pi3' else ''
     btn_label = "Guardar cambios" if setup_ok else "Confirmar configuración"
     back_link = '<a href="/" class="back-link">← Volver al panel</a>' if setup_ok else ''
 
@@ -848,7 +1012,7 @@ body { display: flex; align-items: flex-start; justify-content: center; padding:
   letter-spacing: .1em; color: var(--ink2); margin-bottom: .9rem;
 }
 .toggle-row { display: flex; align-items: center; gap: .75rem; }
-.toggle-row input[type=checkbox] {
+.toggle-row input[type=checkbox], .toggle-row input[type=radio] {
   width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0;
 }
 .toggle-label { font-size: .95rem; font-weight: 500; cursor: pointer; color: var(--ink); }
@@ -908,6 +1072,21 @@ body { display: flex; align-items: flex-start; justify-content: center; padding:
 
   <form method="POST">
     <div class="section">
+      <p class="section-title">Placa</p>
+      <div class="toggle-row">
+        <input type="radio" id="placa-pcb" name="placa" value="storymaker_pcb" {pcb_chk}
+               required onchange="cambiarPlaca()">
+        <label class="toggle-label" for="placa-pcb">StoryMaker (PCB del proyecto)</label>
+      </div>
+      <div class="toggle-row" style="margin-top:.6rem">
+        <input type="radio" id="placa-voicehat" name="placa" value="voicehat_pi3" {vh_chk}
+               onchange="cambiarPlaca()">
+        <label class="toggle-label" for="placa-voicehat">Voice HAT de Google con Raspberry Pi 3</label>
+      </div>
+      <p class="toggle-desc">Kit AIY, solo voz. Cambiar de placa reinicia la caja.</p>
+    </div>
+
+    <div class="section" id="sec-eink">
       <p class="section-title">Pantalla</p>
       <div class="toggle-row">
         <input type="checkbox" id="eink" name="eink" {eink_chk}>
@@ -916,7 +1095,7 @@ body { display: flex; align-items: flex-start; justify-content: center; padding:
       <p class="toggle-desc">WeAct Studio 4.2" · SSD1683 · SPI0</p>
     </div>
 
-    <div class="section">
+    <div class="section" id="sec-impresora">
       <p class="section-title">Impresora</p>
       <div class="toggle-row">
         <input type="checkbox" id="impresora" name="impresora" {imp_chk}
@@ -939,7 +1118,7 @@ body { display: flex; align-items: flex-start; justify-content: center; padding:
                onchange="toggleVol(this.checked)">
         <label class="toggle-label" for="audio">Altavoz I2S</label>
       </div>
-      <p class="toggle-desc">MAX98357A · GPIO 18/19/21 · edge-tts (Elvira Neural)</p>
+      <p class="toggle-desc" id="audio-desc">MAX98357A · GPIO 18/19/21 · edge-tts (Elvira Neural)</p>
       <div id="vol-wrap" class="sub-field" style="display:{'block' if aud_chk else 'none'}">
         <label class="sub-label">Volumen: <span id="vol-num">{vol_val}</span>%</label>
         <div class="vol-row">
@@ -975,7 +1154,7 @@ body { display: flex; align-items: flex-start; justify-content: center; padding:
 
   <div class="danger-zone">
     <p class="danger-title">Zona de peligro</p>
-    <p class="danger-desc">El reset de fábrica borra la configuración de hardware y el PIN, y vuelve al primer arranque. Los perfiles y premisas no se borran.</p>
+    <p class="danger-desc">El reset de fábrica borra la configuración de hardware y el PIN, y vuelve al primer arranque. Los perfiles, las premisas y la placa elegida no se borran.</p>
     <button class="danger-btn" onclick="mostrarConfirmReset()">↺ Reset de fábrica</button>
     <div id="reset-confirm" style="display:none;margin-top:.85rem;padding:.85rem 1rem;background:#fff0f0;border:1px solid #e8c4c4;">
       <p style="font-size:.82rem;color:#a03030;margin-bottom:.7rem;line-height:1.5">
@@ -995,6 +1174,20 @@ function toggleBaud(v) {{
 function toggleVol(v) {{
   document.getElementById('vol-wrap').style.display = v ? 'block' : 'none';
 }}
+// El Voice HAT solo tiene audio: se ocultan e-ink e impresora y el audio va
+// siempre activo (el servidor lo impone igualmente).
+function cambiarPlaca() {{
+  const vh = document.getElementById('placa-voicehat').checked;
+  document.getElementById('sec-eink').style.display      = vh ? 'none' : '';
+  document.getElementById('sec-impresora').style.display = vh ? 'none' : '';
+  const audio = document.getElementById('audio');
+  if (vh) {{ audio.checked = true; toggleVol(true); }}
+  audio.disabled = vh;
+  document.getElementById('audio-desc').textContent = vh
+    ? 'Altavoz del Voice HAT · edge-tts (Elvira Neural)'
+    : 'MAX98357A · GPIO 18/19/21 · edge-tts (Elvira Neural)';
+}}
+cambiarPlaca();
 function mostrarConfirmReset() {{
   document.getElementById('reset-confirm').style.display = 'block';
 }}
@@ -1015,6 +1208,31 @@ async function ejecutarReset() {{
 </script>"""
     return _page_wrap("Setup", body, css)
 
+
+def _render_reinicio(placa):
+    if placa == 'voicehat_pi3':
+        texto = ("La caja se reinicia. En un minuto, vuelve a conectarte a la red "
+                 "StoryMaker-Setup para darle tu WiFi. Cuando se conecte, dirá en "
+                 "voz alta su dirección.")
+    else:
+        texto = ("La caja se reinicia para aplicar la placa. En un minuto volverá "
+                 "a estar disponible.")
+    css = """
+body { display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; }
+.setup-wrap { width: 100%; max-width: 520px; }
+.setup-title {
+  font-family: var(--serif); font-size: 1.8rem; font-weight: 600;
+  color: var(--ink); line-height: 1.1; margin-bottom: .75rem;
+}
+.setup-sub { font-size: .95rem; color: var(--ink2); line-height: 1.6; }
+"""
+    body = f"""
+<div class="setup-wrap">
+  <h1 class="setup-title">Reiniciando</h1>
+  <p class="setup-sub">{html.escape(texto)}</p>
+</div>"""
+    return _page_wrap("Reiniciando", body, css)
+
 # ------------------------------------------------------------------ #
 # Panel principal                                                     #
 # ------------------------------------------------------------------ #
@@ -1033,7 +1251,10 @@ def _render_pagina(perfiles, perfil_activo, perfil_sel, tipo_sel, config, premis
 
     # Badges hardware
     hw_tags = ''
+    placa   = placa_activa(config)
     for clave, label in [('eink','E-ink'), ('impresora','Impresora'), ('audio','Audio')]:
+        if placa and clave not in PLACAS[placa]['salidas']:
+            continue
         on = hw.get(clave, {}).get('activada', False)
         cls = 'on' if on else 'off'
         hw_tags += f'<span class="tag {cls}"><span class="dot {cls}"></span>{label}</span>'
@@ -1405,6 +1626,73 @@ body { display: flex; flex-direction: column; }
   .tabs { gap: .35rem; }
   .tab { padding: .45rem .7rem; font-size: .78rem; }
 }
+
+/* ── Lámina: la premisa recién generada, a toda página ── */
+.lamina {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+  background: rgba(44, 36, 22, .62);
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+  animation: lamina-fondo .35s ease-out;
+}
+.lamina[hidden] { display: none; }
+.lamina-hoja {
+  position: relative; width: 100%; max-width: 46rem; max-height: 100%; overflow-y: auto;
+  background: var(--paper);
+  background-image: radial-gradient(ellipse at 50% 0%, #fffdf8 0%, var(--paper) 55%, var(--paper2) 100%);
+  padding: clamp(2.2rem, 7vw, 4.5rem) clamp(1.5rem, 7vw, 5rem) clamp(1.8rem, 5vw, 3rem);
+  text-align: center;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .35);
+  animation: lamina-hoja .5s cubic-bezier(.2, .7, .2, 1);
+}
+/* Doble filete, como el marco de una portadilla */
+.lamina-hoja::before, .lamina-hoja::after {
+  content: ''; position: absolute; pointer-events: none;
+  border: 1px solid rgba(139, 58, 28, .28);
+}
+.lamina-hoja::before { inset: .65rem; }
+.lamina-hoja::after  { inset: .95rem; border-color: rgba(139, 58, 28, .14); }
+.lamina-cabecera {
+  font-size: .72rem; font-weight: 500; letter-spacing: .28em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1.4rem;
+}
+.lamina-comilla {
+  display: block; font-family: var(--serif); font-size: clamp(4rem, 12vw, 6.5rem);
+  line-height: .55; color: var(--accent); opacity: .32; margin-bottom: .35rem;
+}
+.lamina-texto {
+  font-family: var(--serif); font-weight: 400; color: var(--ink);
+  font-size: clamp(1.55rem, 4.8vw, 2.65rem); line-height: 1.38;
+  text-wrap: balance; hyphens: manual;
+  animation: lamina-texto .9s ease-out .15s both;
+}
+.lamina-orla {
+  font-family: var(--serif); color: var(--accent); opacity: .75;
+  font-size: 1.5rem; margin: 1.6rem 0 1.4rem;
+}
+.lamina-acciones { display: flex; gap: .6rem 1.4rem; justify-content: center; align-items: center; flex-wrap: wrap; }
+.lamina-otra {
+  font-family: var(--serif); font-size: 1rem; font-weight: 600; letter-spacing: .06em;
+  background: var(--ink); color: var(--white); border: none;
+  padding: .7rem 1.8rem; cursor: pointer; transition: background .12s;
+}
+.lamina-otra:hover { background: var(--accent); }
+.lamina-otra:disabled { opacity: .55; cursor: wait; }
+.lamina-cerrar {
+  background: none; border: none; cursor: pointer; padding: .5rem;
+  font-size: .85rem; color: var(--ink2); text-decoration: underline; text-underline-offset: 3px;
+}
+.lamina-cerrar:hover { color: var(--accent); }
+/* Aviso (p. ej. combinaciones agotadas): sin comilla y a menor tamaño */
+.lamina.aviso .lamina-comilla { display: none; }
+.lamina.aviso .lamina-texto { font-size: clamp(1.15rem, 3.4vw, 1.6rem); font-style: italic; }
+@keyframes lamina-fondo { from { opacity: 0; } }
+@keyframes lamina-hoja  { from { opacity: 0; transform: translateY(18px) scale(.985); } }
+@keyframes lamina-texto { from { opacity: 0; letter-spacing: .015em; } }
+@media (prefers-reduced-motion: reduce) {
+  .lamina, .lamina-hoja, .lamina-texto { animation: none; }
+}
 """
     # Funciones del panel.
     #
@@ -1432,7 +1720,62 @@ async function setVol(v) {
 }
 """ if audio_activo else ""
 
-    panel_script = "<script>" + vol_funcs + """
+    panel_script = ("<script>" + vol_funcs
+                    + "var _premisaId = " + str(ultima_premisa_id()) + ";\n" + """
+// ── Lámina de la premisa ──────────────────────────────────────────────────
+// Se pregunta al servidor solo con el panel visible. Lo que se genere con el
+// móvil bloqueado o en otra pestaña no salta al volver: se toma como visto.
+var _sondeo = null;
+async function consultarPremisa(mostrar) {
+  try {
+    const r = await fetch('/api/ultima_premisa', {cache: 'no-store'});
+    if (!r.ok) return;
+    const d = await r.json();          // sesión caducada → HTML → salta al catch
+    if (d.id > _premisaId) {
+      _premisaId = d.id;
+      if (mostrar && d.texto) mostrarLamina(d);
+    }
+  } catch (e) {}
+}
+function arrancarSondeo() {
+  if (!_sondeo) _sondeo = setInterval(() => consultarPremisa(true), 2500);
+}
+function pararSondeo() { clearInterval(_sondeo); _sondeo = null; }
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    consultarPremisa(false).then(arrancarSondeo);
+  } else {
+    pararSondeo();
+  }
+});
+if (document.visibilityState === 'visible') arrancarSondeo();
+
+function mostrarLamina(d) {
+  const lam = document.getElementById('lamina');
+  const txt = document.getElementById('lamina-texto');
+  lam.classList.toggle('aviso', d.tipo === 'aviso');
+  document.getElementById('lamina-cabecera').textContent =
+    d.tipo === 'aviso' ? 'Aviso' : 'Premisa' + (d.perfil ? ' · ' + d.perfil : '');
+  txt.textContent = d.texto;
+  // Reinicia la animación del texto si la lámina ya estaba abierta
+  txt.style.animation = 'none'; void txt.offsetWidth; txt.style.animation = '';
+  const otra = document.getElementById('lamina-otra');
+  otra.disabled = false; otra.textContent = 'Otra premisa';
+  lam.hidden = false;
+}
+function cerrarLamina(ev) {
+  // Un toque en el fondo cierra; dentro de la hoja, no
+  if (ev && ev.target !== ev.currentTarget) return;
+  document.getElementById('lamina').hidden = true;
+}
+function otraPremisa() {
+  const otra = document.getElementById('lamina-otra');
+  otra.disabled = true; otra.textContent = 'Generando…';
+  generarPremisa();
+  setTimeout(() => { otra.disabled = false; otra.textContent = 'Otra premisa'; }, 4000);
+}
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarLamina(); });
+
 async function generarPremisa() {
   const btn = document.getElementById('generar-btn');
   const fb  = document.getElementById('generar-fb');
@@ -1444,6 +1787,8 @@ async function generarPremisa() {
     const d = await r.json();
     if (d.ok) {
       fb.textContent = 'Premisa enviada a las salidas activas.';
+      setTimeout(() => consultarPremisa(true), 400);
+      setTimeout(() => consultarPremisa(true), 1200);
     } else {
       fb.textContent = d.error || 'Error al generar.';
     }
@@ -1477,7 +1822,7 @@ async function confirmarApagado() {
   await fetch('/api/apagar', {method:'POST',
     headers:{'Content-Type':'application/json'}, body:'{}'});
 }
-</script>"""
+</script>""")
 
     vol_control = f'''
 <div class="vol-inline">
@@ -1531,6 +1876,18 @@ async function confirmarApagado() {
     {'<div class="tabs">' + tabs_html + '</div>' if tabs_html else ''}
     {contenido}
   </div>
+</div>
+<div class="lamina" id="lamina" hidden onclick="cerrarLamina(event)">
+  <article class="lamina-hoja" role="dialog" aria-modal="true" aria-labelledby="lamina-texto">
+    <p class="lamina-cabecera" id="lamina-cabecera">Premisa</p>
+    <span class="lamina-comilla" aria-hidden="true">&ldquo;</span>
+    <p class="lamina-texto" id="lamina-texto"></p>
+    <div class="lamina-orla" aria-hidden="true">&#10086;</div>
+    <div class="lamina-acciones">
+      <button class="lamina-otra" id="lamina-otra" onclick="otraPremisa()">Otra premisa</button>
+      <button class="lamina-cerrar" onclick="cerrarLamina()">Cerrar</button>
+    </div>
+  </article>
 </div>
 {panel_script}"""
 

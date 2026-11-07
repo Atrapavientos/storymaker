@@ -48,3 +48,15 @@ marcos impresos en 3D del modelo de acrílico, del alumnado y profesorado del
 
 Detalle por modelo, piezas y licencia en
 [`envolvente/README.md`](envolvente/README.md).
+
+---
+
+## Firmware
+
+El portal web usa dos tipografías libres, que viajan con el firmware en
+[`firmware/static/fuentes/`](firmware/static/fuentes/) junto a su licencia:
+
+- **Lora**, de The Lora Project Authors (Cyreal).
+- **Inter**, de The Inter Project Authors (Rasmus Andersson).
+
+Ambas bajo la SIL Open Font License 1.1, en la distribución de Fontsource 5.3.0.

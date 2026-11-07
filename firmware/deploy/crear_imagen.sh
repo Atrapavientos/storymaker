@@ -67,8 +67,24 @@ printf "║  Imagen: %-43s║\n" "${NOMBRE}.xz"
 echo "╚══════════════════════════════════════════════════════╝"
 echo ""
 
+PERFILES_REPO="${SCRIPT_DIR}/../data/perfiles"
+PERFILES_PI="/home/storymaker/proyecto/data/perfiles"
+
 if [ "$LOCAL" = false ]; then
     PI="storymaker@${IP}"
+
+    # ── Perfiles de fábrica ──────────────────────────────────────────────
+    # deploy.sh no toca data/perfiles/, así que la Pi conserva lo que se haya
+    # probado en ella: premisas añadidas, perfiles creados. La imagen lleva los
+    # del repositorio, se use la Pi que se use. Se extraen al lado y se cambian
+    # de sitio al final: si algo falla a medias, la Pi conserva los suyos.
+    echo "[0/4] Restaurando los perfiles de fábrica del repositorio..."
+    tar -czf - -C "$PERFILES_REPO" . | ssh "$PI" "set -e
+        rm -rf ${PERFILES_PI}.nuevo && mkdir ${PERFILES_PI}.nuevo
+        tar -xzf - -C ${PERFILES_PI}.nuevo
+        rm -rf ${PERFILES_PI} && mv ${PERFILES_PI}.nuevo ${PERFILES_PI}"
+    echo "      → $(ls "$PERFILES_REPO" | tr '\n' ' ')"
+    echo ""
 
     # ── [1/4] Limpiar Pi ─────────────────────────────────────────────────
     echo "[1/4] Limpiando Pi (sudo pedirá la contraseña del dispositivo)..."
@@ -140,6 +156,11 @@ if [ "$LOCAL" = true ]; then
     fi
     ROOTFS=$(mktemp -d /tmp/storymaker-root-XXXXXX)
     sudo mount "$ROOT_PART" "$ROOTFS"
+    # Perfiles de fábrica del repositorio (ver el modo con IP, arriba)
+    sudo rm -rf "${ROOTFS}${PERFILES_PI}"
+    sudo cp -r "$PERFILES_REPO" "${ROOTFS}${PERFILES_PI}"
+    sudo chown -R 1000:1000 "${ROOTFS}${PERFILES_PI}"
+    echo "      → Perfiles de fábrica: $(ls "$PERFILES_REPO" | tr '\n' ' ')"
     sudo bash "${SCRIPT_DIR}/limpiar_montada.sh" "$ROOTFS"
     sudo umount "$ROOTFS"
     rmdir "$ROOTFS"

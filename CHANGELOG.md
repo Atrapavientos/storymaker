@@ -1,5 +1,41 @@
 # Changelog
 
+## v2026-11-07 — imagen distribuible
+
+Release [`v2026-11-07`](https://codeberg.org/atrapavientos/storymaker/releases/tag/v2026-11-07),
+con la imagen de tarjeta y su checksum SHA256. Sustituye a `v2026-10-03`, que
+deja mudas las cajas con altavoz (edge-tts 7.2.8, rechazado por Microsoft).
+
+### Firmware
+
+- La voz vuelve a sonar: edge-tts 7.3.1, espeak por `plug:dmixed` cuando no hay
+  red, y paso a espeak en 2 s si no se llega al servidor de voz. `deploy.sh`
+  actualiza edge-tts en cada despliegue.
+- El panel de control muestra cada premisa generada a toda página mientras está
+  visible, venga del botón físico o del web.
+- Soporte del **Voice HAT de Google (kit AIY V1) con Raspberry Pi 3**, elegible
+  en el asistente (`storymaker-perfil.sh` cambia overlay y `asound.conf`). Solo
+  con altavoz, la caja dicta el AP o su IP con avisos pregrabados.
+- Tras una contraseña WiFi errónea, el punto de acceso de configuración vuelve.
+- Perfil de serie `1eso` renombrado `juvenil`, con migración automática en las
+  cajas actualizadas.
+- Guardar el hardware en el portal ya no imprime dos QR: solo un tique de
+  prueba al activar la impresora o cambiar su baudrate.
+- Tipografías Lora e Inter servidas por la propia caja (`firmware/static/fuentes/`,
+  OFL 1.1), sin Google Fonts.
+- Contraseña del dispositivo: mínimo 6 caracteres.
+- Imagen: las dos rutas de limpieza dejan las salidas apagadas, y la imagen
+  lleva los perfiles del repositorio, no los de la Pi usada para capturarla.
+
+### Documentación
+
+- `docs/hardware.md`: Voice HAT, diagnóstico de «la caja no suena» y QR204.
+- `docs/sistema.md`: ficheros del cambio de placa y su funcionamiento.
+- Manuales: la premisa en pantalla, el bloque «Placa» del asistente y el mínimo
+  de la contraseña.
+
+---
+
 ## v2026-10-03 — imagen distribuible
 
 Primera release publicada desde este repositorio:

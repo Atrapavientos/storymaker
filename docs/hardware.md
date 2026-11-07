@@ -27,7 +27,67 @@ Raspberry Pi OS Lite 64-bit Bookworm (estable)
 - **Audio:** MAX98357A I2S — TTS edge-tts (es-ES-ElviraNeural) + mpg123
 - **Fallback TTS offline:** espeak (voz local, entra cuando no hay red)
 
-## LED (GPIO 23)
+## Audio: la caja recibe la premisa pero no suena
+Mirar el registro: `journalctl -u historias.service -n 50`.
+- **`edge-tts fallo (403, message='Invalid response status' …)`.** Microsoft ha
+  cambiado el protocolo y la versión instalada de edge-tts ya no vale. Pasó con
+  la release del 3 de octubre de 2026 (edge-tts 7.2.8). Arreglo:
+  `~/proyecto/venv/bin/pip install -U edge-tts` y
+  `sudo systemctl restart historias.service`. `deploy.sh` lo actualiza en cada
+  despliegue.
+- **espeak «completado» sin sonido.** En versiones anteriores a v2026-11-07,
+  espeak abría la tarjeta directamente y chocaba con el keepalive
+  («Device or resource busy»). Ahora sale por `plug:dmixed`.
+
+## LED (GPIO 23; GPIO 25 en el Voice HAT)
 - Fijo encendido → sistema listo
 - Parpadeo → feedback de pulsación
 - Apagado → en proceso de shutdown
+
+## Voice HAT de Google (kit AIY V1) con Raspberry Pi 3
+
+Alternativa a la PCB solo con voz: sin e-ink ni impresora. Se elige en el
+asistente (`/setup` → Placa) y `storymaker-perfil.sh` cambia el overlay y el
+`asound.conf` (ver `sistema.md` › Cambio de placa). Pines y salidas en
+`firmware/modules/placas.py`.
+
+| Función | GPIO | Notas |
+|---|---|---|
+| Botón | 23 | Pull-up interno, activo LOW. En la PCB, GPIO23 es el LED |
+| LED del botón | 25 | Activo en alto. En la PCB, GPIO25 es D/C de la e-ink |
+| Apagado del amplificador | 16 | Lo gestiona el driver del overlay: el firmware no lo toca |
+| Audio I2S | 18, 19, 21 | Overlay `googlevoicehat-soundcard` |
+
+- **Tarjeta ALSA:** `sndrpigooglevoi`. Su número cambia según los overlays (en
+  la Pi 3 el jack y el HDMI también son tarjetas), por eso `asound.conf` la
+  nombra en vez de usar `hw:0`.
+- **Formato:** solo S32_LE, 48000 Hz, 2 canales. Sin controles de mezclador: el
+  volumen lo aplican `mpg123 -f` y la amplitud de espeak.
+- **Sin placa elegida** (imagen recién grabada) el firmware no toca ni el botón
+  ni el LED: GPIO23 cambia de sentido entre las dos placas, y ponerlo en alto
+  como LED con el botón del HAT pulsado lo cortocircuitaría a masa.
+- **Rescate AP con el botón al arrancar:** `storymaker-wifi.sh` solo mira GPIO5,
+  así que en el HAT lo hace `main.py` al arrancar el servicio (botón en GPIO23
+  mantenido 3 s).
+- **Raspberry Pi 3 Model B (sin «+»):** su WiFi solo ve redes de 2,4 GHz.
+- **Dictado de la dirección:** sin e-ink ni impresora, la caja dice por voz el
+  AP al que conectarse o su IP con el puerto 5000, cada vez que cambia la red
+  (`modules/anuncio_red.py`). Si una premisa está sonando, el aviso espera.
+  Suena con clips de Elvira grabados de antemano en `firmware/data/voz/`
+  (`firmware/deploy/generar_voz.py`, que se ejecuta en el PC); si falta alguno,
+  lo dice con espeak.
+
+### Problemas encontrados
+
+- **La tarjeta del HAT no aparece en `aplay -l`.** Falta el overlay o la Pi no
+  se ha reiniciado tras elegir la placa: `config.txt` debe acabar con el bloque
+  `# >>> storymaker placa` y, tras reiniciar, `aplay -l` muestra `sndrpigooglevoi`.
+- **`mpg123` muere con `SIGSEGV` y entra espeak.** `asound.conf` apunta a otra
+  tarjeta: pasó en la Pi 3 con el de la PCB, cuyo `hw:0` es el jack.
+- **Tras una contraseña WiFi errónea, la caja se queda sin red y sin AP.** Al
+  probar la red, wlan0 suelta el AP y NetworkManager no lo recupera, porque su
+  perfil no autoconecta. Afectaba también a la PCB. Ahora el portal cautivo lo
+  reactiva y renueva `/run/storymaker-ap-mode`, y la caja vuelve a anunciarlo
+  (el AP cae solo unos 5 s, demasiado poco para detectarlo sondeando).
+- **espeak no se oye o da «Device or resource busy».** Abría la tarjeta
+  directamente, que ya tenía abierta el dmix. Ahora sale por `plug:dmixed`.

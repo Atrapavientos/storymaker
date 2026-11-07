@@ -20,11 +20,13 @@ import traceback
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, PROJECT_DIR)
 
-from modules.config_manager import cargar_config
+from modules.config_manager import cargar_config, guardar_config
 from modules.generador      import Generador
 from modules.boton          import Boton, detectar_boton_arranque, SimpleLED
 from modules.salidas        import RouterSalidas
-from modules.portal         import Portal
+from modules.portal         import (Portal, reinicio_pendiente, leer_marca_reinicio,
+                                    publicar_premisa)
+from modules.placas         import PLACAS, placa_activa, filtrar_hardware
 
 
 def _forzar_ap():
@@ -70,6 +72,7 @@ def al_pulsar_corto():
             boton.led.off()
             boton.parpadear(5, 0.4)
             boton.led.on()
+        publicar_premisa(mensaje, tipo='aviso')
         router.enviar(mensaje)
         return
 
@@ -90,9 +93,12 @@ def al_pulsar_corto():
             boton.led.off()
             boton.parpadear(5, 0.4)
             boton.led.on()
+        publicar_premisa(mensaje, tipo='aviso')
         router.enviar(mensaje)
         return
 
+    # Al portal primero: aparece en pantalla mientras la caja habla o imprime
+    publicar_premisa(frase, perfil=cargar_config().get('perfil_activo', '').upper())
     resultados = router.enviar_con_animacion(frase)
 
     for salida, ok in resultados.items():
@@ -137,6 +143,28 @@ def cleanup(*args):
     sys.exit(0)
 
 
+def _migrar_perfil_1eso():
+    """El perfil de fábrica se llamaba `1eso` hasta la release de 2026-11. En las
+    cajas ya montadas, deploy.sh no toca data/perfiles/ ni config.json, así que
+    el cambio de nombre se hace aquí, una sola vez. Las premisas se conservan."""
+    perfiles = os.path.join(PROJECT_DIR, 'data', 'perfiles')
+    viejo, nuevo = os.path.join(perfiles, '1eso'), os.path.join(perfiles, 'juvenil')
+    if not os.path.isdir(viejo):
+        return
+    if os.path.exists(nuevo):
+        print("[Main] AVISO: existen los perfiles '1eso' y 'juvenil'; no se migra.")
+        return
+    try:
+        os.rename(viejo, nuevo)
+        config = cargar_config()
+        if config.get('perfil_activo') == '1eso':
+            config['perfil_activo'] = 'juvenil'
+            guardar_config(config)
+        print("[Main] Perfil '1eso' renombrado a 'juvenil'.")
+    except OSError as e:
+        print(f"[Main] AVISO: no se ha podido renombrar el perfil '1eso': {e}")
+
+
 def main():
     global generador, router, boton
 
@@ -145,6 +173,7 @@ def main():
     print("=" * 50)
 
     # 1. Configuración
+    _migrar_perfil_1eso()
     try:
         config = cargar_config()
         print(f"[Main] Perfil activo: '{config.get('perfil_activo', '?')}'")
@@ -153,13 +182,19 @@ def main():
         sys.exit(1)
 
     # 1.5 Detección de botón al arranque → forzar AP
-    pin_boton = config.get('boton', {}).get('pin_gpio', 5)
-    pin_led   = config.get('led',   {}).get('pin_gpio', 23)
-    if detectar_boton_arranque(pin_boton, pin_led=pin_led):
-        _forzar_ap()
-        # 3 parpadeos lentos: AP activo
-        _led_boot = SimpleLED(pin_led)
-        _led_boot.blink(on_time=0.4, off_time=0.4, n=3)
+    # Sin placa elegida no se toca ni botón ni LED (ver modules/placas.py)
+    placa = placa_activa(config)
+    if placa:
+        print(f"[Main] Placa: {placa}")
+        pin_boton = PLACAS[placa]['boton']
+        pin_led   = PLACAS[placa]['led']
+        if detectar_boton_arranque(pin_boton, pin_led=pin_led):
+            _forzar_ap()
+            # 3 parpadeos lentos: AP activo
+            _led_boot = SimpleLED(pin_led)
+            _led_boot.blink(on_time=0.4, off_time=0.4, n=3)
+    else:
+        print("[Main] Placa sin elegir: botón y LED desactivados hasta configurarla.")
 
     # 2. Portal web (siempre, incluso antes del setup)
     portal = Portal(config)
@@ -179,21 +214,29 @@ def main():
         cfg_impresora = config.get('hardware', {}).get('impresora', {})
         cfg_audio     = dict(config.get('hardware', {}).get('audio', {}))
         cfg_audio['activada'] = True  # forzar activo para anuncio de setup
+        if placa:
+            cfg_audio['keepalive'] = PLACAS[placa]['keepalive']
 
         pantalla_setup  = None
         impresora_setup = None
         audio_setup     = None
 
-        try:
-            pantalla_setup = PantallaEInk(cfg_eink)
-        except Exception as e:
-            print(f"[Main] E-ink no disponible en setup: {e}")
+        # Sin placa se prueba todo (primer arranque de la PCB); con placa,
+        # solo lo que tiene. La e-ink usa GPIO25, el LED del Voice HAT.
+        salidas_setup = PLACAS[placa]['salidas'] if placa else {'eink', 'impresora', 'audio'}
 
-        try:
-            from modules.impresora import Impresora
-            impresora_setup = Impresora(cfg_impresora)
-        except Exception as e:
-            print(f"[Main] Impresora no disponible en setup: {e}")
+        if 'eink' in salidas_setup:
+            try:
+                pantalla_setup = PantallaEInk(cfg_eink)
+            except Exception as e:
+                print(f"[Main] E-ink no disponible en setup: {e}")
+
+        if 'impresora' in salidas_setup:
+            try:
+                from modules.impresora import Impresora
+                impresora_setup = Impresora(cfg_impresora)
+            except Exception as e:
+                print(f"[Main] Impresora no disponible en setup: {e}")
 
         try:
             audio_setup = Audio(cfg_audio)
@@ -250,7 +293,8 @@ def main():
                     _anunciar_setup(modo=_modo_red, ip=get_ip())
 
                 config_nueva = cargar_config()
-                if config_nueva.get('setup_completado', False):
+                # Con un cambio de placa, el portal reinicia la Pi entera
+                if config_nueva.get('setup_completado', False) and not reinicio_pendiente():
                     print("[Main] Setup completado. Reiniciando servicio...")
                     # Usar systemctl en lugar de os.execv: evita que el FD del
                     # socket Flask quede heredado y cause conflicto de puerto.
@@ -271,14 +315,23 @@ def main():
         sys.exit(1)
 
     # 5. Router de salidas (e-ink / impresora / audio)
-    router = RouterSalidas(config.get('hardware', {}))
+    router = RouterSalidas(filtrar_hardware(config.get('hardware', {}), placa))
     if not router.hay_salidas():
         print("[Main] AVISO: ninguna salida configurada. Ve al portal → ⚙ Hardware.")
 
-    # 6. Botón
-    boton = Boton(config['boton'], config['led'])
-    boton.on_corto(al_pulsar_corto)
-    boton.on_largo(al_pulsar_largo)
+    # Solo con altavoz, la caja dicta su dirección: no tiene dónde mostrarla
+    if router.audio and not router.eink and not router.impresora:
+        from modules import anuncio_red
+        anuncio_red.iniciar(router.audio)
+
+    # 6. Botón (pines según la placa; sin placa válida no se arma)
+    if placa:
+        boton = Boton({**config.get('boton', {}), 'pin_gpio': PLACAS[placa]['boton']},
+                      {'pin_gpio': PLACAS[placa]['led']})
+        boton.on_corto(al_pulsar_corto)
+        boton.on_largo(al_pulsar_largo)
+    else:
+        print(f"[Main] AVISO: placa '{config.get('placa')}' no válida. Botón y LED desactivados.")
 
     # Registrar callbacks en el portal (botón virtual web + cambio de perfil)
     from modules.portal import (registrar_callback_generar,
@@ -289,8 +342,13 @@ def main():
     registrar_callback_cambiar_perfil(al_cambiar_perfil)
 
     # LED encendido fijo = sistema listo para generar premisas
-    boton.led.on()
-    router.mostrar_bienvenida()
+    if boton:
+        boton.led.on()
+    # Tras guardar el hardware en el portal no se imprime (ver portal.py)
+    imprimir_bienvenida = leer_marca_reinicio()
+    if not imprimir_bienvenida:
+        print("[Main] Reinicio desde el portal: bienvenida sin ticket impreso.")
+    router.mostrar_bienvenida(imprimir=imprimir_bienvenida)
 
     # 7. Señales del sistema
     signal.signal(signal.SIGINT,  cleanup)

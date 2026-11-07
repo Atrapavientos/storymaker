@@ -55,7 +55,9 @@ if [ ! -f "$SSH_KEY" ]; then
 fi
 
 for f in historias.service storymaker-wifi.service storymaker-captive.service \
-          storymaker-wifi.sh storymaker-captive.py storymaker-shutdown; do
+          storymaker-wifi.sh storymaker-captive.py storymaker-shutdown \
+          storymaker-perfil.sh storymaker-perfil.sudoers \
+          asound/storymaker_pcb.conf asound/voicehat_pi3.conf; do
     if [ ! -f "$SISTEMA_DIR/$f" ]; then
         echo "ERROR: falta $SISTEMA_DIR/$f"
         exit 1
@@ -214,44 +216,24 @@ echo "      → Reglas guardadas con netfilter-persistent"
 REMOTE
 
 # =============================================================================
-# PASO 5 — ALSA: device "plug:dmixed" para MAX98357A
+# PASO 5 — ALSA: device "plug:dmixed" (una configuración por placa)
 # =============================================================================
 echo ""
 echo "[5/8] Configurando ALSA..."
 
+# Las configuraciones de cada placa quedan en /usr/local/share/storymaker/asound,
+# de root, para que storymaker-perfil.sh copie la elegida sin que el servicio
+# pueda alterarlas. Mientras no se elija otra placa, rige la de la PCB.
+ssh $SSH_OPTS "$PI" "mkdir -p /tmp/storymaker-asound"
+scp $SSH_OPTS "$SISTEMA_DIR"/asound/*.conf "${PI}:/tmp/storymaker-asound/"
+
 ssh $SSH_OPTS "$PI" bash <<'REMOTE'
 set -euo pipefail
-
-sudo tee /etc/asound.conf > /dev/null <<'ASOUND'
-# StoryMaker — MAX98357A I2S via hifiberry-dac (Pi Zero 2W, card 0)
-# type dmix: mixer por software que permite streams simultáneos.
-# Necesario para que el hilo keep-alive (aplay /dev/zero) y mpg123
-# usen el dispositivo al mismo tiempo sin conflicto, eliminando el
-# chasquido del MAX98357A en cada premisa.
-pcm.dmixed {
-    type dmix
-    ipc_key 1024
-    ipc_key_add_uid true
-    slave {
-        pcm "hw:0,0"
-        rate 44100
-        format S16_LE
-        period_time 0
-        period_size 1024
-        buffer_size 8192
-    }
-    bindings {
-        0 0
-        1 1
-    }
-}
-ctl.dmixed {
-    type hw
-    card 0
-}
-ASOUND
-
-echo "      → /etc/asound.conf creado"
+sudo install -d -m 755 -o root -g root /usr/local/share/storymaker/asound
+sudo install -m 644 -o root -g root /tmp/storymaker-asound/*.conf /usr/local/share/storymaker/asound/
+sudo install -m 644 -o root -g root /usr/local/share/storymaker/asound/storymaker_pcb.conf /etc/asound.conf
+rm -rf /tmp/storymaker-asound
+echo "      → /etc/asound.conf creado (PCB) y perfiles de placa instalados"
 REMOTE
 
 # =============================================================================
@@ -267,6 +249,8 @@ scp $SSH_OPTS "$SISTEMA_DIR/storymaker-wifi.sh"         "${PI}:/tmp/"
 scp $SSH_OPTS "$SISTEMA_DIR/storymaker-captive.py"      "${PI}:/tmp/"
 scp $SSH_OPTS "$SISTEMA_DIR/storymaker-shutdown"        "${PI}:/tmp/"
 scp $SSH_OPTS "$SISTEMA_DIR/storymaker-setpass"         "${PI}:/tmp/"
+scp $SSH_OPTS "$SISTEMA_DIR/storymaker-perfil.sh"       "${PI}:/tmp/"
+scp $SSH_OPTS "$SISTEMA_DIR/storymaker-perfil.sudoers"  "${PI}:/tmp/"
 
 ssh $SSH_OPTS "$PI" bash <<'REMOTE'
 set -euo pipefail
@@ -280,6 +264,10 @@ sudo chmod +x /usr/local/bin/storymaker-wifi.sh
 sudo chmod +x /usr/local/bin/storymaker-captive.py
 sudo install -m 440 -o root -g root /tmp/storymaker-shutdown /etc/sudoers.d/storymaker-shutdown
 sudo install -m 755 -o root -g root /tmp/storymaker-setpass  /usr/local/bin/storymaker-setpass
+sudo visudo -c -f /tmp/storymaker-perfil.sudoers
+sudo install -m 440 -o root -g root /tmp/storymaker-perfil.sudoers /etc/sudoers.d/storymaker-perfil
+sudo install -m 755 -o root -g root /tmp/storymaker-perfil.sh /usr/local/bin/storymaker-perfil.sh
+rm -f /tmp/storymaker-perfil.sudoers /tmp/storymaker-perfil.sh
 
 sudo systemctl daemon-reload
 sudo systemctl enable avahi-daemon
@@ -360,7 +348,7 @@ check() {
 echo "  Servicios:"
 check "historias.service habilitado"         "systemctl is-enabled historias.service"
 check "storymaker-wifi.service habilitado"   "systemctl is-enabled storymaker-wifi.service"
-check "storymaker-captive.service habilitado""systemctl is-enabled storymaker-captive.service"
+check "storymaker-captive.service habilitado" "systemctl is-enabled storymaker-captive.service"
 check "avahi-daemon habilitado"              "systemctl is-enabled avahi-daemon"
 
 echo "  Archivos:"
@@ -373,6 +361,9 @@ check "storymaker-captive.py" "test -f /usr/local/bin/storymaker-captive.py"
 check "sudoers"               "test -f /etc/sudoers.d/storymaker-shutdown"
 check "storymaker-setpass"    "test -x /usr/local/bin/storymaker-setpass"
 check "asound.conf"           "test -f /etc/asound.conf"
+check "storymaker-perfil.sh"  "test -x /usr/local/bin/storymaker-perfil.sh"
+check "sudoers perfil"        "test -f /etc/sudoers.d/storymaker-perfil"
+check "asound de placas"      "test -f /usr/local/share/storymaker/asound/voicehat_pi3.conf"
 
 echo ""
 echo "  Resultado: $OK OK, $FAIL fallos"

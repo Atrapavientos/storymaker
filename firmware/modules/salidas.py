@@ -193,27 +193,35 @@ class RouterSalidas:
 
         return resultados
 
-    def mostrar_bienvenida(self):
-        """Muestra/imprime bienvenida en todas las salidas activas."""
+    def mostrar_bienvenida(self, imprimir=True):
+        """Muestra/imprime bienvenida en todas las salidas activas.
+
+        Con imprimir=False la impresora no saca ticket: tras un cambio de
+        ajustes en el portal, quien guarda ya tiene el portal abierto.
+        """
         if self.eink:
             try:
                 self.eink.mostrar_bienvenida()
             except Exception as e:
                 print(f"[Router] Error en bienvenida e-ink: {e}")
-        if self.impresora:
+        if self.impresora and imprimir:
             try:
                 self.impresora.imprimir_bienvenida()
             except Exception as e:
                 print(f"[Router] Error en bienvenida impresora: {e}")
 
-    def mostrar_despedida(self):
-        """Muestra/imprime despedida en todas las salidas activas."""
+    def mostrar_despedida(self, solo_eink=False):
+        """Muestra/imprime despedida en todas las salidas activas.
+
+        Con solo_eink=True se limita a la pantalla: es lo que hace el portal al
+        desactivar la e-ink, para que no se quede con una imagen vieja.
+        """
         if self.eink:
             try:
                 self.eink.mostrar_despedida()
             except Exception as e:
                 print(f"[Router] Error en despedida e-ink: {e}")
-        if self.impresora:
+        if self.impresora and not solo_eink:
             try:
                 self.impresora.imprimir_despedida()
             except Exception as e:

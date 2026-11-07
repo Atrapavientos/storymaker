@@ -23,7 +23,7 @@
 set -euo pipefail
 
 USUARIO="storymaker"
-MIN_LONGITUD=8
+MIN_LONGITUD=6   # igual que MIN_PASS_SSH en modules/portal.py
 
 IFS= read -r PASS || true
 PASS="${PASS:-}"

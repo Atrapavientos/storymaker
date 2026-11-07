@@ -15,6 +15,9 @@ Hay que aplicarlos manualmente en cada despliegue limpio.
 | `storymaker-captive.py` | `/usr/local/bin/` | Portal cautivo para configurar WiFi desde el AP |
 | `storymaker-shutdown` | `/etc/sudoers.d/` | Permisos NOPASSWD: shutdown, restart del servicio y setpass |
 | `storymaker-setpass` | `/usr/local/bin/` | Fija la contraseña SSH del dispositivo; lo invoca el portal por sudo |
+| `storymaker-perfil.sh` | `/usr/local/bin/` | Aplica la placa elegida (overlay y `asound.conf`); lo invoca el portal por sudo |
+| `storymaker-perfil.sudoers` | `/etc/sudoers.d/storymaker-perfil` | NOPASSWD sólo para el script anterior con sus dos argumentos |
+| `asound/*.conf` | `/usr/local/share/storymaker/asound/` | `asound.conf` de cada placa (root:root) |
 
 ## Orden de aplicación en una SD nueva
 

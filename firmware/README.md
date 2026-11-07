@@ -1,7 +1,9 @@
 # Firmware
 
-Código Python que corre en la Raspberry Pi Zero 2W. Gestiona el botón físico,
-las salidas (e-ink, impresora térmica, audio) y el portal web de configuración.
+Código Python que corre en la Raspberry Pi Zero 2W con la placa del proyecto, o
+en una Raspberry Pi 3 con el Voice HAT de Google (kit AIY V1, solo voz).
+Gestiona el botón físico, las salidas (e-ink, impresora térmica, audio) y el
+portal web de configuración.
 
 Licencia: **GPLv3** (ver `/LICENSE`).
 
@@ -27,21 +29,25 @@ firmware/
 │   ├── boton.py              # Polling GPIO: pulsación corta/larga + LED
 │   ├── eink.py               # Pantalla e-ink WeAct 4.2" (SSD1683, SPI0)
 │   ├── audio.py              # Síntesis de voz edge-tts + reproducción mpg123
-│   ├── impresora.py          # Impresora térmica QR701 UART (ESC/POS)
+│   ├── impresora.py          # Impresora térmica QR701 o QR204 por UART (ESC/POS)
 │   ├── generador.py          # Generador de premisas aleatorias desde perfiles .txt
 │   ├── importador.py         # Importación masiva de premisas desde .txt
 │   ├── salidas.py            # Orquesta las salidas activas + animación e-ink
 │   ├── portal.py             # Portal web Flask (puerto 5000)
 │   ├── config_manager.py     # Lectura/escritura atómica de config.json (thread-safe)
 │   ├── netinfo.py            # Detecta modo de red (cliente/AP/sin red)
+│   ├── placas.py             # Pines y salidas de cada placa (PCB, Voice HAT)
+│   ├── anuncio_red.py        # Solo con altavoz: dicta el AP o la IP por voz
 │   └── __init__.py
+├── static/fuentes/           # Lora e Inter para el portal (SIL OFL 1.1, ver /CREDITS.md)
 ├── data/
 │   ├── config.json           # Configuración activa del dispositivo
 │   ├── config.template.json  # Plantilla para dispositivos nuevos
 │   ├── pluma.png             # Animación "pensando" para e-ink
 │   ├── logo_atrapa.png       # Logo del taller
+│   ├── voz/                  # Avisos de red pregrabados (voz Elvira)
 │   └── perfiles/
-│       ├── 1eso/             # Perfil de ejemplo (1º ESO)
+│       ├── juvenil/          # Perfil de ejemplo
 │       │   ├── detonantes.txt
 │       │   ├── protagonistas.txt
 │       │   └── conflictos.txt
@@ -53,6 +59,7 @@ firmware/
     ├── crear_imagen.sh       # Genera la imagen .img.xz distribuible
     ├── limpiar_pi.sh         # Limpieza previa a la imagen (Pi encendida)
     ├── limpiar_montada.sh    # Limpieza previa a la imagen (SD montada en el PC)
+    ├── generar_voz.py        # Regenera los avisos de data/voz/ (se ejecuta en el PC)
     └── sistema/              # Servicios systemd, sudoers y scripts de red
 ```
 
@@ -65,7 +72,8 @@ firmware/
 | Audio | `audio.py` | I2S MAX98357A (GPIO 18/19/21) |
 
 Las tres son independientes y se activan o desactivan desde el portal web. El
-dispositivo funciona con cualquier combinación, incluida ninguna.
+dispositivo funciona con cualquier combinación, incluida ninguna. Con el Voice
+HAT solo hay audio, por el propio HAT; sus pines están en `modules/placas.py`.
 
 ## Perfiles
 

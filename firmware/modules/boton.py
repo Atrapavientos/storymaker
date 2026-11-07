@@ -2,8 +2,8 @@
 boton.py — Polling seguro para Bookworm (sin edge detection).
 
 Usa un hilo de polling a 50Hz con debounce por conteo de lecturas.
-GPIO5 → botón (pull-up interno, activo LOW)
-GPIO23 → LED
+Botón con pull-up interno, activo LOW. Los pines dependen de la placa
+(modules/placas.py): PCB → botón GPIO5, LED GPIO23; Voice HAT → 23 y 25.
 """
 
 import time

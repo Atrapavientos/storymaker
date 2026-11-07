@@ -23,7 +23,7 @@ Las premisas se montan combinando tres listas:
 > milicia.*
 
 Las tres listas forman un **perfil**. Cambiando de perfil cambia el tono de lo
-que sale: no es lo mismo un taller con primero de la ESO que uno con adultos.
+que sale: no es lo mismo un taller juvenil que uno con adultos.
 
 La premisa sale por donde tengas activado: la pantalla de tinta electrónica, la
 impresora de tiques o el altavoz, que la lee en voz alta. Pueden ser las tres a
@@ -80,6 +80,12 @@ Hay dos formas, y hacen exactamente lo mismo:
 
 Lo que tarda depende de las salidas: la pantalla e-ink necesita unos segundos
 para refrescarse entera, y la voz tarda lo que tarde en leer la frase.
+
+**Con el panel de control abierto, la premisa aparece también en pantalla**, en
+grande, venga del botón físico o del de GENERAR. Sirve para proyectarla en el
+aula o leerla en voz alta. Se cierra con «Cerrar» o tocando fuera, y «Otra
+premisa» genera la siguiente. Solo aparece mientras el panel está a la vista:
+lo que se genere con el móvil bloqueado o en otra pestaña no salta al volver.
 
 > **La pantalla e-ink se refresca entera cada vez.** Parpadea en blanco y negro
 > durante un par de segundos antes de mostrar la premisa. No está rota: esta

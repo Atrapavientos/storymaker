@@ -18,6 +18,9 @@ Los pasos están en [`manuales/despliegue.md`](manuales/despliegue.md).
 | `deploy/sistema/storymaker-captive.py` | `/usr/local/bin/` | Portal cautivo Flask |
 | `deploy/sistema/storymaker-shutdown` | `/etc/sudoers.d/` | `NOPASSWD` para apagar, reiniciar el servicio y fijar contraseña |
 | `deploy/sistema/storymaker-setpass` | `/usr/local/bin/` | Fija la contraseña SSH del dispositivo (lo llama el portal) |
+| `deploy/sistema/storymaker-perfil.sh` | `/usr/local/bin/` | Aplica la placa elegida: overlay de audio en `config.txt` y `asound.conf` (lo llama el portal) |
+| `deploy/sistema/storymaker-perfil.sudoers` | `/etc/sudoers.d/storymaker-perfil` | NOPASSWD sólo para `storymaker-perfil.sh` con sus dos argumentos exactos |
+| `deploy/sistema/asound/*.conf` | `/usr/local/share/storymaker/asound/` | `asound.conf` de cada placa; root:root para que el servicio no pueda alterar lo que copia el script |
 
 El firmware en sí vive en `/home/storymaker/proyecto/`, con su entorno virtual
 en `proyecto/venv/`.
@@ -69,6 +72,24 @@ contraseña del dispositivo.
 - **Portal cautivo** Flask en el puerto 8080; `iptables` redirige el 80 al 8080,
   de modo que el móvil abra la página de configuración por su cuenta.
 - Script de decisión: `/usr/local/bin/storymaker-wifi.sh`.
+- `/run/storymaker-ap-mode` marca que el AP está activo. La crea
+  `storymaker-wifi.sh` y la renueva el portal cautivo cuando reactiva el AP tras
+  un intento fallido (el perfil del AP no autoconecta). En las cajas solo con
+  audio, `modules/anuncio_red.py` usa su fecha para volver a anunciar el AP.
+
+## Cambio de placa (PCB ↔ Voice HAT)
+
+La placa se elige en el asistente `/setup` (también accesible desde el portal
+cautivo, enlace «Configurar hardware»). Si cambia, el portal ejecuta
+`sudo storymaker-perfil.sh <placa>` y reinicia la Pi. El script:
+
+- guarda una única vez `config.txt.storymaker.bak` con el original;
+- con `voicehat_pi3`, comenta los overlays de audio con `#storymaker-off# ` y
+  añade al final el bloque `# >>> storymaker placa` … `# <<< storymaker placa`
+  con `dtoverlay=googlevoicehat-soundcard`;
+- con `storymaker_pcb`, quita el bloque y las marcas: `config.txt` queda idéntico
+  al original;
+- copia el `asound.conf` de la placa a `/etc/asound.conf`.
 
 ## Servicios habilitados
 
@@ -87,7 +108,8 @@ NetworkManager-wait-online  # DESHABILITADO (arranque más rápido)
 - Audio I2S (`dtoverlay=hifiberry-dac`)
 - Consola serie eliminada de `cmdline.txt`, para dejar el UART libre
 - El usuario `storymaker` pertenece a los grupos `spi`, `gpio`, `dialout`, `audio`
-- `/etc/asound.conf` con `dmix` para el MAX98357A: evita el chasquido entre premisas
+- `/etc/asound.conf` con `dmix` para el MAX98357A: evita el chasquido entre premisas.
+  Es una copia de `/usr/local/share/storymaker/asound/<placa>.conf`; de serie, la de la PCB.
 - Perfil de AP en NetworkManager: `StoryMaker-Setup`, `10.42.0.1`, modo
   `infrastructure`/`ap`
 - `iptables`: `PREROUTING -i wlan0 -p tcp --dport 80 → :8080`

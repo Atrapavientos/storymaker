@@ -1,0 +1,3 @@
+# Cambio de placa desde el portal. Sólo esos dos argumentos exactos: el script
+# reescribe /boot/firmware/config.txt y /etc/asound.conf como root.
+storymaker ALL=(root) NOPASSWD: /usr/local/bin/storymaker-perfil.sh storymaker_pcb, /usr/local/bin/storymaker-perfil.sh voicehat_pi3

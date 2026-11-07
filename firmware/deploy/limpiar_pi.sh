@@ -42,6 +42,7 @@ with open(path, encoding='utf-8') as f:
     cfg = json.load(f)
 cfg['setup_completado'] = False
 cfg.pop('flask_secret', None)
+cfg.pop('placa', None)       # la imagen sale sin placa: se elige en el primer arranque
 cfg['pin'] = '1234'          # el asistente de primer arranque pedirá otro
 
 # Perfil activo de fábrica. Sin esto, la imagen hereda el perfil que estuviera
@@ -49,15 +50,23 @@ cfg['pin'] = '1234'          # el asistente de primer arranque pedirá otro
 # silenciosa de qué Pi se tenía a mano. Si el perfil de fábrica no existiera, se
 # deja el que haya en lugar de apuntar a una carpeta inexistente, que impediría
 # arrancar el Generador.
-PERFIL_FABRICA = '1eso'
+PERFIL_FABRICA = 'juvenil'
 if os.path.isdir(os.path.join(os.path.dirname(path), 'perfiles', PERFIL_FABRICA)):
     cfg['perfil_activo'] = PERFIL_FABRICA
 else:
     print(f"      AVISO: no existe el perfil '{PERFIL_FABRICA}'; "
           f"se deja '{cfg.get('perfil_activo')}' como activo")
+# Reset hardware a fábrica: todo desactivado, volumen neutro. Igual que en
+# limpiar_montada.sh: la imagen no debe depender del modo de captura.
+hw = cfg.setdefault('hardware', {})
+hw.setdefault('eink', {})['activada'] = False
+hw.setdefault('impresora', {})['activada'] = False
+audio = hw.setdefault('audio', {})
+audio['activada'] = False
+audio['volumen'] = 50
 with open(path, 'w', encoding='utf-8') as f:
     json.dump(cfg, f, ensure_ascii=False, indent=4)
-print("      → config.json limpiado")
+print("      → config.json reseteado a fábrica")
 PYEOF
 else
     echo "      → config.json no encontrado (omitido)"

@@ -174,8 +174,12 @@ paso siguiente.
 
 ### 2.8 Asistente de configuración inicial
 
-Al entrar por primera vez, el panel lleva directo al asistente. Tiene cuatro
+Al entrar por primera vez, el panel lleva directo al asistente. Tiene estos
 bloques:
+
+**Placa** — *StoryMaker (PCB del proyecto)* o *Voice HAT de Google con
+Raspberry Pi 3*, la alternativa solo con voz (ver `docs/hardware.md`). Cambiar
+de placa reinicia la caja.
 
 **Pantalla e-ink** — actívala si la tienes conectada.
 
@@ -195,7 +199,8 @@ entrar por SSH a tu aparato. Y quien entra por SSH puede leer las claves WiFi
 guardadas en el sistema: no es la máquina lo que está en juego, es la
 contraseña de la red del centro.
 
-Por eso el asistente no deja terminar sin cambiarla. Elige una que puedas
+Por eso el asistente no deja terminar sin cambiarla. Mínimo 6 caracteres, sin
+espacios. Elige una que puedas
 recordar o apuntar en algún sitio; la necesitarás si algún día quieres entrar
 por SSH, y no hay forma de recuperarla sin volver a grabar la tarjeta.
 

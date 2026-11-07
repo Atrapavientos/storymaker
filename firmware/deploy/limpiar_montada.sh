@@ -48,6 +48,7 @@ with open(path, encoding='utf-8') as f:
     cfg = json.load(f)
 cfg['setup_completado'] = False
 cfg.pop('flask_secret', None)
+cfg.pop('placa', None)       # la imagen sale sin placa: se elige en el primer arranque
 cfg['pin'] = '1234'          # el asistente de primer arranque pedirá otro
 
 # Perfil activo de fábrica. Sin esto, la imagen hereda el perfil que estuviera
@@ -55,7 +56,7 @@ cfg['pin'] = '1234'          # el asistente de primer arranque pedirá otro
 # silenciosa de qué Pi se tenía a mano. Si el perfil de fábrica no existiera, se
 # deja el que haya en lugar de apuntar a una carpeta inexistente, que impediría
 # arrancar el Generador.
-PERFIL_FABRICA = '1eso'
+PERFIL_FABRICA = 'juvenil'
 if os.path.isdir(os.path.join(os.path.dirname(path), 'perfiles', PERFIL_FABRICA)):
     cfg['perfil_activo'] = PERFIL_FABRICA
 else:

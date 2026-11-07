@@ -28,7 +28,6 @@ def _en_modo_ap():
 # CSS — diseño tipográfico editorial, optimizado para móvil
 # ─────────────────────────────────────────────────────────────
 CSS = """
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;600&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -220,6 +219,10 @@ CSS = """
     border-top: 1px solid #f0f0f0;
     padding-top: .8rem;
   }
+  .hw-link {
+    display: block; margin-top: 1.25rem; text-align: center;
+    font-size: .9rem; font-weight: 600; color: var(--accent);
+  }
 """
 
 # ─────────────────────────────────────────────────────────────
@@ -298,6 +301,28 @@ def es_primer_arranque():
             return not json.load(f).get('setup_completado', False)
     except Exception:
         return True
+
+
+def _volver_al_ap():
+    """Reactiva el AP tras un intento fallido. Al probar la red, wlan0 deja el
+    AP, y NetworkManager no lo recupera solo porque su perfil no autoconecta:
+    la caja se quedaba sin red y sin portal hasta reiniciarla."""
+    try:
+        activas = subprocess.run(
+            ['nmcli', '-t', '-f', 'NAME', 'connection', 'show', '--active'],
+            capture_output=True, text=True, timeout=5
+        ).stdout.splitlines()
+        if 'StoryMaker-Setup' not in activas:
+            r = subprocess.run(['nmcli', 'connection', 'up', 'StoryMaker-Setup', 'ifname', 'wlan0'],
+                               capture_output=True, timeout=30)
+            if r.returncode == 0:
+                # Renovar la marca del AP: anuncio_red.py la usa para saber que
+                # es una sesión nueva y volver a decir a qué red conectarse
+                with open('/run/storymaker-ap-mode', 'a'):
+                    os.utime('/run/storymaker-ap-mode')
+            print("[Captive] Conexión fallida: AP StoryMaker-Setup reactivado.", flush=True)
+    except Exception as e:
+        print(f"[Captive] No se pudo reactivar el AP: {e}")
 
 
 def guardar_y_conectar(ssid, password):
@@ -382,6 +407,9 @@ def guardar_y_conectar(ssid, password):
     finally:
         with _estado_lock:
             _estado['intentando'] = False
+            fallido = _estado['resultado'] != 'ok'
+        if fallido:
+            _volver_al_ap()
 
 
 # ─────────────────────────────────────────────────────────────
@@ -390,6 +418,9 @@ def guardar_y_conectar(ssid, password):
 # ─────────────────────────────────────────────────────────────
 
 CAPTIVE_REDIRECT = "http://10.42.0.1:8080/"
+# Asistente de hardware del portal principal. Desde el AP es la única forma de
+# llegar a elegir la placa: en el Voice HAT, sin placa no hay audio que dicte la IP.
+PORTAL_SETUP = "http://10.42.0.1:5000/setup"
 
 @app.route('/generate_204')           # Android / Chrome
 @app.route('/gen_204')
@@ -536,6 +567,8 @@ def index(path):
 
     <button type="submit">Conectar →</button>
   </form>
+
+  <a class="hw-link" href="{PORTAL_SETUP}">⚙ Configurar hardware (placa y salidas)</a>
 
   <div class="footer">StoryMaker · Portal de configuración WiFi</div>
 </div>
