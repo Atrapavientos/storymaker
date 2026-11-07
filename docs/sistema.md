@@ -105,7 +105,8 @@ NetworkManager-wait-online  # DESHABILITADO (arranque más rápido)
 
 - SPI habilitado (`dtparam=spi=on` en `config.txt`)
 - UART estable para la impresora (`enable_uart=1` + `dtoverlay=disable-bt`)
-- Audio I2S (`dtoverlay=hifiberry-dac`)
+- Audio I2S (`dtoverlay=hifiberry-dac` con la PCB; `googlevoicehat-soundcard` con
+  el Voice HAT, ver «Cambio de placa»)
 - Consola serie eliminada de `cmdline.txt`, para dejar el UART libre
 - El usuario `storymaker` pertenece a los grupos `spi`, `gpio`, `dialout`, `audio`
 - `/etc/asound.conf` con `dmix` para el MAX98357A: evita el chasquido entre premisas.

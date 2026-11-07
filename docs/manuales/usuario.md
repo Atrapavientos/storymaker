@@ -240,6 +240,10 @@ Desactivar una salida es la forma de trabajar cuando algo está desconectado o
 estropeado: la máquina sigue funcionando con las demás, sin esperas ni errores.
 También sirve para silenciar el altavoz en una sesión sin apagarlo.
 
+Al guardar, la máquina tarda unos segundos en aplicar los cambios. La impresora
+sólo saca un tique, de prueba, cuando la acabas de activar o le cambias la
+velocidad; el resto de cambios no gasta papel.
+
 ### Cambiar el PIN
 
 En esa misma pantalla, **PIN de acceso al portal**: de 4 a 8 dígitos. Si lo
@@ -281,7 +285,8 @@ inicial y a pasar por el asistente de configuración.
 **¿Puedo usarla sin internet?**
 Sí. Sólo necesita una red local, y ni siquiera eso si usas el botón. Lo único
 que pide internet es la voz principal del altavoz: sin conexión usa una voz
-local, de peor calidad, y tarda unos segundos más en arrancar cada frase.
+local, de peor calidad. Al perder la red, la primera frase tarda un par de
+segundos más, mientras la máquina lo comprueba.
 
 **¿Puedo tener varias máquinas en el mismo centro?**
 Sí, pero todas responderán al nombre `storymaker.local` y se pisarán. Con más

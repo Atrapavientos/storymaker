@@ -3,7 +3,8 @@
 Dispositivo educativo de hardware y software libre, basado en Raspberry Pi
 Zero 2W, que genera premisas narrativas aleatorias
 (detonante + protagonista + conflicto) para talleres de fomento de la lectura,
-con salida por pantalla e-ink, impresora térmica y audio.
+con salida por pantalla e-ink, impresora térmica y audio. También funciona, solo
+con voz, en una Raspberry Pi 3 con el Voice HAT de Google (kit AIY V1).
 
 Pulsas un botón y sale el arranque de una historia que alguien tiene que
 continuar.

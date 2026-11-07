@@ -37,6 +37,12 @@ Las tres salidas son opcionales e independientes. El aparato arranca y funciona
 con cualquier combinación, incluida ninguna (en ese caso sólo responde por el
 portal web).
 
+**Alternativa solo con voz:** una Raspberry Pi 3 con el **Voice HAT de Google**
+(kit AIY V1), que trae botón, LED y amplificador, sin la placa del proyecto ni
+soldaduras. Sin pantalla ni impresora, la caja dice en voz alta a qué red
+conectarse y en qué dirección está su panel. Se elige en el asistente (2.8);
+pines y detalles en [`docs/hardware.md`](../hardware.md).
+
 ### Conexiones (numeración BCM)
 
 | Función | GPIO | Pin físico |
@@ -349,7 +355,12 @@ cd firmware/deploy
 ```
 
 **Conserva** `config.json` y `data/perfiles/`: no pierdes ni la configuración de
-hardware ni las premisas que hayas escrito en el dispositivo.
+hardware ni las premisas que hayas escrito en el dispositivo. Además actualiza
+`edge-tts`, la voz principal, que deja de funcionar cuando Microsoft cambia su
+protocolo.
+
+Si el dispositivo viene de una imagen anterior a `v2026-11-07`, su perfil de
+serie `1eso` se renombra solo a `juvenil` al arrancar, con sus premisas.
 
 Pedirá la contraseña del dispositivo al instalar los ficheros de sistema. Si
 sólo has tocado código Python, puedes saltarte ese paso:
@@ -389,8 +400,10 @@ cd firmware/deploy
 ```
 
 El proceso limpia el dispositivo (WiFi, configuración, claves SSH, historial y
-registros), captura la tarjeta con `dd`, la encoge con `pishrink` y la comprime
-con `xz`.
+registros), deja todas las salidas apagadas, sustituye `data/perfiles/` por los
+perfiles del repositorio, captura la tarjeta con `dd`, la encoge con `pishrink`
+y la comprime con `xz`. Los dos modos dejan la imagen igual, sea cual sea la Pi
+de la que salga.
 
 **Antes de capturar, verifica la tarjeta a mano.** Monta la partición raíz en
 sólo lectura y comprueba que no quedan claves de host SSH, que
@@ -446,9 +459,13 @@ revísalo.
 **El audio chasquea entre premisas.**
 Falta la configuración `dmix` en `/etc/asound.conf`. La instala `setup_sd.sh`.
 
-**Sin internet, cada frase tarda quince segundos.**
-La voz principal (`edge-tts`) es un servicio en línea. Sin red, espera a que
-venza el tiempo antes de pasar a la voz local. Es un comportamiento conocido.
+**Sin internet, la voz suena robótica.**
+La voz principal (`edge-tts`) es un servicio en línea. Si la caja no llega a
+él, pasa en dos segundos a la voz local, de peor calidad, y durante dos minutos
+no vuelve a intentarlo. Es el comportamiento previsto. Si **con** internet
+tampoco suena la voz buena, mira el registro
+(`journalctl -u historias.service -n 50`): un error 403 significa que hay que
+actualizar `edge-tts` (lo hace `deploy.sh`, sección 4).
 
 **El dispositivo se reinicia solo al imprimir o al hablar.**
 Pico de consumo. Es justo lo que resuelve el condensador de 1000 µF en la

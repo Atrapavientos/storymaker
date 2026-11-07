@@ -34,29 +34,7 @@ deja mudas las cajas con altavoz (edge-tts 7.2.8, rechazado por Microsoft).
 - Manuales: la premisa en pantalla, el bloque «Placa» del asistente y el mínimo
   de la contraseña.
 
----
-
-## v2026-10-03 — imagen distribuible
-
-Primera release publicada desde este repositorio:
-[`v2026-10-03`](https://codeberg.org/atrapavientos/storymaker/releases/tag/v2026-10-03),
-con la imagen de tarjeta y su checksum SHA256.
-
-La imagen se generó el 3 de octubre desde el repositorio de desarrollo. El
-firmware de este árbol es idéntico byte a byte al que lleva dentro, de modo que
-el tag corresponde de verdad a lo que se descarga.
-
-Qué trae la imagen, en las [notas de la
-release](https://codeberg.org/atrapavientos/storymaker/releases/tag/v2026-10-03).
-
-Desde el 2026-10-05, **Codeberg y este repositorio son el único sitio de
-descarga**: el repositorio de desarrollo pasó a privado.
-
----
-
-## Sin publicar (contenido del repositorio)
-
-### Añadido
+### Contenido del repositorio
 
 - **Firmware completo**, trasplantado desde el repositorio de desarrollo:
   código Python, módulos de hardware, portal web, perfiles de ejemplo y
@@ -84,7 +62,22 @@ descarga**: el repositorio de desarrollo pasó a privado.
 - **Impresora QR204 TTL+USB** probada como alternativa a la QR701: funciona
   sin cambios en el firmware, conectada por TTL a 9600 bps.
 
-### Notas
+### Notas del repositorio
 
 - Estructura inicial del repositorio: esqueleto de carpetas, licencias y
   READMEs.
+
+---
+
+## v2026-10-03 — imagen distribuible (retirada)
+
+Primera release publicada desde este repositorio, con la imagen de tarjeta y su
+checksum SHA256 (`90a1be92…98f7`). La imagen se generó el 3 de octubre desde el
+repositorio de desarrollo, con el firmware de este árbol idéntico byte a byte.
+
+**Retirada el 2026-11-07**, al publicarse `v2026-11-07`: su edge-tts (7.2.8) ya
+no funciona y las cajas con altavoz se quedaban mudas. Aquí solo se mantiene
+la release más reciente.
+
+Desde el 2026-10-05, **Codeberg y este repositorio son el único sitio de
+descarga**: el repositorio de desarrollo pasó a privado.
