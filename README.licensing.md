@@ -11,6 +11,3 @@ de material que contiene.
 | `docs/` (manuales, docs) | Creative Commons Atribución-CompartirIgual 4.0 Internacional | `CC-BY-SA-4.0` | [`/docs/LICENSE`](docs/LICENSE) |
 | `envolvente/` | CERN Open Hardware Licence v2 — Strongly Reciprocal | `CERN-OHL-S-2.0` | [`/envolvente/LICENSE`](envolvente/LICENSE) |
 | `artes-graficas/` | Creative Commons Atribución-CompartirIgual 4.0 Internacional, salvo los elementos de terceros que lista su README | `CC-BY-SA-4.0` | [`/artes-graficas/LICENSE`](artes-graficas/LICENSE) |
-
-> **Nota:** La combinación de licencias de este proyecto está pendiente de OK formal
-> de **Atrapavientos** (titular del proyecto) antes de la publicación definitiva.

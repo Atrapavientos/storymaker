@@ -14,8 +14,8 @@ continuar.
 > todo lo necesario para construir una.
 
 > **Estado:** firmware, documentación, placa base (PCB), artes gráficas y
-> envolventes de corte láser publicados; lista de materiales y caja impresa
-> en 3D en preparación.
+> envolventes (caja impresa en 3D, madera y acrílico) publicados; lista de
+> materiales en preparación.
 
 Codename técnico interno: *StoryMaker*.
 
@@ -30,7 +30,7 @@ Codename técnico interno: *StoryMaker*.
 | Entender cómo está hecho el firmware | [`firmware/README.md`](firmware/README.md) y [`docs/decisiones.md`](docs/decisiones.md) |
 | Fabricar la placa base y conectar los periféricos | [`hardware/`](hardware/README.md) (el BOM está pendiente) |
 | Imprimir una caja de cartón | [`artes-graficas/`](artes-graficas/README.md) |
-| Fabricar una caja de madera, acrílico o impresa en 3D | [`envolvente/`](envolvente/README.md) |
+| Imprimir la caja en 3D, o fabricarla en madera o acrílico | [`envolvente/`](envolvente/README.md) |
 
 ---
 
@@ -41,7 +41,7 @@ Codename técnico interno: *StoryMaker*.
 | `firmware/` | Código Python que corre en el dispositivo, y los scripts de instalación |
 | `docs/` | Manuales, referencia técnica y galería de imágenes |
 | `hardware/` | Placa base: esquema, Gerber para fabricarla y diseño editable en Fritzing. BOM *(pendiente)* |
-| `envolvente/` | Cajas de madera y acrílico para corte láser (IES Virgen del Pilar) y caja impresa en 3D *(próximamente)* |
+| `envolvente/` | Caja impresa en 3D en siete versiones, con sus accesorios, y cajas de madera y acrílico para corte láser (IES Virgen del Pilar) |
 | `artes-graficas/` | Diseños de la caja de cartón: troqueles, fuentes de Illustrator, PDF para imprimir y fotos de prototipos (IES Pilar Lorengar) |
 
 ---

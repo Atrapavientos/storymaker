@@ -42,6 +42,9 @@ Detalle de la placa y su licencia en [`hardware/README.md`](hardware/README.md).
 
 ## Envolvente
 
+Caja impresa en 3D, en sus siete versiones, y sus accesorios: diseño propio
+del proyecto.
+
 Cajas de madera y acrílico para corte láser, con las bisagras, esquineras y
 marcos impresos en 3D del modelo de acrílico, del alumnado y profesorado del
 **IES Virgen del Pilar**.

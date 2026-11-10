@@ -1,5 +1,21 @@
 # Changelog
 
+## Después de v2026-11-07
+
+### Contenido del repositorio
+
+- **Caja impresa en 3D** (`envolvente/`, modelo 00): siete versiones, una por
+  combinación de salidas (e-ink, impresora y altavoz), y un juego de
+  accesorios común: tapa inferior, tornillos y tuercas, patas para la placa
+  base y el powerbank, llave de patas, marco del e-ink, rejillas para
+  altavoz de 40 y 78 mm y soporte de Pi Zero. En STL y como proyecto de Bambu
+  Studio (3MF) con una placa por versión, con parámetros de impresión
+  orientativos. Diseñada en Tinkercad.
+- La caja impresa en 3D pasa a ser el modelo de base; madera y acrílico se
+  renumeran como 01 y 02 (`01 Madera/`, `02 Acrílico/`).
+
+---
+
 ## v2026-11-07 — imagen distribuible
 
 Release [`v2026-11-07`](https://codeberg.org/atrapavientos/storymaker/releases/tag/v2026-11-07),
