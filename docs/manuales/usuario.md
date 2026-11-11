@@ -41,6 +41,8 @@ las salidas que tengas activas y se apaga sola. El LED se apaga al terminar.
 También puedes apagarla desde el panel de control, con **Apagar** en la
 cabecera.
 
+<img src="../galeria/usuario-00-eink-despedida.jpg" width="400" alt="Caja apagada con la pantalla de despedida en la e-ink: el título de la máquina, el logotipo de Atrapavientos, un QR y «Escanea el QR para visitar el proyecto»">
+
 > **Espera a que el LED se apague antes de desenchufarla.** Cortar la corriente
 > de golpe repetidas veces acaba corrompiendo la tarjeta de memoria. Si pasa,
 > hay que volver a grabarla.
@@ -63,10 +65,12 @@ Y el LED te dice en qué está:
 |---|---|
 | Fijo encendido | Lista, esperando |
 | Dos parpadeos rápidos | Ha recibido la pulsación, está generando |
-| Cinco parpadeos lentos | Se han agotado las combinaciones (ver [punto 8](#8-cuando-se-agotan-las-combinaciones)) |
+| Cinco parpadeos lentos | Se han agotado las combinaciones (ver [punto 9](#9-cuando-se-agotan-las-combinaciones)) |
 | Parpadeo lento durante el arranque | Está detectando que mantienes el botón |
 | Parpadeo rápido durante el arranque | Confirmado: ya puedes soltar |
 | Apagado | Apagándose, o apagada |
+
+<img src="../galeria/usuario-01-boton-led.jpg" width="480" alt="Pulsador grande azul de la caja, visto de cerca, delante de la ranura de la impresora">
 
 ---
 
@@ -87,10 +91,14 @@ aula o leerla en voz alta. Se cierra con «Cerrar» o tocando fuera, y «Otra
 premisa» genera la siguiente. Solo aparece mientras el panel está a la vista:
 lo que se genere con el móvil bloqueado o en otra pestaña no salta al volver.
 
+<img src="../galeria/usuario-03a-premisa-pc.png" width="520" alt="Panel de control en el ordenador con una premisa en grande, en una tarjeta sobre el panel oscurecido, con los botones Otra premisa y Cerrar"> <img src="../galeria/usuario-03b-premisa-panel.png" width="220" alt="La misma tarjeta de premisa a toda pantalla en un móvil">
+
 > **La pantalla e-ink se refresca entera cada vez.** Parpadea en blanco y negro
 > durante un par de segundos antes de mostrar la premisa. No está rota: esta
 > tecnología no admite refrescos parciales. Mientras tanto, muestra el dibujo
 > de una pluma para que se note que está trabajando.
+
+<img src="../galeria/usuario-02-eink-premisa.jpg" width="340" alt="Pantalla e-ink mostrando en negrita una premisa de siete líneas"> <img src="../galeria/usuario-03-tique.jpg" width="453" alt="Tique recién impreso con la premisa «Al descubrir que su vida entera es un experimento, un traductor de la ONU que guarda demasiados secretos emprende un viaje sin billete de vuelta.»">
 
 ---
 
@@ -118,6 +126,8 @@ Si esa dirección no funciona, es que la red del centro no resuelve nombres
 - **A la izquierda:** la lista de perfiles y el botón de crear uno nuevo.
 - **En el centro:** las premisas del perfil que estés mirando, por categorías.
 
+<img src="../galeria/usuario-04-panel.png" width="520" alt="Panel de control en el ordenador: cabecera con las salidas activas, el volumen y el perfil activo JUVENIL; a la izquierda los perfiles ADULTOS, abierto, y JUVENIL, marcado como activo; en el centro las pestañas Detonantes, Protagonistas y Conflictos con 50 frases cada una y la lista de detonantes"> <img src="../galeria/usuario-05-panel-movil.png" width="224" alt="El mismo panel en un móvil: la cabecera, el botón GENERAR, los perfiles en fila y debajo las pestañas y la lista">
+
 ---
 
 ## 6. Perfiles
@@ -134,6 +144,8 @@ y editar cualquiera sin cambiar el activo.
 **Crear uno nuevo:** **+ Nuevo perfil** abajo a la izquierda. Nace vacío, y hay
 que darle contenido antes de poder usarlo: **las tres categorías necesitan al
 menos una frase**. Con una sola vacía, el perfil no funciona.
+
+<img src="../galeria/usuario-04-panel.png" width="520" alt="Las dos cosas que se confunden: en la barra lateral, ADULTOS resaltado porque es el perfil que se está editando; en la cabecera, el selector Perfil activo con JUVENIL, que es el que usa la máquina al generar">
 
 ---
 
@@ -168,6 +180,8 @@ escribir los conflictos de forma neutra es lo que mejor funciona.
 
 Los cambios se guardan al momento.
 
+<img src="../galeria/usuario-07-editar.png" width="520" alt="Lista de detonantes con una ✕ a la derecha de cada frase para borrarla y, debajo, el recuadro Añadir nueva premisa con el botón Añadir">
+
 ---
 
 ## 8. Importar listas desde un `.txt`
@@ -183,17 +197,25 @@ dejarlo como activo al terminar.
 **Paso 2 — Modo.** *Añadir al final* (lo normal) o *reemplazar la lista*
 entera. En un perfil nuevo no aplica.
 
+<img src="../galeria/usuario-08a-importar.png" width="440" alt="Primera parte del importador: explicación de cómo funciona, paso 1 con la opción Crear un perfil nuevo llamado Terror y la casilla de usarlo como activo, y paso 2 desactivado porque el perfil es nuevo">
+
 **Paso 3 — Textos.** Un fichero `.txt` por categoría, **una frase por línea**, o
 pegado a mano en el recuadro. Si rellenas las dos cosas para la misma
 categoría, se juntan. Las categorías que dejes vacías **no se tocan**, ni
 siquiera en modo reemplazar.
 
+<img src="../galeria/usuario-08b-importar.png" width="440" alt="Paso 3 del importador: detonantes.txt, protagonistas.txt y conflictos.txt elegidos, cada uno con su recuadro para pegar frases, y el botón Revisar antes de guardar">
+
 Después aparece una **revisión** antes de tocar nada: cuántas frases entran,
 cuáles se descartan (repetidas, ya presentes, demasiado largas) y cómo queda
 cada categoría. Si algo no cuadra, vuelve atrás.
 
+<img src="../galeria/usuario-09-importar-revision.png" width="440" alt="Revisión antes de guardar: tabla con 0 frases ahora, +50 y 50 al final en cada categoría, y las primeras frases de cada una tal como se van a guardar">
+
 Al confirmar, el botón **Deshacer** devuelve las listas a como estaban. **Un
 solo nivel:** la siguiente importación lo sustituye.
+
+<img src="../galeria/usuario-09b-importar-terminada.png" width="440" alt="Importación terminada: 50 frases añadidas en cada categoría del perfil Terror, que pasa a ser el activo, y el botón Deshacer esta importación">
 
 Los `.txt` de Word y del Bloc de notas de Windows funcionan sin tocar nada: el
 importador se apaña con sus codificaciones.
@@ -249,6 +271,8 @@ velocidad; el resto de cambios no gasta papel.
 En esa misma pantalla, **PIN de acceso al portal**: de 4 a 8 dígitos. Si lo
 dejas en blanco, se queda el que había.
 
+<img src="../galeria/usuario-10-hardware.png" width="520" alt="Página Configuración de hardware: placa, salidas, volumen, PIN y contraseña SSH, que se dejan en blanco para no cambiarlos, y el botón Guardar cambios">
+
 ---
 
 ## 11. Llevar la máquina a otro sitio
@@ -266,6 +290,8 @@ parpadea despacio mientras lo detecta.
 
 Recuerda que la Pi Zero 2W **sólo se conecta a redes de 2,4 GHz**. Si el router
 del sitio nuevo sólo da 5 GHz, no la verá.
+
+<img src="../galeria/despliegue-08-captivo-redes.png" width="300" alt="Portal de configuración en el móvil: desplegable de red WiFi, campo de contraseña y botón Conectar">
 
 ---
 

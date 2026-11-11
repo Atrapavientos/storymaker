@@ -15,6 +15,8 @@ Hay **dos caminos**, y conviene elegir antes de empezar:
 Si sólo quieres usar el dispositivo, **Ruta A**. La Ruta B existe porque el
 proyecto es libre y la imagen tiene que poder reconstruirse desde el código.
 
+<img src="../galeria/despliegue-00-dispositivo.jpg" width="420" alt="StoryMaker terminado: caja cúbica turquesa impresa en 3D con el pulsador y la rejilla del altavoz arriba, y en el frontal la pantalla e-ink mostrando una premisa">
+
 ---
 
 ## 1. Material necesario
@@ -65,6 +67,8 @@ El botón va a masa con resistencia de *pull-up* interna: es activo a nivel bajo
 La impresora térmica **necesita su propia alimentación**; no tires de los 5 V de
 la Pi para moverla.
 
+![Interior de la caja visto desde arriba: la Raspberry Pi Zero 2W sobre la placa del proyecto, con el amplificador morado y el cargador insertados, un portapilas con dos baterías 18650 a la derecha, el conector de carga arriba y el altavoz abajo, todo unido con cables a las bornas de tornillo verdes](../galeria/despliegue-01-cableado.jpg)
+
 ### Software en tu ordenador
 
 - **Ruta A:** [Raspberry Pi Imager](https://www.raspberrypi.com/software/).
@@ -86,6 +90,8 @@ más reciente (`vAAAA-MM-DD`) y descarga los dos ficheros:
 **Codeberg es el único sitio de descarga.** Si algún día este repositorio se
 replica en otra forja, la imagen se seguirá bajando de aquí: los espejos de git
 copian el código y los tags, no los adjuntos de las releases.
+
+![Página de la release en Codeberg: la orden sha256sum para verificar, la nota de la versión y, en Descargas, la imagen .img.xz de 987 MiB, su fichero .sha256 y los dos paquetes de código fuente](../galeria/despliegue-02-release.png)
 
 ### 2.2 Comprobar que la descarga está íntegra
 
@@ -124,6 +130,8 @@ No hace falta descomprimir el `.xz`: el Imager lo hace solo.
 > Con versiones antiguas del Imager (la 1.x) sí sale una pregunta sobre
 > personalizar los ajustes. Responde **NO**: personalizarla rompe la imagen.
 
+<img src="../galeria/despliegue-03-imager.png" width="520" alt="Raspberry Pi Imager 2.0 al terminar la escritura: el resumen muestra Raspberry Pi Zero 2 W, la imagen storymaker .img.xz y la tarjeta, y en la barra lateral el paso Personalización aparece en gris">
+
 ### 2.4 Primer arranque
 
 Mete la tarjeta en la Pi y conéctala a la corriente.
@@ -141,6 +149,8 @@ Cuando esté lista:
   conectarte y ese mismo QR.
 - Si hay **altavoz**, dice en voz alta a qué red conectarte.
 
+<img src="../galeria/despliegue-06-tique-bienvenida.jpg" width="360" alt="Tique de primera configuración saliendo de la impresora: pide conectar el móvil a la red StoryMaker-Setup, abierta y sin clave, y trae un QR con la dirección http://10.42.0.1:8080">
+
 Con el **Voice HAT** en una Raspberry Pi 3, la caja reconoce el HAT y se
 reinicia una vez más para cargar su driver de audio: cuenta con un minuto
 extra antes de oír el aviso.
@@ -156,6 +166,8 @@ Como todavía no conoce ninguna red, la máquina levanta su propia WiFi.
 3. El móvil avisará de que "esta red no tiene acceso a internet". Es correcto:
    dile que la mantenga conectada.
 
+<img src="../galeria/despliegue-07-wifi-ap.png" width="300" alt="Lista de redes WiFi de un móvil Android con StoryMaker-Setup la primera, marcada como sin acceso a internet; el resto de redes, difuminadas">
+
 ### 2.6 Elegir la red WiFi del centro
 
 La página de configuración muestra las redes que la máquina ve a su alrededor.
@@ -169,6 +181,8 @@ La pantalla pasa a *Conectando...*. Si la contraseña era incorrecta o la red no
 responde, al cabo de unos segundos vuelve al formulario con un aviso en rojo y
 la red ya seleccionada, lista para reintentar.
 
+<img src="../galeria/despliegue-08-captivo-redes.png" width="300" alt="Portal de configuración en el móvil: desplegable de red WiFi con una red elegida, campo de contraseña con el icono del ojo y botón Conectar">
+
 Si va bien, la máquina apaga su red `StoryMaker-Setup` para conectarse a la
 tuya, así que **lo normal es que la página del móvil se cierre sola** sin
 llegar a mostrar ningún mensaje de éxito. No es un fallo: el aviso lo da la
@@ -180,6 +194,8 @@ propia máquina, que en unos segundos anuncia su nueva dirección:
 - Por el **altavoz**, dictando la dirección.
 
 Apunta la dirección numérica: es la que funciona en cualquier red.
+
+<img src="../galeria/despliegue-09-tique-direccion.jpg" width="480" alt="Tique impreso tras conectarse a la red: «Bienvenido. Escanea el QR para abrir el portal», un QR y debajo la dirección numérica http://192.168.1.206:5000 y la alternativa http://storymaker.local:5000">
 
 ### 2.7 Entrar al panel de control
 
@@ -194,6 +210,8 @@ nombres `.local`. Entra por la dirección numérica que te ha dado la máquina,
 La pantalla de acceso pide un PIN. **En el primer arranque, la propia página
 muestra arriba cuál es el PIN inicial** y avisa de que podrás cambiarlo en el
 paso siguiente.
+
+![Pantalla de acceso al panel de control con el aviso «Primera configuración» y el PIN inicial 1234, el campo del PIN y el botón Entrar](../galeria/despliegue-10-login.png)
 
 ### 2.8 Asistente de configuración inicial
 
@@ -230,6 +248,8 @@ por SSH, y no hay forma de recuperarla sin volver a grabar la tarjeta.
 
 Pulsa el botón de guardar. El servicio se reinicia solo y te deja en el panel.
 
+![Asistente de configuración inicial: bloque Placa con la PCB del proyecto elegida, casillas de pantalla e-ink, impresora térmica con su velocidad y altavoz con el volumen, PIN de acceso y los dos campos de la contraseña SSH obligatoria, botón Confirmar configuración y, abajo, la zona de peligro con el reset de fábrica](../galeria/despliegue-11-asistente.png)
+
 ### 2.9 Comprobar que todo funciona
 
 En el panel, pulsa **GENERAR**. Debería ocurrir todo esto, según lo que tengas
@@ -245,6 +265,8 @@ Ahora prueba el **botón físico**: una pulsación corta hace exactamente lo mis
 Si algo no responde, vuelve al asistente (**⚙ Hardware** en la cabecera) y
 comprueba que esa salida está activada. Si lo está, mira la sección de
 problemas al final.
+
+![Panel de control: en la cabecera las etiquetas E-INK, IMPRESORA y AUDIO encendidas en verde, el volumen, el selector de perfil activo con JUVENIL, y los enlaces Hardware, Apagar y Salir; debajo el botón GENERAR y la lista de perfiles a la izquierda](../galeria/despliegue-12-panel.png)
 
 Con esto el dispositivo está listo. Para usarlo en el taller, sigue con el
 [manual de usuario](usuario.md).
