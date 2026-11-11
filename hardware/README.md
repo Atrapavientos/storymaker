@@ -53,7 +53,7 @@ cada cable de un color según su función (en [SVG](esquemas/v3-croquis.svg)):
 | `pcb/gerber/` | Lo que se manda a fabricar: el `.zip` con los Gerber y el fichero de taladros |
 | `pcb/fritzing/` | El diseño editable, para abrirlo y modificarlo en Fritzing |
 | `pcb/imagenes/` | Fotos de la placa real, renders de las dos caras, vista 3D y trazado de pistas en SVG |
-| `bom/` | Lista de materiales *(pendiente)* |
+| [`bom/`](bom/) | Lista de materiales por bloques, según las salidas y la alimentación *(borrador)* |
 
 Los ficheros llevan la versión de la placa en el nombre (`v3`).
 

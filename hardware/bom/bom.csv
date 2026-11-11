@@ -1,0 +1,39 @@
+id,bloque,ref_pcb,descripcion,especificacion,fabricante,mpn,cantidad,sustitucion,estado,proveedor,enlace,precio_unit_eur,pack_min,notas
+B01,BASE,,PCB StoryMaker,"80 × 70 mm, 2 capas, 4 taladros de 3,2 mm",,,1,exacto,pendiente,,,,,Gerbers en hardware/pcb/gerber. Es la v3: la serigrafía dice V2.0 por una errata. El fabricante impone un pedido mínimo.
+B02,BASE,RASPBERRY PI ZERO 2W,Raspberry Pi Zero 2 W,Sin pines soldados (no la «WH»),Raspberry Pi,,1,exacto,probado,,,,,"El conector de 40 pines se suelda por debajo de la Pi, al revés de lo habitual (ver B04)."
+B03,BASE,,Tarjeta microSD,"8 GB o más, clase 10 o mejor",,,1,genérico,probado,,,,,
+B04,BASE,RASPBERRY PI ZERO 2W,Tira de pines macho 2×20,"Paso 2,54 mm",,,1,genérico,probado,,,,,"Se suelda en la Pi, por debajo, para pincharla encima de la PCB con los componentes hacia arriba."
+B16,BASE,RASPBERRY PI ZERO 2W,Zócalo hembra 2×20,"Paso 2,54 mm",,,1,genérico,probado,,,,,Se suelda en la PCB y recibe la Pi.
+B05,BASE,C1,Condensador electrolítico,"1000 µF, 10 V, low-ESR, 105 °C",,,1,equivalente,probado,,,,,"Se monta en todas las versiones, por estabilidad. Polarizado. Las pistas de la huella están a 2,54 mm: un condensador de este valor suele tener más separación entre patas, así que puede requerir doblarlas."
+B06,BASE,JUMPER (J1),Tira de pines macho 1×3,"Paso 2,54 mm",,,1,genérico,probado,,,,,Selector de alimentación. En la PCB va macho; la pieza de Fritzing figura como hembra.
+B07,BASE,JUMPER (J1),Puente (jumper),"Paso 2,54 mm",,,1,genérico,probado,,,,,
+B08,BASE,"INT (S1, S2)",Interruptor de encendido,Unipolar; mín. 3 A a 5 V,,,1,equivalente,pendiente,,,,,Va en serie con BAT/USB en todas las configuraciones. PENDIENTE: modelo.
+B09,BASE,"INT, BAT/USB",Borne de tornillo de 2 polos,"Paso 5,08 mm",,,2,equivalente,probado,,,,,
+B10,BASE,"PULS (P1, P2)",Pulsador principal,"Normalmente abierto, de panel",,,1,equivalente,pendiente,,,,,GPIO5. Pulsación corta: genera; pulsación larga: apaga.
+B11,BASE,"LED (Led+, GND)",LED indicador,PENDIENTE: color y tamaño,,,1,genérico,pendiente,,,,,GPIO23.
+B12,BASE,LED,Resistencia para el LED,PENDIENTE: valor,,,1,genérico,pendiente,,,,,"La PCB no tiene huella de resistencia. PENDIENTE: dónde va, o si el LED la lleva integrada."
+B13,BASE,"PULS, LED",Borne de tornillo de 2 polos,"Paso 2,54 mm",,,2,equivalente,probado,,,,,
+B14,BASE,Taladros,Tornillos M3,M3 × 6,,,4,genérico,probado,,,,,"Fijan la PCB. En la caja impresa en 3D van sobre sus patas impresas, sin separadores; otras envolventes, en su README."
+B15,BASE,,Cable para conexiones internas,PENDIENTE: sección y longitud,,,1,genérico,pendiente,,,,,
+I01,IMP,,Impresora térmica UART,"QR701-N32-2011, 5 V, 9600 baudios",,QR701,1,equivalente,probado,,,,,"Compatible sin cambios: QR204 (TTL + USB), conectada por TTL a 9600 baudios. No se puede alimentar con MH-CD42 + LiPo."
+I02,IMP,"PRINTER (VIN, GND, Tx)",Borne de tornillo de 3 polos,"Paso 2,54 mm",,,1,equivalente,probado,,,,,Tx sale de GPIO14 y va a la RX de la impresora. GPIO15 no está conectado en la PCB.
+I03,IMP,,Rollo de papel térmico,PENDIENTE: confirmar 58 mm de ancho y diámetro máximo,,,1,genérico,pendiente,,,,,Consumible.
+A01,AUD,AUDIO,Módulo amplificador I2S MAX98357A,Huella de Adafruit #3006,Adafruit,3006,1,equivalente,probado,,,,,Otro módulo compatible debe tener el mismo orden de pines; compruébalo con la serigrafía.
+A03,AUD,AUDIO,Zócalo hembra 1×7,"Paso 2,54 mm",,,1,genérico,probado,,,,,"Recibe el módulo amplificador, que trae su tira de pines."
+A02,AUD,,Altavoz,4 Ω; PENDIENTE: potencia y tamaño,,,1,equivalente,probado,,,,,"Se conecta a la salida del propio módulo, no a la PCB."
+P01,PAN,E-INK LCD,"Pantalla e-ink 4,2"" blanco y negro",Controlador SSD1683,WeAct Studio,,1,exacto,probado,,,,,El firmware usa la secuencia de inicio de WeAct; otra pantalla no está garantizada.
+P02,PAN,E-INK LCD,Tira de pines macho acodada 1×8,"Paso 2,54 mm",,,1,genérico,probado,,,,,En la PCB va macho acodada; la pieza de Fritzing figura como hembra.
+P03,PAN,E-INK LCD,Cable de 8 hilos,PENDIENTE: longitud,,,1,genérico,pendiente,,,,,"Conectar por el nombre de cada señal, no por su posición."
+P04,PAN,,Tornillos M2,M2 × 15,,,4,genérico,pendiente,,,,,Fijan la pantalla en la caja impresa en 3D. PENDIENTE: confirmar cantidad.
+C01,ALIM-CARG,BAT/USB,Cargador USB,"5 V; mín. 2 A, o 2,5 A con impresora",,,1,genérico,pendiente,,,,,J1 en SÓLO USB. No se monta el MH-CD42.
+C02,ALIM-CARG,BAT/USB,Cable USB con hilos a borne,PENDIENTE: conector de entrada y longitud,,,1,equivalente,pendiente,,,,,Respetar + y − de la serigrafía: la entrada no tiene protección de polaridad.
+W01,ALIM-PB,BAT/USB,Powerbank de dos celdas 18650,"Salida de 5 V; mín. 2 A, o 2,5 A con impresora",,,1,equivalente,probado,,,,,"J1 en SÓLO USB. No se monta el MH-CD42. En la caja impresa en 3D va sobre las patas altas, con tornillos M3 × 6. PENDIENTE: confirmar el requisito de corriente."
+W02,ALIM-PB,,Celda 18650,PENDIENTE: capacidad,,,2,genérico,pendiente,,,,,Si el powerbank no las incluye.
+W03,ALIM-PB,BAT/USB,Cable USB con hilos a borne,PENDIENTE: longitud,,,1,equivalente,pendiente,,,,,Respetar + y − de la serigrafía: la entrada no tiene protección de polaridad.
+L01,ALIM-LIPO,CARGADOR,Módulo de carga y descarga MH-CD42,"Salida de 5 V, 2 A",,MH-CD42,1,exacto,pendiente,,,,,J1 en BAT+CARG. Solo sin impresora. PENDIENTE: puente necesario para arrancar con el interruptor.
+L06,ALIM-LIPO,CARGADOR,Zócalo hembra 1×6,"Paso 2,54 mm",,,1,genérico,probado,,,,,Recibe el MH-CD42. Puede soldarse siempre y quedar vacío si no se usa.
+L02,ALIM-LIPO,BAT/USB,Batería LiPo de una celda,"3,7 V; PENDIENTE: capacidad y tamaño",,,1,equivalente,pendiente,,,,,Respetar + y − de la serigrafía.
+L03,ALIM-LIPO,USB,Borne de 2 polos,"Paso 5,08 mm",,,1,equivalente,pendiente,,,,,
+L04,ALIM-LIPO,USB,Toma USB hembra de panel,PENDIENTE: tipo de conector,,,1,equivalente,pendiente,,,,,Es la entrada de carga.
+L05,ALIM-LIPO,,Cargador USB,5 V; mín. 2 A,,,1,genérico,pendiente,,,,,
+X01,OPC,INTERFAZ GPIO's RASPBERRY PI,Tira de pines 1×14,"Paso 2,54 mm",,,1,genérico,probado,,,,,Acceso opcional a las señales; en las máquinas montadas va sin soldar.
