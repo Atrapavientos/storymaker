@@ -36,48 +36,11 @@ Junta las filas de los bloques elegidos en `bom.csv`. El bloque `OPC` es opciona
 
 ## Configurar la alimentación
 
-| En la PCB | Cargador USB o powerbank | MH-CD42 + LiPo |
-|---|---|---|
-| Jumper J1 | `SÓLO USB` | `BAT+CARG.` |
-| Módulo `CARGADOR` | No se monta | Se monta |
-| Borne `BAT/USB` | Cable USB externo o salida del powerbank | Batería |
-| Borne `USB` | Vacío | Toma USB externa de carga |
-| Borne `INT` | Interruptor | Interruptor |
-
-```text
-BAT/USB + ── INT ── J1 ─┬─ BAT+CARG. ── BAT del módulo ── salida del módulo ──┐
-                        │                                                     ├── 5 V
-                        └─ SÓLO USB ──────────────────────────────────────────┘
-
-USB + ── VIN del módulo
-```
-
-### Avisos
-
-- **No inviertas la polaridad.** La PCB no tiene fusible ni diodo de protección, y `BAT/USB` llega al raíl de 5 V que alimenta la Pi cuando J1 está en `SÓLO USB`.
-- **Comprueba J1 antes de dar corriente.**
-  - Con J1 en `BAT+CARG.`, los 5 V de un cargador entrarían por la entrada de batería del módulo y podrían dañarlo.
-  - Con J1 en `SÓLO USB`, la LiPo quedaría conectada directamente al raíl de 5 V, sin pasar por el módulo.
-- **No montes el MH-CD42 si J1 va en `SÓLO USB`.** Su salida está siempre unida al raíl de 5 V.
-- **Para cargar la LiPo, el interruptor debe estar cerrado.** `INT` está entre la batería y el módulo; si está abierto, la batería queda desconectada.
-- **Arranque con MH-CD42:** PENDIENTE: puente necesario para que arranque con el interruptor.
-
-## Conexiones de la PCB
-
-| Conector | Serigrafía | Señal |
-|---|---|---|
-| `PULS` | `P1` / `P2` | GND / GPIO5 |
-| `LED` | `GND` / `Led+` | GND / GPIO23 |
-| `PRINTER` | `VIN` / `GND` / `Tx` | 5 V / GND / GPIO14 |
-| `AUDIO` | `VIN` / `GND` | 5 V / GND |
-| `AUDIO` | `DIN` / `BCLK` / `LRC` | GPIO21 / GPIO18 / GPIO19 |
-| `E-INK LCD` | `3,3V` / `GND` | 3,3 V / GND |
-| `E-INK LCD` | `SDA` / `SCL` / `CS` | GPIO10 / GPIO11 / GPIO8 |
-| `E-INK LCD` | `D/C` / `RES` / `BUSY` | GPIO25 / GPIO17 / GPIO24 |
-
-Numeración BCM. La impresora solo recibe datos: GPIO15 (RX) no está conectado en la PCB.
-
-Los dos pads junto al módulo de audio dan acceso a sus pines `SD_MODE` y `GAIN`, y no van conectados a la Pi. El conector `INTERFAZ GPIO's RASPBERRY PI` repite estas señales en una sola fila.
+Antes de dar corriente, coloca el puente `J1` según la alimentación elegida:
+`SÓLO USB` con cargador USB o powerbank, `BAT+CARG.` con MH-CD42 + LiPo. Qué va
+en cada borne, cómo funciona cada posición y los avisos de polaridad, en
+[Alimentación y el puente J1](../README.md#alimentaci%C3%B3n-y-el-puente-j1).
+A qué va cada conector de la PCB, en [Conectores](../README.md#conectores).
 
 ## Cómo leer `bom.csv`
 

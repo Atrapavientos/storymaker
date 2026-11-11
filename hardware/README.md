@@ -87,13 +87,26 @@ defecto, y salen a dos pads del dorso por si alguien quiere cambiarla.
 La alimentación entra por `BAT/USB`, pasa por el interruptor `INT` y llega a
 `J1`, que decide adónde va:
 
-| Posición de `J1` | Serigrafía | Qué conectar en `BAT/USB` | Cómo funciona |
-|---|---|---|---|
-| Arriba | `BAT+CARG.` | La **batería** de litio | La batería va al cargador, que la eleva a 5 V para todo el circuito. Por `USB` se carga |
-| Abajo | `SÓLO USB` | Una **fuente USB de 5 V** | Los 5 V van directos al circuito. El cargador no interviene y `USB` no se usa |
+| Posición de `J1` | Serigrafía | `BAT/USB` | `CARGADOR` | `USB` | Cómo funciona |
+|---|---|---|---|---|---|
+| Arriba | `BAT+CARG.` | La **batería** LiPo de una celda | Módulo MH-CD42 montado | Toma de carga | La batería va al cargador, que la eleva a 5 V para todo el circuito. Por `USB` se carga |
+| Abajo | `SÓLO USB` | Una **fuente USB de 5 V** o la salida de un powerbank | Vacío | Vacío | Los 5 V van directos al circuito |
 
-> **Pon `J1` antes de conectar nada.** Con el puente arriba, `BAT/USB` va al
-> pin de batería del cargador: una fuente de 5 V ahí puede dañarlo.
+Qué comprar para cada opción, en la [lista de materiales](bom/).
+
+> **Pon `J1` antes de conectar nada.**
+>
+> - Con el puente arriba, `BAT/USB` va al pin de batería del cargador: una
+>   fuente de 5 V ahí puede dañarlo.
+> - Con el puente abajo, una LiPo quedaría conectada directamente a los 5 V,
+>   sin pasar por el cargador.
+
+- **Respeta la polaridad.** La placa no tiene fusible ni diodo de protección:
+  con `J1` abajo, `BAT/USB` llega directo al raíl de 5 V que alimenta la Pi.
+- **Con `J1` abajo, no montes el cargador.** Su salida está siempre unida al
+  raíl de 5 V.
+- **Para cargar la LiPo, el interruptor tiene que estar cerrado.** `INT` está
+  entre la batería y el cargador; abierto, la batería queda desconectada.
 
 ---
 
