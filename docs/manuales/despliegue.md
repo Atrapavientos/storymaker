@@ -141,6 +141,10 @@ Cuando esté lista:
   conectarte y ese mismo QR.
 - Si hay **altavoz**, dice en voz alta a qué red conectarte.
 
+Con el **Voice HAT** en una Raspberry Pi 3, la caja reconoce el HAT y se
+reinicia una vez más para cargar su driver de audio: cuenta con un minuto
+extra antes de oír el aviso.
+
 ### 2.5 Conectarse al dispositivo
 
 Como todavía no conoce ninguna red, la máquina levanta su propia WiFi.
@@ -197,8 +201,9 @@ Al entrar por primera vez, el panel lleva directo al asistente. Tiene estos
 bloques:
 
 **Placa** — *StoryMaker (PCB del proyecto)* o *Voice HAT de Google con
-Raspberry Pi 3*, la alternativa solo con voz (ver `docs/hardware.md`). Cambiar
-de placa reinicia la caja.
+Raspberry Pi 3*, la alternativa solo con voz (ver `docs/hardware.md`). Si la
+caja ha reconocido el Voice HAT, ya viene marcado. Cambiar de placa reinicia la
+caja.
 
 **Pantalla e-ink** — actívala si la tienes conectada.
 
@@ -413,8 +418,9 @@ cd firmware/deploy
 ```
 
 El proceso limpia el dispositivo (WiFi, configuración, claves SSH, historial y
-registros), deja todas las salidas apagadas, sustituye `data/perfiles/` por los
-perfiles del repositorio, captura la tarjeta con `dd`, la encoge con `pishrink`
+registros), deja todas las salidas apagadas, devuelve `config.txt` y el audio a
+la placa del proyecto aunque la Pi de origen lleve el Voice HAT, sustituye
+`data/perfiles/` por los perfiles del repositorio, captura la tarjeta con `dd`, la encoge con `pishrink`
 y la comprime con `xz`. Los dos modos dejan la imagen igual, sea cual sea la Pi
 de la que salga.
 
@@ -487,9 +493,10 @@ Pico de consumo. Es justo lo que resuelve el condensador de 1000 µF en la
 alimentación. Revisa también que la fuente dé 2,5 A de verdad.
 
 **Quiero cambiar la máquina de red WiFi.**
-Mantén pulsado el botón **durante el arranque**, unos tres segundos. El LED
-parpadea despacio mientras lo detecta y rápido cuando está confirmado: suéltalo
-entonces. La máquina levanta `StoryMaker-Setup` y puedes volver a configurarla
+Enchufa la máquina **con el botón ya pulsado** y no lo sueltes: el botón se
+lee unos 20–30 segundos después, justo antes de que se conecte a la WiFi. El
+LED parpadea despacio mientras lo detecta y rápido cuando está confirmado:
+suéltalo entonces. Funciona igual con la placa del proyecto y con el Voice HAT. La máquina levanta `StoryMaker-Setup` y puedes volver a configurarla
 desde el [paso 2.5](#25-conectarse-al-dispositivo).
 
 **Quiero empezar de cero sin volver a grabar la tarjeta.**

@@ -22,6 +22,26 @@ PLACAS = {
 }
 
 
+# Los HAT oficiales llevan una EEPROM que el firmware de la Pi lee al arrancar
+# y publica en el device tree. El Voice HAT del kit AIY V1 se presenta como
+# «Google AIY audioHAT Board v1»; la PCB del proyecto no tiene EEPROM.
+RUTA_HAT = '/proc/device-tree/hat/product'
+HAT_PLACA = {'AIY audioHAT': 'voicehat_pi3'}
+
+
+def detectar_placa():
+    """Placa reconocida por la EEPROM del HAT, o None si no hay una conocida."""
+    try:
+        with open(RUTA_HAT, 'rb') as f:
+            producto = f.read().rstrip(b'\0').decode('utf-8', 'replace')
+    except OSError:
+        return None
+    for clave, placa in HAT_PLACA.items():
+        if clave in producto:
+            return placa
+    return None
+
+
 def placa_activa(config: dict):
     """Nombre de la placa, o None si no hay una elegida y válida.
 

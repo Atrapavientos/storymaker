@@ -15,18 +15,33 @@ for i in $(seq 1 10); do
     sleep 1
 done
 
-# ── Rescate AP: botón (GPIO5, activo LOW) pulsado al arrancar → forzar AP ──
+# ── Rescate AP: botón (activo LOW) pulsado al arrancar → forzar AP ──
 # Útil cuando la red del centro tiene client isolation y el portátil no alcanza la Pi.
 # Se mantiene pulsado durante el encendido (~3s) para activar el rescate.
+# El botón está en GPIO5 en la PCB y en GPIO23 en el Voice HAT, que se reconoce
+# por su EEPROM o por la placa guardada. Solo se lee config.json como JSON: nada
+# del proyecto se ejecuta como root. Hacerlo aquí y no en main.py es obligado:
+# el servicio corre como storymaker y polkit no le deja cambiar de red.
 FORCE_AP=false
 if python3 -c "
-import sys
+import sys, json
+pin = 5
+try:
+    if b'AIY audioHAT' in open('/proc/device-tree/hat/product', 'rb').read():
+        pin = 23
+except OSError:
+    pass
+try:
+    if json.load(open('/home/storymaker/proyecto/data/config.json')).get('placa') == 'voicehat_pi3':
+        pin = 23
+except Exception:
+    pass
 try:
     import RPi.GPIO as GPIO, time
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     time.sleep(0.3)
-    count = sum(1 for _ in range(10) if GPIO.input(5) == GPIO.LOW)
+    count = sum(1 for _ in range(10) if GPIO.input(pin) == GPIO.LOW)
     GPIO.cleanup()
     sys.exit(0 if count >= 7 else 1)
 except Exception:

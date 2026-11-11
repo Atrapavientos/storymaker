@@ -1,6 +1,34 @@
 # Changelog
 
-## Después de v2026-11-07
+## v2026-11-11 — imagen distribuible
+
+Release [`v2026-11-11`](https://codeberg.org/atrapavientos/storymaker/releases/tag/v2026-11-11),
+con la imagen de tarjeta y su checksum SHA256. Probada en una Raspberry Pi 3
+con el Voice HAT y en una Zero 2W con la placa del proyecto.
+
+### Firmware
+
+- **El Voice HAT se reconoce solo** por su EEPROM en el primer arranque: se
+  aplica su placa y la caja se reinicia una vez, así que el altavoz del HAT
+  suena desde el principio.
+- **El aviso del primer arranque suena con la voz de Elvira** también sin
+  internet (clips de `data/voz/`). En modo punto de acceso no hay red y antes
+  salía siempre con espeak.
+- **Contraseña WiFi errónea en el portal cautivo:** la caja repite por voz el
+  aviso del punto de acceso (sin tique ni e-ink).
+- **Rescate con el botón al arrancar en el Voice HAT:** lo hace ya
+  `storymaker-wifi.sh` para las dos placas. Antes lo intentaba el servicio, que
+  no tiene permiso para cambiar de red, y nunca funcionó.
+- Imagen: la limpieza devuelve `config.txt` y `asound.conf` a la placa del
+  proyecto aunque la Pi de origen lleve el Voice HAT.
+
+### Documentación
+
+- Manuales: el rescate con el botón se mantiene desde el encendido hasta el
+  parpadeo rápido (no «tres segundos»); el Voice HAT añade un reinicio al
+  primer arranque y viene marcado en el asistente.
+- `docs/hardware.md`: detección del HAT, rescate AP y aviso tras una contraseña
+  errónea.
 
 ### Contenido del repositorio
 
@@ -16,11 +44,12 @@
 
 ---
 
-## v2026-11-07 — imagen distribuible
+## v2026-11-07 — imagen distribuible (retirada)
 
-Release [`v2026-11-07`](https://codeberg.org/atrapavientos/storymaker/releases/tag/v2026-11-07),
-con la imagen de tarjeta y su checksum SHA256. Sustituye a `v2026-10-03`, que
-deja mudas las cajas con altavoz (edge-tts 7.2.8, rechazado por Microsoft).
+Sustituía a `v2026-10-03`, que dejaba mudas las cajas con altavoz (edge-tts
+7.2.8, rechazado por Microsoft). Checksum `19ba8a48…de7c`. **Retirada el
+2026-11-11** al publicarse `v2026-11-11`: aquí solo se mantiene la release más
+reciente.
 
 ### Firmware
 

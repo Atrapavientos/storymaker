@@ -260,9 +260,9 @@ conoce y levantará la suya para que la reconfigures.
 **`StoryMaker-Setup`** desde el móvil, conéctate (no tiene contraseña) y se
 abrirá sola la página para elegir la red nueva.
 
-**Si quieres forzarlo a propósito:** enchúfala **manteniendo el botón pulsado**
-unos tres segundos. El LED parpadea despacio mientras lo detecta y rápido
-cuando ya está: suelta entonces.
+**Si quieres forzarlo a propósito:** enchúfala **con el botón ya pulsado** y no
+lo sueltes hasta que el LED parpadee rápido, unos 20–30 segundos después. Antes
+parpadea despacio mientras lo detecta.
 
 Recuerda que la Pi Zero 2W **sólo se conecta a redes de 2,4 GHz**. Si el router
 del sitio nuevo sólo da 5 GHz, no la verá.

@@ -26,28 +26,7 @@ from modules.boton          import Boton, detectar_boton_arranque, SimpleLED
 from modules.salidas        import RouterSalidas
 from modules.portal         import (Portal, reinicio_pendiente, leer_marca_reinicio,
                                     publicar_premisa)
-from modules.placas         import PLACAS, placa_activa, filtrar_hardware
-
-
-def _forzar_ap():
-    """Desconecta el WiFi de cliente y activa el AP StoryMaker-Setup."""
-    try:
-        result = subprocess.run(
-            ['nmcli', '-t', '-f', 'NAME,TYPE', 'connection', 'show', '--active'],
-            capture_output=True, text=True, timeout=5
-        )
-        for line in result.stdout.splitlines():
-            if line.endswith(':802-11-wireless'):
-                name = line[:-len(':802-11-wireless')]
-                if name != 'StoryMaker-Setup':
-                    print(f"[Main] Bajando conexión WiFi: {name}")
-                    subprocess.run(['nmcli', 'connection', 'down', name],
-                                   capture_output=True, timeout=5)
-        subprocess.run(['nmcli', 'connection', 'up', 'StoryMaker-Setup'],
-                       capture_output=True, timeout=5)
-        print("[Main] Modo AP forzado.")
-    except Exception as e:
-        print(f"[Main] Error al forzar AP: {e}")
+from modules.placas         import PLACAS, placa_activa, filtrar_hardware, detectar_placa
 
 
 generador = None
@@ -165,6 +144,38 @@ def _migrar_perfil_1eso():
         print(f"[Main] AVISO: no se ha podido renombrar el perfil '1eso': {e}")
 
 
+def _autodetectar_placa(config):
+    """Primer arranque de una imagen recién grabada: la imagen sale preparada
+    para la PCB, así que en una Pi 3 con el Voice HAT el altavoz no tendría
+    driver y la caja no podría decir a qué red conectarse. Si el HAT se
+    identifica por su EEPROM, se aplica su placa y se reinicia una vez.
+
+    Solo actúa sin placa guardada y con el setup sin completar. La placa se
+    guarda antes de reiniciar, así que no puede entrar en bucle."""
+    if 'placa' in config or config.get('setup_completado', False):
+        return
+    placa = detectar_placa()
+    if not placa:
+        return
+    print(f"[Main] Detectada la placa '{placa}' por la EEPROM del HAT. Aplicándola...")
+    try:
+        r = subprocess.run(['sudo', '-n', '/usr/local/bin/storymaker-perfil.sh', placa],
+                           capture_output=True, text=True, timeout=30)
+    except Exception as e:
+        print(f"[Main] AVISO: no se ha podido aplicar la placa: {e}. Se elige en el portal.")
+        return
+    if r.returncode != 0:
+        print(f"[Main] AVISO: storymaker-perfil.sh falló ({r.returncode}): "
+              f"{(r.stderr or '').strip()}. Se elige en el portal.")
+        return
+    config['placa'] = placa
+    guardar_config(config)
+    print("[Main] Placa aplicada. Reiniciando la Pi para cargar su driver de audio...")
+    subprocess.run(['sudo', '-n', '/usr/sbin/shutdown', '-r', 'now'], check=False)
+    time.sleep(60)   # que el reinicio llegue antes de seguir arrancando
+    sys.exit(0)
+
+
 def main():
     global generador, router, boton
 
@@ -181,6 +192,9 @@ def main():
         print(f"[Main] ERROR CRÍTICO: {e}")
         sys.exit(1)
 
+    # 1.4 Placa reconocible por su EEPROM (Voice HAT) en el primer arranque
+    _autodetectar_placa(config)
+
     # 1.5 Detección de botón al arranque → forzar AP
     # Sin placa elegida no se toca ni botón ni LED (ver modules/placas.py)
     placa = placa_activa(config)
@@ -188,11 +202,17 @@ def main():
         print(f"[Main] Placa: {placa}")
         pin_boton = PLACAS[placa]['boton']
         pin_led   = PLACAS[placa]['led']
+        # El AP de rescate lo levanta storymaker-wifi.sh, como root, antes de
+        # este servicio: desde aquí polkit no deja cambiar de red. Esto solo
+        # da la señal del LED y avisa si el botón no se pulsó a tiempo.
         if detectar_boton_arranque(pin_boton, pin_led=pin_led):
-            _forzar_ap()
-            # 3 parpadeos lentos: AP activo
-            _led_boot = SimpleLED(pin_led)
-            _led_boot.blink(on_time=0.4, off_time=0.4, n=3)
+            if os.path.exists('/run/storymaker-ap-mode'):
+                # 3 parpadeos lentos: AP activo
+                _led_boot = SimpleLED(pin_led)
+                _led_boot.blink(on_time=0.4, off_time=0.4, n=3)
+            else:
+                print("[Main] Botón pulsado, pero el AP no está activo: hay que "
+                      "mantenerlo desde el encendido, antes de que conecte la WiFi.")
     else:
         print("[Main] Placa sin elegir: botón y LED desactivados hasta configurarla.")
 
@@ -243,13 +263,9 @@ def main():
         except Exception as e:
             print(f"[Main] Audio no disponible en setup: {e}")
 
+        from modules import anuncio_red
+
         def _anunciar_setup(modo, ip):
-            if modo == 'ap':
-                texto_audio = "Conecta tu movil a la red StoryMaker-Setup para configurar el WiFi."
-            elif modo == 'client' and ip:
-                texto_audio = f"StoryMaker esta en linea. Accede al portal en la direccion {ip}, puerto cinco mil."
-            else:
-                texto_audio = None
 
             if pantalla_setup:
                 try:
@@ -257,9 +273,13 @@ def main():
                 except Exception as e:
                     print(f"[Main] E-ink setup error: {e}")
 
-            if texto_audio and audio_setup:
+            # Con los clips grabados con la voz de Elvira (data/voz), como las
+            # cajas solo con altavoz: en modo AP no hay internet y edge-tts no
+            # puede sonar, así que el primer aviso salía siempre con espeak.
+            # Si falta algún clip, anuncio_red lo dice con espeak.
+            if audio_setup and modo in ('ap', 'client'):
                 try:
-                    audio_setup.hablar(texto_audio)
+                    anuncio_red._anunciar(audio_setup, (modo, ip))
                 except Exception as e:
                     print(f"[Main] Audio anuncio error: {e}")
 
@@ -280,6 +300,7 @@ def main():
 
         # Capturar modo ANTES del anuncio para evitar race condition en _modo_red
         _modo_red = get_wifi_mode()
+        _sesion_ap = anuncio_red._sesion_ap()
         _anunciar_setup(modo=_modo_red, ip=get_ip())
 
         signal.signal(signal.SIGINT,  cleanup)
@@ -288,9 +309,22 @@ def main():
             time.sleep(5)
             try:
                 modo_actual = get_wifi_mode()
+                sesion_actual = anuncio_red._sesion_ap()
                 if modo_actual != _modo_red and modo_actual in ('client', 'ap'):
-                    _modo_red = modo_actual
+                    _modo_red, _sesion_ap = modo_actual, sesion_actual
                     _anunciar_setup(modo=_modo_red, ip=get_ip())
+                elif modo_actual == 'ap' and sesion_actual != _sesion_ap:
+                    # Contraseña WiFi errónea: el AP cae unos 5 s y el cautivo
+                    # lo reactiva, demasiado rápido para verlo como cambio de
+                    # modo. La marca /run/storymaker-ap-mode se renueva, y eso
+                    # sí se ve. Solo se repite la voz: ni tique ni e-ink.
+                    _sesion_ap = sesion_actual
+                    print("[Main] El AP ha vuelto (¿contraseña WiFi errónea?): se repite el aviso.")
+                    if audio_setup:
+                        try:
+                            anuncio_red._anunciar(audio_setup, ('ap', sesion_actual))
+                        except Exception as e:
+                            print(f"[Main] Audio anuncio error: {e}")
 
                 config_nueva = cargar_config()
                 # Con un cambio de placa, el portal reinicia la Pi entera

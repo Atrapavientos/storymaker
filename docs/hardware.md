@@ -63,12 +63,27 @@ asistente (`/setup` → Placa) y `storymaker-perfil.sh` cambia el overlay y el
   nombra en vez de usar `hw:0`.
 - **Formato:** solo S32_LE, 48000 Hz, 2 canales. Sin controles de mezclador: el
   volumen lo aplican `mpg123 -f` y la amplitud de espeak.
-- **Sin placa elegida** (imagen recién grabada) el firmware no toca ni el botón
-  ni el LED: GPIO23 cambia de sentido entre las dos placas, y ponerlo en alto
-  como LED con el botón del HAT pulsado lo cortocircuitaría a masa.
-- **Rescate AP con el botón al arrancar:** `storymaker-wifi.sh` solo mira GPIO5,
-  así que en el HAT lo hace `main.py` al arrancar el servicio (botón en GPIO23
-  mantenido 3 s).
+- **Detección automática.** El HAT lleva una EEPROM que se presenta como
+  «Google AIY audioHAT Board v1» (`/proc/device-tree/hat/product`). En el primer
+  arranque de una imagen recién grabada, sin placa guardada, `main.py` la
+  reconoce, aplica `voicehat_pi3` con `storymaker-perfil.sh` y reinicia una vez:
+  así el altavoz tiene driver y la caja puede decir a qué red conectarse desde
+  el principio. La PCB del proyecto no tiene EEPROM y sigue el camino normal.
+- **Sin placa elegida** (imagen recién grabada y ningún HAT reconocido) el
+  firmware no toca ni el botón ni el LED: GPIO23 cambia de sentido entre las dos
+  placas, y ponerlo en alto como LED con el botón del HAT pulsado lo
+  cortocircuitaría a masa.
+- **Rescate AP con el botón al arrancar:** lo hace `storymaker-wifi.sh`, como
+  root y antes del servicio, leyendo GPIO23 si reconoce el HAT (por su EEPROM o
+  por la placa guardada) y GPIO5 en la PCB. El botón se mantiene pulsado desde
+  el encendido; `main.py` solo da la señal del LED. Antes lo intentaba
+  `main.py`, pero el servicio corre como `storymaker` y polkit no le deja
+  cambiar de red.
+- **Contraseña WiFi errónea en el primer arranque:** el AP cae unos 5 s y el
+  portal cautivo lo reactiva renovando `/run/storymaker-ap-mode`. El modo de
+  configuración de `main.py` vigila esa marca y repite el aviso por voz (sin
+  tique ni e-ink). Los avisos usan los clips de `data/voz/`, que suenan sin
+  internet: en modo AP edge-tts no puede funcionar.
 - **Raspberry Pi 3 Model B (sin «+»):** su WiFi solo ve redes de 2,4 GHz.
 - **Dictado de la dirección:** sin e-ink ni impresora, la caja dice por voz el
   AP al que conectarse o su IP con el puerto 5000, cada vez que cambia la red

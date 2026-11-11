@@ -81,6 +81,11 @@ fi
 # por qué viajar en una imagen distribuible.
 find "${ROOTFS}/home/storymaker/proyecto/data/perfiles" -name '*.txt.bak' -delete 2>/dev/null || true
 
+# asound.conf de la PCB, como en limpiar_pi.sh; config.txt está en la
+# partición de arranque y lo devuelve crear_imagen.sh
+ASOUND_PCB="${ROOTFS}/usr/local/share/storymaker/asound/storymaker_pcb.conf"
+[ -f "$ASOUND_PCB" ] && install -m 0644 "$ASOUND_PCB" "${ROOTFS}/etc/asound.conf"
+
 # ── [3] Claves SSH autorizadas del usuario ───────────────────────────
 echo "[3/8] Borrando authorized_keys de storymaker..."
 AUTH_KEYS="${ROOTFS}/home/storymaker/.ssh/authorized_keys"

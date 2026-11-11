@@ -162,6 +162,18 @@ if [ "$LOCAL" = true ]; then
     sudo chown -R 1000:1000 "${ROOTFS}${PERFILES_PI}"
     echo "      → Perfiles de fábrica: $(ls "$PERFILES_REPO" | tr '\n' ' ')"
     sudo bash "${SCRIPT_DIR}/limpiar_montada.sh" "$ROOTFS"
+
+    # config.txt de vuelta a la PCB (misma lógica que storymaker-perfil.sh):
+    # quita el bloque del Voice HAT y las marcas que comentan los overlays
+    BOOT_PART="${ROOT_PART%2}1"
+    BOOTFS=$(mktemp -d /tmp/storymaker-boot-XXXXXX)
+    sudo mount "$BOOT_PART" "$BOOTFS"
+    sudo sed -i -e '/^# >>> storymaker placa$/,/^# <<< storymaker placa$/d' \
+                -e 's/^#storymaker-off# //' "${BOOTFS}/config.txt"
+    sudo rm -f "${BOOTFS}/config.txt.storymaker.bak"
+    echo "      → config.txt de la PCB"
+    sudo umount "$BOOTFS"
+    rmdir "$BOOTFS"
     sudo umount "$ROOTFS"
     rmdir "$ROOTFS"
 

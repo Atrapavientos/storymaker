@@ -76,6 +76,17 @@ fi
 # por qué viajar en una imagen distribuible.
 sudo find "/home/storymaker/proyecto/data/perfiles" -name '*.txt.bak' -delete 2>/dev/null || true
 
+# La imagen sale para la PCB: config.json ya no lleva placa, y config.txt y
+# asound.conf tienen que coincidir. Si la Pi usada tenía el Voice HAT, la
+# imagen arrancaría en una Zero 2W con el overlay del HAT y sin sonido. En el
+# primer arranque, un Voice HAT se reconoce por su EEPROM y se vuelve a aplicar.
+if [ -x /usr/local/bin/storymaker-perfil.sh ]; then
+    sudo /usr/local/bin/storymaker-perfil.sh storymaker_pcb \
+        && echo "      → config.txt y asound.conf de la PCB" \
+        || { echo "ERROR: no se ha podido devolver config.txt a la PCB"; exit 1; }
+    sudo rm -f /boot/firmware/config.txt.storymaker.bak
+fi
+
 # ── [2] Claves SSH autorizadas del usuario ───────────────────────────
 echo "[2/8] Borrando authorized_keys de storymaker..."
 > /home/storymaker/.ssh/authorized_keys 2>/dev/null \
