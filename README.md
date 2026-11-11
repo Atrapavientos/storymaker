@@ -65,3 +65,11 @@ CC BY-SA 4.0.
 ## Créditos
 
 Ver [`CREDITS.md`](CREDITS.md).
+
+---
+
+## Dudas y contacto
+
+- **Incidencias** de este repositorio, para errores y propuestas que puedan
+  servir a más gente.
+- **Correo:** profektor@tuta.com, para lo demás.

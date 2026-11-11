@@ -1,8 +1,9 @@
 # Artes gráficas
 
 Diseños para la caja de cartón de la máquina: troqueles, ilustraciones y
-prototipos. Son obra del alumnado y el profesorado de Artes Gráficas del
-**IES Pilar Lorengar** (Zaragoza).
+prototipos. Son obra del alumnado y el profesorado del módulo Diseño
+Estructural de Envases y Embalajes, de 2.º curso de Grado Superior de Artes
+Gráficas, del **IES Pilar Lorengar** (Zaragoza).
 
 Hay seis modelos, cada uno con su propia estética. Cualquiera de ellos sirve
 para vestir la misma máquina.

@@ -1,17 +1,20 @@
 # Créditos
 
-> **Nota:** la redacción exacta de estos créditos está pendiente de confirmación
-> con la Asociación Atrapavientos antes de la publicación definitiva.
-
 **Creado por:** Asociación Atrapavientos (Zaragoza).
 
 **Proyecto de innovación en FP**, Gobierno de Aragón —
 Departamento de Educación, Cultura y Deporte.
 
 **Centros de FP participantes:**
-- IES Pablo Serrano
-- IES Virgen del Pilar
-- IES Pilar Lorengar
+
+- **IES Pablo Serrano**, centro coordinador del proyecto. Ciclo de Grado
+  Superior en Automatización y Robótica Industrial (ELE303).
+  Responsable: Héctor Ríos.
+- **IES Virgen del Pilar**. Ciclo de Grado Medio en Conformado por Moldeo de
+  Metales y Polímeros (FME201). Responsable: Juan Carlos Lacave.
+- **IES Pilar Lorengar**. Módulo Diseño Estructural de Envases y Embalajes,
+  de 2.º curso de Grado Superior de Artes Gráficas. Profesorado: Fernando
+  Bueno, Jesús Fernández y Jonás Pérez.
 
 **Con la colaboración de:** CIFPA (Centro de Innovación para la FP de Aragón) e IDEA FP.
 
@@ -20,7 +23,8 @@ Departamento de Educación, Cultura y Deporte.
 ## Artes gráficas
 
 Diseños de la caja de cartón (troqueles, ilustraciones y prototipos) del
-alumnado y profesorado de Artes Gráficas del **IES Pilar Lorengar**.
+alumnado y profesorado del módulo Diseño Estructural de Envases y Embalajes
+(2.º de Grado Superior de Artes Gráficas) del **IES Pilar Lorengar**.
 
 Detalle por modelo, licencia y elementos de terceros en
 [`artes-graficas/README.md`](artes-graficas/README.md).
@@ -47,6 +51,7 @@ del proyecto.
 
 Cajas de madera y acrílico para corte láser, con las bisagras, esquineras y
 marcos impresos en 3D del modelo de acrílico, del alumnado y profesorado del
+ciclo de Conformado por Moldeo de Metales y Polímeros del
 **IES Virgen del Pilar**.
 
 Detalle por modelo, piezas y licencia en

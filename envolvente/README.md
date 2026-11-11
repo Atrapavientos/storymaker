@@ -15,7 +15,8 @@ a mano, hay dos alternativas:
 - **Acrílico**, de corte láser, con bisagras y esquineras impresas en 3D.
 
 Las tres son un cubo de 160 mm. Las de madera y acrílico son obra del
-alumnado y el profesorado del **IES Virgen del Pilar** (Zaragoza), con tapa
+alumnado y el profesorado del ciclo de Grado Medio en Conformado por Moldeo de
+Metales y Polímeros del **IES Virgen del Pilar** (Zaragoza), con tapa
 abatible; en la tapa van la ventana de la pantalla e-ink y el hueco del botón,
 y en un lateral, dos orificios más.
 
