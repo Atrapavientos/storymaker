@@ -116,10 +116,13 @@ No hace falta descomprimir el `.xz`: el Imager lo hace solo.
    → selecciona el `.img.xz` descargado.
 4. **Almacenamiento** → tu tarjeta microSD. Mira dos veces que es la tarjeta y
    no un disco externo: se borra entera.
-5. **Siguiente** → cuando pregunte si quieres personalizar los ajustes,
-   responde **NO**. La imagen ya trae su configuración, y personalizarla la
-   rompe.
+5. **Siguiente** → **Escribir**. El paso *Personalización* aparece en gris y
+   el Imager se lo salta: con una imagen personalizada no se puede usar, y no
+   hace falta, porque la imagen ya trae su configuración.
 6. Espera a que grabe y verifique (5–10 minutos).
+
+> Con versiones antiguas del Imager (la 1.x) sí sale una pregunta sobre
+> personalizar los ajustes. Responde **NO**: personalizarla rompe la imagen.
 
 ### 2.4 Primer arranque
 
@@ -133,9 +136,10 @@ Cuando esté lista:
 
 - El **LED de estado** se queda fijo encendido.
 - Si hay **pantalla e-ink**, muestra la pantalla de bienvenida con un código QR
-  y la dirección a la que conectarse.
-- Si hay **impresora**, imprime un tique con esa misma dirección y su QR.
-- Si hay **altavoz**, lo dice en voz alta.
+  para configurar la WiFi.
+- Si hay **impresora**, imprime un tique con el nombre de la red a la que
+  conectarte y ese mismo QR.
+- Si hay **altavoz**, dice en voz alta a qué red conectarte.
 
 ### 2.5 Conectarse al dispositivo
 
@@ -161,17 +165,26 @@ La pantalla pasa a *Conectando...*. Si la contraseña era incorrecta o la red no
 responde, al cabo de unos segundos vuelve al formulario con un aviso en rojo y
 la red ya seleccionada, lista para reintentar.
 
-Si va bien, aparece una pantalla de éxito con la dirección del panel de
-control: **`http://storymaker.local:5000`**. Apúntala.
+Si va bien, la máquina apaga su red `StoryMaker-Setup` para conectarse a la
+tuya, así que **lo normal es que la página del móvil se cierre sola** sin
+llegar a mostrar ningún mensaje de éxito. No es un fallo: el aviso lo da la
+propia máquina, que en unos segundos anuncia su nueva dirección:
+
+- En la **pantalla e-ink**, con un QR que lleva al panel de control.
+- En un **tique**, con la dirección numérica (`http://192.168.x.x:5000`), la
+  alternativa **`http://storymaker.local:5000`** y el mismo QR.
+- Por el **altavoz**, dictando la dirección.
+
+Apunta la dirección numérica: es la que funciona en cualquier red.
 
 ### 2.7 Entrar al panel de control
 
 1. Vuelve a conectar el móvil o el portátil a **la WiFi normal del centro** (la
    misma a la que acabas de conectar la máquina).
-2. Abre `http://storymaker.local:5000`.
+2. Escanea el QR o abre `http://storymaker.local:5000`.
 
 Si el navegador no encuentra esa dirección, es que la red del centro no resuelve
-nombres `.local`. Busca la IP del dispositivo en el router y entra por
+nombres `.local`. Entra por la dirección numérica que te ha dado la máquina,
 `http://<ip>:5000`. Pasa sobre todo en redes con aislamiento de clientes.
 
 La pantalla de acceso pide un PIN. **En el primer arranque, la propia página
@@ -444,7 +457,9 @@ vuelve a configurar la red.
 
 **`storymaker.local` no resuelve.**
 La red del centro no pasa mDNS, cosa habitual con aislamiento de clientes.
-Busca la IP en el router y entra por `http://<ip>:5000`.
+Entra por la dirección numérica, `http://<ip>:5000`. La máquina la anuncia al
+arrancar (en la e-ink, en el tique y por voz); si no tienes ninguna de esas
+salidas, búscala en el router.
 
 **La e-ink se queda en blanco o con la imagen anterior.**
 Esta pantalla **no admite refresco parcial**; cada actualización es un refresco
