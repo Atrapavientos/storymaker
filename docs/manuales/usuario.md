@@ -6,6 +6,20 @@ informática ni de electrónica.
 Si todavía no la has instalado, empieza por el
 [manual de despliegue](despliegue.md).
 
+> **En cinco minutos.**
+>
+> - **Encender:** enchúfala y espera a que el LED se quede fijo, un minuto.
+> - **Generar:** pulsa el botón. La premisa sale por la pantalla, el tique o
+>   el altavoz, según lo que tenga la máquina.
+> - **Apagar:** mantén el botón dos segundos y espera a que el LED se apague.
+> - **Cambiar las frases o el perfil:** desde el móvil, en la misma WiFi, en
+>   `http://storymaker.local:5000` ([punto 5](#5-el-panel-de-control)).
+> - **Cuántas premisas da una sesión:** tantas como frases tenga la lista más
+>   corta ([punto 9](#9-cuando-se-agotan-las-combinaciones)).
+>
+> El resto del manual es eso mismo con detalle, y lo que hacer cuando algo no
+> va.
+
 ---
 
 ## 1. Qué hace la máquina

@@ -1,6 +1,6 @@
-# Errores conocidos / qué evitar
+# Trampas encontradas en el desarrollo
 
-Puntos críticos detectados durante el desarrollo; documentados aquí para no repetirlos.
+Puntos críticos detectados al desarrollar el firmware, documentados para no repetirlos. Los problemas de uso están en los manuales.
 
 - **Driver e-ink:** usar la secuencia de init oficial **WeAct SSD1683**, nunca la de
   Waveshare/SSD1619. Son incompatibles aunque el hardware parezca similar.

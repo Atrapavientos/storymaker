@@ -1,4 +1,4 @@
-# Hardware — StoryMaker
+# Referencia de hardware
 
 ## OS
 Raspberry Pi OS Lite 64-bit Bookworm (estable)

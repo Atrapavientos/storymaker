@@ -92,26 +92,10 @@ puntuación final y los conflictos cierran la frase con punto.
 
 ### Importar premisas en bloque
 
-Desde el portal, `⇪ Importar .txt` abre un asistente de tres pasos en `/importar`:
-
-1. **Destino** — un perfil existente, o uno nuevo que se crea en el momento
-   (con opción de dejarlo como perfil activo al terminar).
-2. **Modo** — *añadir al final* (por defecto) o *reemplazar la lista*. En un
-   perfil nuevo el paso no aplica.
-3. **Textos** — un `.txt` por categoría, o la lista pegada a mano. Si se
-   rellenan ambos para la misma categoría, se concatenan. Las categorías que se
-   dejan vacías no se modifican.
-
-Antes de escribir nada se muestra una **revisión**: cuántas frases entran, qué
-se descarta (repetidas, ya existentes, demasiado largas) y cómo queda cada
-categoría. Al confirmar se guarda un `<tipo>.txt.bak` por categoría tocada, de
-modo que el botón **Deshacer** devuelve las listas a su estado anterior
-(un solo nivel: la siguiente importación lo sustituye).
-
-Si el destino es el perfil activo, el generador se recarga al confirmar, lo que
-reinicia el recuento de combinaciones de la sesión en curso.
-
-Límites: 3 MB por envío, 5000 frases por categoría, 300 caracteres por frase.
+`⇪ Importar .txt` en el portal (`/importar`): tres pasos, revisión antes de
+escribir y un nivel de deshacer mediante `<tipo>.txt.bak`. Cómo se usa, en el
+[manual de usuario](../docs/manuales/usuario.md#8-importar-listas-desde-un-txt);
+las decisiones de diseño, en [`docs/decisiones.md`](../docs/decisiones.md).
 
 ## Despliegue
 

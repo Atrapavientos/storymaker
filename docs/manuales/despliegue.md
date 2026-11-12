@@ -3,6 +3,20 @@
 Cómo pasar de una Raspberry Pi y una tarjeta SD en blanco a una máquina de
 generar historias funcionando.
 
+> **En cinco minutos.** Si la máquina ya está montada y solo quieres ponerla
+> en marcha:
+>
+> 1. Descarga la imagen de la sección **Releases** ([2.1](#21-descargar-la-imagen)).
+> 2. Grábala en la tarjeta con Raspberry Pi Imager ([2.3](#23-grabar-la-tarjeta)).
+> 3. Enchufa la Pi, espera dos minutos y conecta el móvil a la WiFi
+>    `StoryMaker-Setup` ([2.5](#25-conectarse-al-dispositivo)).
+> 4. Elige la red de tu centro en la página que se abre ([2.6](#26-elegir-la-red-wifi-del-centro)).
+> 5. Entra en `http://storymaker.local:5000` con el PIN que muestra la propia
+>    página y completa el asistente ([2.7](#27-entrar-al-panel-de-control) y [2.8](#28-asistente-de-configuración-inicial)).
+>
+> Eso es la Ruta A entera. Lo de abajo es lo mismo, con capturas y con qué
+> hacer cuando algo no sale.
+
 Hay **dos caminos**, y conviene elegir antes de empezar:
 
 | | **Ruta A — desde la imagen publicada** | **Ruta B — desde cero** |
@@ -45,35 +59,22 @@ soldaduras. Sin pantalla ni impresora, la caja dice en voz alta a qué red
 conectarse y en qué dirección está su panel. Se elige en el asistente (2.8);
 pines y detalles en [`docs/hardware.md`](../hardware.md).
 
-### Conexiones (numeración BCM)
+### Conexiones
 
-| Función | GPIO | Pin físico |
-|---|---|---|
-| Botón | 5 | 29 |
-| LED de estado | 23 | 16 |
-| E-ink DC | 25 | 22 |
-| E-ink RST | 17 | 11 |
-| E-ink BUSY | 24 | 18 |
-| E-ink MOSI (SPI0) | 10 | 19 |
-| E-ink CLK (SPI0) | 11 | 23 |
-| E-ink CS (SPI0 CE0) | 8 | 24 |
-| Impresora TX | 14 | 8 |
-| Impresora RX | 15 | 10 |
-| Audio BCLK (I2S) | 18 | 12 |
-| Audio LRCLK (I2S) | 19 | 35 |
-| Audio DATA (I2S) | 21 | 40 |
+Con la placa base del proyecto no hay que mirar pines: cada periférico va a
+su conector, rotulado en la serigrafía. Qué se conecta en cada uno, en
+[Conectores](../../hardware/README.md#conectores); ahí están también los
+GPIO de la Raspberry Pi, por si montas sin la placa.
 
-El botón va a masa con resistencia de *pull-up* interna: es activo a nivel bajo.
-La impresora térmica **necesita su propia alimentación**; no tires de los 5 V de
-la Pi para moverla.
+La impresora térmica **necesita alimentación aparte de la Pi**: con la placa,
+va por su conector `PRINTER`; sin ella, directa a los 5 V de la fuente.
 
 ![Interior de la caja visto desde arriba: la Raspberry Pi Zero 2W sobre la placa del proyecto, con el amplificador morado y el cargador insertados, un portapilas con dos baterías 18650 a la derecha, el conector de carga arriba y el altavoz abajo, todo unido con cables a las bornas de tornillo verdes](../galeria/despliegue-01-cableado.jpg)
 
 ### Software en tu ordenador
 
 - **Ruta A:** [Raspberry Pi Imager](https://www.raspberrypi.com/software/).
-- **Ruta B:** además, Linux con `bash`, `ssh`, `rsync` y `openssl`. Para generar
-  imágenes, también `pishrink.sh` y `xz`.
+- **Ruta B:** además, Linux con `bash`, `ssh`, `rsync` y `openssl`.
 
 ---
 
@@ -233,18 +234,12 @@ vale para la QR701 y la QR204; cámbialo sólo si tu modelo pide otro.
 **PIN de acceso al portal** — opcional. De 4 a 8 dígitos. Si lo dejas vacío, se
 queda como está.
 
-**Contraseña del dispositivo** — **obligatoria, y no es opcional por un motivo
-concreto.** La imagen que has descargado es pública y todas las unidades
-instaladas desde ella arrancan con la misma contraseña. Mientras no pongas una
-propia, cualquiera que esté en la misma red y haya leído la documentación puede
-entrar por SSH a tu aparato. Y quien entra por SSH puede leer las claves WiFi
-guardadas en el sistema: no es la máquina lo que está en juego, es la
-contraseña de la red del centro.
-
-Por eso el asistente no deja terminar sin cambiarla. Mínimo 6 caracteres, sin
-espacios. Elige una que puedas
-recordar o apuntar en algún sitio; la necesitarás si algún día quieres entrar
-por SSH, y no hay forma de recuperarla sin volver a grabar la tarjeta.
+**Contraseña del dispositivo** — **obligatoria.** La imagen es pública y
+todas las máquinas grabadas con ella arrancan con la misma contraseña; quien
+la conozca y esté en tu red podría entrar al aparato y leer la clave WiFi del
+centro. Mínimo 6 caracteres, sin espacios. Apúntala: solo la necesitarás si
+algún día entras por SSH, pero no se puede recuperar sin volver a grabar la
+tarjeta. El detalle, en [`docs/sistema.md`](../sistema.md#acceso-y-credenciales).
 
 Pulsa el botón de guardar. El servicio se reinicia solo y te deja en el panel.
 
@@ -420,57 +415,7 @@ Si no sale nada, `--solo-firmware` es suficiente.
 
 ---
 
-## 5. Crear una imagen distribuible
-
-Para empaquetar un dispositivo ya configurado como imagen `.img.xz`.
-
-**Requisito previo**, una sola vez:
-
-```bash
-wget https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh
-chmod +x pishrink.sh && sudo mv pishrink.sh /usr/local/bin/
-```
-
-Dos modos:
-
-```bash
-cd firmware/deploy
-./crear_imagen.sh 192.168.1.XX   # limpia la Pi por SSH y la apaga
-./crear_imagen.sh --local        # la Pi ya está apagada y la SD en el PC
-```
-
-El proceso limpia el dispositivo (WiFi, configuración, claves SSH, historial y
-registros), deja todas las salidas apagadas, devuelve `config.txt` y el audio a
-la placa del proyecto aunque la Pi de origen lleve el Voice HAT, sustituye
-`data/perfiles/` por los perfiles del repositorio, captura la tarjeta con `dd`, la encoge con `pishrink`
-y la comprime con `xz`. Los dos modos dejan la imagen igual, sea cual sea la Pi
-de la que salga.
-
-**Antes de capturar, verifica la tarjeta a mano.** Monta la partición raíz en
-sólo lectura y comprueba que no quedan claves de host SSH, que
-`authorized_keys` y `.bash_history` están vacíos, que ha desaparecido
-`/etc/sudoers.d/010_pi-nopasswd`, que `storymaker-setpass` sigue instalado, que
-sólo queda el perfil de red del punto de acceso y que `config.json` tiene
-`setup_completado: false`.
-
-Ese paso es el que detecta los fallos de limpieza. No es teórico: durante meses
-la limpieza se ejecutó a medias sin que nadie lo notara, precisamente porque
-nadie miraba.
-
-> **Después de capturar, la tarjeta queda inservible tal cual.** El sistema de
-> ficheros se ha encogido al mínimo y el gancho que lo vuelve a expandir lo
-> añade `pishrink` a la imagen, no a la tarjeta. Vuelve a grabarla con la imagen
-> recién generada antes de usar esa Pi otra vez.
-
-Por último, genera la huella que acompaña a la descarga:
-
-```bash
-sha256sum storymaker-$(date +%F).img.xz | tee storymaker-$(date +%F).img.xz.sha256
-```
-
----
-
-## 6. Problemas frecuentes
+## 5. Problemas frecuentes
 
 **El LED no se enciende nunca y no aparece la red `StoryMaker-Setup`.**
 La tarjeta no arrancó. Vuelve a grabarla y comprueba la huella SHA256 del
@@ -528,9 +473,10 @@ perfiles.**
 
 ---
 
-## 7. Dónde está cada cosa
+## 6. Dónde está cada cosa
 
 - Qué queda instalado en el sistema operativo: [`../sistema.md`](../sistema.md)
 - Pinout y periféricos: [`../hardware.md`](../hardware.md)
 - Por qué el firmware está hecho así: [`../decisiones.md`](../decisiones.md)
+- Generar una imagen distribuible nueva: [`../desarrollo.md`](../desarrollo.md)
 - Cómo se usa en el taller: [`usuario.md`](usuario.md)

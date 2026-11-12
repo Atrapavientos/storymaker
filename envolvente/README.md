@@ -86,7 +86,10 @@ tres. Cada pieza se llama igual en todas: `tapa.dxf`, `tapa.iges` y
 - **Con Bambu Studio u OrcaSlicer:** abre
   [`storymaker-set-completo.3mf`](02%20producci%C3%B3n/00%20Impresa%20en%203D/3mf/storymaker-set-completo.3mf)
   y lamina la placa de tu versión, más las de accesorios que necesites
-  (placas 8 a 10, ver [Versiones](#versiones)).
+  (placas 8 a 10, ver [Versiones](#versiones)). El proyecto está preparado
+  para una Bambu Lab P1S y no viene laminado: si tu impresora es otra, ajusta
+  su perfil antes. Los STL son el diseño de referencia; el 3MF se rehace a
+  partir de ellos.
 - **Con cualquier otro laminador:** imprime el STL de la caja de tu versión y
   [`accesorios.stl`](02%20producci%C3%B3n/00%20Impresa%20en%203D/stl/accesorios.stl),
   quitando las piezas que no te hagan falta (ver [Accesorios](#accesorios)).
@@ -105,15 +108,19 @@ tres. Cada pieza se llama igual en todas: `tapa.dxf`, `tapa.iges` y
 | Impresora + altavoz | | ✔ | ✔ | `caja_imp-alt.stl` | 6 | — |
 | Las tres | ✔ | ✔ | ✔ | `caja_imp-alt-eink.stl` | 7 | Marco del e-ink |
 
+Todas las cajas miden 160 × 160 × 160 mm. `accesorios.stl` agrupa los 38
+accesorios en una sola placa (467 × 497 × 36). Cada fichero tiene su vista con
+el mismo nombre en `03 imágenes/00 Impresa en 3D/`; las placas 8 a 10 del 3MF,
+en `marco_eink.png`, `accesorios.png` y `tapa_tornillos.png`.
+
 Todas llevan además la **tapa inferior** y **4 tornillos cortos** (placa 10),
 **4 patas bajas** para la placa base y, si usas powerbank, **4 patas altas**
 (placa 9). El marco del e-ink está en la placa 8. La tornillería comercial,
 en [Tornillería](#torniller%C3%ADa).
 
-En el 3MF las placas se llaman igual que la versión: *Display*, *Impresora*,
-*Altavoz*, *Impresora + display*, *Altavoz + display*, *Impresora + altavoz*
-e *Impresora + display + altavoz*; las tres últimas, *Marco interior display
-e-ink*, *Accesorios* y *Tapa inferior + tornillos cortos*.
+En el 3MF cada placa lleva el nombre de su versión (*Display*, *Impresora +
+altavoz*...); las tres de accesorios son *Marco interior display e-ink*,
+*Accesorios* y *Tapa inferior + tornillos cortos*.
 
 ### Accesorios
 
@@ -174,42 +181,11 @@ Orientativos: son los del proyecto 3MF, preparado para una Bambu Lab P1S.
 El 3MF no está laminado, así que no da tiempo ni filamento: te los calculará
 el laminador para tu impresora.
 
-### Sobre el 3MF
-
-[`storymaker-set-completo.3mf`](02%20producci%C3%B3n/00%20Impresa%20en%203D/3mf/storymaker-set-completo.3mf)
-es un proyecto de **Bambu Studio** (también lo abre **OrcaSlicer**) hecho a
-partir de los STL, con una placa por versión y los parámetros de arriba. Es una
-comodidad, no el diseño: si cambias de impresora, ajusta su perfil antes de
-laminar. Los STL son la referencia, y el 3MF se rehace a partir de ellos en
-cada versión.
-
 ---
 
-## Piezas
+## Piezas de las cajas de corte láser
 
 Medidas en milímetros, sacadas de los propios ficheros.
-
-### 00 · Impresa en 3D
-
-Ficheros de impresión (`stl/` y `3mf/`). Cada uno tiene su vista en
-`03 imágenes/00 Impresa en 3D/`, con el mismo nombre.
-
-| Fichero | Qué es | Medidas | Vista |
-|---|---|---|---|
-| `caja_eink.stl` | Caja con ventana para la pantalla e-ink | 160 × 160 × 160 | [`caja_eink.png`](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_eink.png) |
-| `caja_imp.stl` | Caja con hueco para la impresora térmica | 160 × 160 × 160 | [`caja_imp.png`](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp.png) |
-| `caja_alt.stl` | Caja con rejilla para el altavoz | 160 × 160 × 160 | [`caja_alt.png`](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_alt.png) |
-| `caja_imp-eink.stl` | Caja con impresora y pantalla | 160 × 160 × 160 | [`caja_imp-eink.png`](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-eink.png) |
-| `caja_alt-eink.stl` | Caja con altavoz y pantalla | 160 × 160 × 160 | [`caja_alt-eink.png`](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_alt-eink.png) |
-| `caja_imp-alt.stl` | Caja con impresora y altavoz | 160 × 160 × 160 | [`caja_imp-alt.png`](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-alt.png) |
-| `caja_imp-alt-eink.stl` | Caja con las tres salidas | 160 × 160 × 160 | [`caja_imp-alt-eink.png`](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-alt-eink.png) |
-| `accesorios.stl` | Los 38 accesorios en una sola placa (detalle en [Accesorios](#accesorios)) | 467 × 497 × 36 en conjunto | [`accesorios.png`](03%20im%C3%A1genes/00%20Impresa%20en%203D/accesorios.png) |
-| `storymaker-set-completo.3mf` | Proyecto de Bambu Studio con las diez placas (ver [Sobre el 3MF](#sobre-el-3mf)) | — | — |
-
-Las placas de accesorios del 3MF tienen también su vista:
-[`marco_eink.png`](03%20im%C3%A1genes/00%20Impresa%20en%203D/marco_eink.png) (placa 8),
-[`accesorios.png`](03%20im%C3%A1genes/00%20Impresa%20en%203D/accesorios.png) (placa 9) y
-[`tapa_tornillos.png`](03%20im%C3%A1genes/00%20Impresa%20en%203D/tapa_tornillos.png) (placa 10).
 
 ### 01 · Madera
 

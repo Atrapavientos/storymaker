@@ -43,33 +43,4 @@
 
 ## Estructura interna de `firmware/`
 
-El detalle de qué hace cada módulo está en
-[`../firmware/README.md`](../firmware/README.md).
-
-```
-firmware/
-├── main.py
-├── modules/
-│   ├── boton.py
-│   ├── eink.py
-│   ├── impresora.py
-│   ├── audio.py
-│   ├── salidas.py
-│   ├── generador.py
-│   ├── importador.py
-│   ├── netinfo.py
-│   ├── config_manager.py
-│   ├── placas.py
-│   ├── anuncio_red.py
-│   └── portal.py
-├── static/fuentes/
-├── data/
-│   ├── config.json
-│   ├── pluma.png
-│   ├── voz/
-│   └── perfiles/<nombre>/{detonantes,protagonistas,conflictos}.txt
-└── deploy/
-    ├── prepare_sd.sh · setup_sd.sh · deploy.sh
-    ├── crear_imagen.sh · limpiar_pi.sh · limpiar_montada.sh · generar_voz.py
-    └── sistema/   # servicios systemd, sudoers y scripts de red
-```
+Qué hace cada módulo y cada script, en [`../firmware/README.md`](../firmware/README.md).
