@@ -1,9 +1,6 @@
 # La asombrosa máquina de generar historias
 
-<!-- PENDIENTE imagen portada-00-taller.jpg: la máquina en uso en un taller,
-     con gente alrededor o tiques pegados en cuadernos. Cuando exista,
-     sustituye a la foto de abajo, que pasa a la tira. -->
-<img src="docs/galeria/despliegue-00-dispositivo.jpg" width="560" alt="La máquina terminada: una caja cúbica turquesa con un pulsador y la rejilla del altavoz arriba, y en el frontal una pantalla de tinta electrónica mostrando el arranque de una historia">
+<img src="docs/galeria/portada-00-taller.jpg" width="420" alt="Dos máquinas de cartón rojo con el rótulo «La asombrosa máquina de generar historias», una grande y otra pequeña con tubos de colores a modo de asas, sobre la mesa de un taller con rotuladores y papeles"> <img src="docs/galeria/portada-01-familia.jpg" width="420" alt="Unas veinte cajas apiladas en un aula: las de cartón decoradas de los seis modelos, varias de madera y una negra, abierta, con la placa y los cables a la vista">
 
 **Pulsas un botón y la máquina te da el arranque de una historia. Tú tienes
 que continuarla.**
@@ -20,10 +17,6 @@ construir una: el programa, la placa, las cajas y los manuales.
 |:-:|:-:|:-:|:-:|
 | <img src="docs/galeria/artes-02-arcade.jpg" width="180" alt="Caja de cartón decorada como una máquina recreativa"> | <img src="docs/galeria/usuario-03-tique.jpg" width="180" alt="Tique recién impreso con una premisa"> | <img src="docs/galeria/usuario-02-eink-premisa.jpg" width="180" alt="Pantalla de tinta electrónica con una premisa"> | <img src="docs/galeria/usuario-05-panel-movil.png" width="100" alt="Panel de control de la máquina en un móvil"> |
 | Una caja cualquiera... | ...que imprime historias | o las muestra en pantalla | y se maneja desde el móvil |
-
-<!-- PENDIENTE imagen portada-01-familia.jpg: las cajas juntas (cartón,
-     impresa en 3D, madera y acrílico, las que se tengan a mano). Iría aquí,
-     bajo la tira, o sustituyendo la primera foto de la tira. -->
 
 ---
 
