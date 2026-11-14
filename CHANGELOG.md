@@ -100,7 +100,7 @@ reciente.
   esquineras y marcos para impresión 3D (STL, IGES y fuentes de Inventor).
   Modelos y vídeos del montaje. Las siete versiones de la caja impresa en 3D
   llegarán aparte.
-- **Placa base v3** (`hardware/`): esquema eléctrico y croquis de montaje
+- **Placa base v2** (`hardware/`; publicada como «v3» hasta el 2026-11-14, cuando se igualó a la serigrafía): esquema eléctrico y croquis de montaje
   (PNG y SVG), Gerber listos para fabricar, diseño editable en Fritzing,
   fotos de la placa real, renders, trazado de pistas a escala 1:1 y tabla de
   conectores con su GPIO. El BOM llegará aparte.

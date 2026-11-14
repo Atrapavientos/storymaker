@@ -1,5 +1,5 @@
 id,bloque,ref_pcb,descripcion,especificacion,fabricante,mpn,cantidad,sustitucion,estado,proveedor,enlace,precio_unit_eur,pack_min,notas
-B01,BASE,,PCB StoryMaker,"80 × 70 mm, 2 capas, 4 taladros de 3,2 mm",,,1,exacto,pendiente,,,,,Gerbers en hardware/pcb/gerber. Es la v3: la serigrafía dice V2.0 por una errata. El fabricante impone un pedido mínimo.
+B01,BASE,,PCB StoryMaker,"80 × 70 mm, 2 capas, 4 taladros de 3,2 mm",,,1,exacto,pendiente,,,,,"Gerbers en hardware/pcb/gerber. Versión v2, la de la serigrafía. El fabricante impone un pedido mínimo."
 B02,BASE,RASPBERRY PI ZERO 2W,Raspberry Pi Zero 2 W,Sin pines soldados (no la «WH»),Raspberry Pi,,1,exacto,probado,,,,,"El conector de 40 pines se suelda por debajo de la Pi, al revés de lo habitual (ver B04)."
 B03,BASE,,Tarjeta microSD,"8 GB o más, clase 10 o mejor",,,1,genérico,probado,,,,,
 B04,BASE,RASPBERRY PI ZERO 2W,Tira de pines macho 2×20,"Paso 2,54 mm",,,1,genérico,probado,,,,,"Se suelda en la Pi, por debajo, para pincharla encima de la PCB con los componentes hacia arriba."

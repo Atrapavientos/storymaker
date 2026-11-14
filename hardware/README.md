@@ -6,7 +6,7 @@ conectores de la pantalla, la impresora, el botón y el LED. Con ella no hay
 que soldar cables a la Pi: cada periférico va a su conector, rotulado en la
 serigrafía.
 
-La versión publicada es la **v3**: 80 × 70 mm, dos caras y solo componentes
+La versión publicada es la **v2**, la que dice la serigrafía: 80 × 70 mm, dos caras y solo componentes
 de agujero pasante, que se sueldan a mano.
 
 ---
@@ -17,27 +17,27 @@ Pulsa una imagen para verla a tamaño completo.
 
 | Montada | Placa y módulos |
 |:-:|:-:|
-| [<img src="../docs/galeria/hardware-01-montada.jpg" width="240" alt="Foto de la placa montada: la Raspberry Pi Zero 2W encima, el amplificador y el cargador insertados en sus zócalos, y las bornas verdes de tornillo">](pcb/imagenes/v3-foto-montada.jpg) | [<img src="../docs/galeria/hardware-02-piezas.jpg" width="240" alt="Foto de la placa con los conectores ya soldados, junto al amplificador, el cargador y la Raspberry Pi sueltos">](pcb/imagenes/v3-foto-piezas.jpg) |
+| [<img src="../docs/galeria/hardware-01-montada.jpg" width="240" alt="Foto de la placa montada: la Raspberry Pi Zero 2W encima, el amplificador y el cargador insertados en sus zócalos, y las bornas verdes de tornillo">](pcb/imagenes/v2-foto-montada.jpg) | [<img src="../docs/galeria/hardware-02-piezas.jpg" width="240" alt="Foto de la placa con los conectores ya soldados, junto al amplificador, el cargador y la Raspberry Pi sueltos">](pcb/imagenes/v2-foto-piezas.jpg) |
 | **Cara (render)** | **Dorso (render)** |
-| [<img src="../docs/galeria/hardware-03-pcb-cara.jpg" width="240" alt="Render de la cara de la placa, con los conectores rotulados: audio, cargador, interruptor, entradas de alimentación, impresora, pantalla e-ink, botón, LED y la doble fila de pines de la Raspberry Pi">](pcb/imagenes/v3-cara.png) | [<img src="../docs/galeria/hardware-04-pcb-dorso.jpg" width="240" alt="Render del dorso de la placa, con los logotipos de los centros participantes, el nombre de la máquina y la dirección del repositorio">](pcb/imagenes/v3-dorso.png) |
+| [<img src="../docs/galeria/hardware-03-pcb-cara.jpg" width="240" alt="Render de la cara de la placa, con los conectores rotulados: audio, cargador, interruptor, entradas de alimentación, impresora, pantalla e-ink, botón, LED y la doble fila de pines de la Raspberry Pi">](pcb/imagenes/v2-cara.png) | [<img src="../docs/galeria/hardware-04-pcb-dorso.jpg" width="240" alt="Render del dorso de la placa, con los logotipos de los centros participantes, el nombre de la máquina y la dirección del repositorio">](pcb/imagenes/v2-dorso.png) |
 
-Hay también una [vista 3D](pcb/imagenes/v3-3d.png) y el trazado de pistas de
+Hay también una [vista 3D](pcb/imagenes/v2-3d.png) y el trazado de pistas de
 cada cara en SVG, a escala 1:1: impreso al 100 %, sirve para comprobar el
 tamaño y los taladros antes de encargarla
-([cara](pcb/imagenes/v3-layout-cara.svg), [dorso](pcb/imagenes/v3-layout-dorso.svg)).
+([cara](pcb/imagenes/v2-layout-cara.svg), [dorso](pcb/imagenes/v2-layout-dorso.svg)).
 
 ---
 
 ## Esquema
 
-En [SVG](esquemas/v3-esquema.svg), para ampliarlo sin pixelar o imprimirlo.
+En [SVG](esquemas/v2-esquema.svg), para ampliarlo sin pixelar o imprimirlo.
 
-[![Esquema eléctrico de la placa v3: la Raspberry Pi Zero 2W en el centro, con la pantalla e-ink, la impresora y el botón a la izquierda, el amplificador y las entradas de alimentación a la derecha, y el cargador y el puente J1 abajo](esquemas/v3-esquema.png)](esquemas/v3-esquema.png)
+[![Esquema eléctrico de la placa v2: la Raspberry Pi Zero 2W en el centro, con la pantalla e-ink, la impresora y el botón a la izquierda, el amplificador y las entradas de alimentación a la derecha, y el cargador y el puente J1 abajo](esquemas/v2-esquema.png)](esquemas/v2-esquema.png)
 
 El mismo circuito en vista de montaje, con los módulos dibujados como son y
-cada cable de un color según su función (en [SVG](esquemas/v3-croquis.svg)):
+cada cable de un color según su función (en [SVG](esquemas/v2-croquis.svg)):
 
-[![Croquis de montaje de la placa v3, con los módulos y la Raspberry Pi dibujados y los cables coloreados](esquemas/v3-croquis.png)](esquemas/v3-croquis.png)
+[![Croquis de montaje de la placa v2, con los módulos y la Raspberry Pi dibujados y los cables coloreados](esquemas/v2-croquis.png)](esquemas/v2-croquis.png)
 
 > **C1 es de 1000 µF**, como dice la serigrafía. En el esquema y en el
 > fichero de Fritzing figura como 1 µF: es el valor por defecto de la pieza.
@@ -55,7 +55,7 @@ cada cable de un color según su función (en [SVG](esquemas/v3-croquis.svg)):
 | `pcb/imagenes/` | Fotos de la placa real, renders de las dos caras, vista 3D y trazado de pistas en SVG |
 | [`bom/`](bom/) | Lista de materiales por bloques, según las salidas y la alimentación *(borrador)* |
 
-Los ficheros llevan la versión de la placa en el nombre (`v3`).
+Los ficheros llevan la versión de la placa en el nombre (`v2`).
 
 ---
 
@@ -157,7 +157,7 @@ soldado **por debajo** de la Pi, al revés de lo habitual.
 ## Editar el diseño
 
 La placa está diseñada en **Fritzing** 1.0.8. El fichero
-[`storymaker_pcb_v3.fzz`](pcb/fritzing/storymaker_pcb_v3.fzz) lleva dentro
+[`storymaker_pcb_v2.fzz`](pcb/fritzing/storymaker_pcb_v2.fzz) lleva dentro
 las piezas que no vienen con el programa (el amplificador y el cargador), así
 que se abre sin instalar nada más.
 
@@ -168,9 +168,6 @@ pide una aportación.
 Para volver a fabricar después de un cambio: *File → Export → for
 Production → Extended Gerber*, y comprimir en un `.zip` los ficheros que
 genera.
-
-> La serigrafía de la cara dice «Storymaker board **V2.0**», en la esquina
-> derecha. Es una errata: esta es la v3.
 
 ---
 
