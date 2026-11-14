@@ -142,15 +142,89 @@ servicio al subir el `.zip`: deben verse las dos caras como en el muestrario.
 
 ---
 
-## La Raspberry Pi va encima
+## Montar la placa
 
-La Pi se pincha **encima** de la placa, con sus componentes hacia arriba, como
-en la foto de la placa montada. Para eso, el conector de 40 pines tiene que ir
-soldado **por debajo** de la Pi, al revés de lo habitual.
+Todo se suelda a mano con un soldador corriente. Lo que necesitas está en la
+[lista de materiales](bom/), bloque `BASE` más los de tus salidas y tu
+alimentación.
 
-> **Compra una Raspberry Pi Zero 2W sin pines (no la «WH»).** La Zero 2 WH
-> viene con el conector ya soldado por arriba y no sirve: dada la vuelta para
-> pincharla, los pines quedan invertidos.
+> **Compra una Raspberry Pi Zero 2W sin pines (no la «WH»).** La Pi se pincha
+> **encima** de la placa, con sus componentes hacia arriba, así que su
+> conector de 40 pines va soldado **por debajo**, al revés de lo habitual. La
+> Zero 2 WH viene con el conector ya soldado por arriba y no sirve.
+
+### 1. Soldar la placa
+
+De lo más bajo a lo más alto, para que la placa se apoye plana en la mesa
+mientras sueldas:
+
+1. **Zócalo de la Pi** (hembra 2×20), en `RASPBERRY PI ZERO 2W`.
+2. **Zócalos de los módulos:** hembra 1×7 en `AUDIO` y, si usas batería
+   LiPo, hembra 1×6 en `CARGADOR`. Soldarlos permite cambiar un módulo sin
+   desoldar nada.
+3. **Pines de `J1`** (macho 1×3) y **pines de `E-INK LCD`** (macho acodada
+   1×8, con las puntas hacia el borde de la placa).
+4. **Bornas de tornillo**, con la boca hacia fuera de la placa: `INT`,
+   `BAT/USB` y `USB` (las grandes), y `PULS`, `LED` y `PRINTER`.
+5. **C1**, el condensador, el último porque es lo más alto. **Tiene
+   polaridad:** la pata corta, la del lado de la franja con signos «−», es
+   el negativo; colócalo según la marca de polaridad de su huella en la
+   serigrafía. Si estorba, se puede tumbar
+   doblando las patas, como en la foto del interior en el [manual de
+   despliegue](../docs/manuales/despliegue.md#1-material-necesario).
+
+Solo si vas a usarla: la fila `INTERFAZ GPIO's RASPBERRY PI`, que repite las
+señales para medir o ampliar. Las máquinas montadas la dejan sin soldar.
+
+### 2. Preparar la Pi y los módulos
+
+- **Pi:** suelda la tira macho 2×20 **por la cara de abajo**, con los pines
+  hacia abajo.
+- **Amplificador:** suelda su tira de pines y su borna para el altavoz, que
+  vienen en la bolsa del módulo.
+- **Cargador MH-CD42** (solo con LiPo): quítale el pulsador y puentea sus
+  contactos, como se explica en [Alimentación y el puente
+  J1](#alimentaci%C3%B3n-y-el-puente-j1).
+
+### 3. Comprobar antes de dar corriente
+
+Con la placa todavía sin módulos ni Pi:
+
+- [ ] **Sin cortos:** con el polímetro en continuidad, entre los pads `5V` y
+  `GND` de la fila `INTERFAZ GPIO's RASPBERRY PI` no debe pitar de forma
+  continua (un pitido breve al principio es C1 cargándose). Repasa las soldaduras con lupa: un puente de
+  estaño entre dos pines vecinos es el fallo más común.
+- [ ] **`J1`** en su posición: `SÓLO USB` para cargador USB o powerbank,
+  `BAT+CARG.` para LiPo.
+- [ ] **C1** con la pata negativa en su sitio.
+
+Después, pincha los módulos y la Pi:
+
+- [ ] **Amplificador y cargador** con sus pines coincidiendo con los nombres
+  de la serigrafía (`VIN`, `GND`, `DIN`…; `VOUT`, `BAT`, `VIN`…).
+- [ ] **Pi** con sus componentes hacia arriba y la ranura de la tarjeta en el
+  mismo lado que en la foto de la placa montada. Sus cuatro agujeros caen
+  sobre los de la placa.
+- [ ] Sin el cargador si `J1` está en `SÓLO USB`.
+
+### 4. Conectar los periféricos
+
+La alimentación entra por la borna `BAT/USB`, no por el micro-USB de la Pi.
+
+| Periférico | Dónde | Cómo |
+|---|---|---|
+| Interruptor | `INT` | Sus dos cables, en cualquier orden |
+| Cargador USB, powerbank o LiPo | `BAT/USB` | **Respeta `+` y `−`:** la placa no tiene protección contra la polaridad invertida |
+| Toma de carga (solo LiPo) | `USB` | `+` y `−` |
+| Botón | `PULS` | Sus dos cables, en cualquier orden |
+| LED | `LED` | Pata larga (ánodo) a `Led+`, corta a `GND`. La placa no lleva la resistencia del LED: ver la fila B12 de la [lista de materiales](bom/) |
+| Impresora | `PRINTER` | `VIN` y `GND` a su alimentación; `Tx`, al RX de la impresora |
+| Pantalla e-ink | `E-INK LCD` | Cable de 8 hilos, **cada uno por el nombre de su señal**, no por la posición: el orden de los pines de la pantalla no coincide con el de la placa |
+| Altavoz | La borna del propio amplificador | Sus dos cables |
+
+Con todo conectado, graba la tarjeta (Ruta A del [manual de
+despliegue](../docs/manuales/despliegue.md)), métela en la Pi y cierra el
+interruptor. El LED se queda fijo cuando la máquina está lista.
 
 ---
 

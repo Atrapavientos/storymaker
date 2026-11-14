@@ -183,6 +183,35 @@ Orientativos: son los del proyecto 3MF, preparado para una Bambu Lab P1S.
 El 3MF no está laminado, así que no da tiempo ni filamento: te los calculará
 el laminador para tu impresora.
 
+### Montar la caja
+
+Con la placa ya soldada y comprobada (ver [Montar la
+placa](../hardware/README.md#montar-la-placa)):
+
+1. **Imprime** la caja de tu versión, la tapa inferior, 4 tornillos cortos y
+   4 patas bajas; si usas powerbank, también 4 patas altas, y si llevas
+   pantalla, el marco del e-ink.
+2. **Patas.** Coloca las patas con la llave impresa: las bajas para la placa
+   y, si hay powerbank, las altas para él.
+   <!-- PENDIENTE (Héctor): ¿las patas van en la tapa inferior? ¿a presión,
+   roscadas? -->
+3. **Placa y powerbank**, cada uno sobre sus patas con tornillos M3 × 6.
+4. **Pantalla** (versiones con e-ink): por dentro de la ventana, sujeta con el
+   marco del e-ink y 4 tornillos M2 × 15.
+   <!-- PENDIENTE (Héctor): orden exacto pantalla/marco/caja y por dónde
+   entran los tornillos. -->
+5. **Botón** en el agujero de arriba, con su tuerca.
+   <!-- PENDIENTE (Héctor): ¿el LED va dentro del pulsador o en otro agujero? -->
+6. **Altavoz** (versiones con altavoz) detrás de la rejilla.
+   <!-- PENDIENTE (Héctor): cómo se fija (pegamento, tornillos, a presión). -->
+7. **Impresora** (versiones con impresora) en la ranura de arriba, desde
+   fuera.
+   <!-- PENDIENTE (Héctor): confirmar en la QR701 y la QR204. -->
+8. **Conecta** los periféricos a la placa (ver [Conectar los
+   periféricos](../hardware/README.md#4-conectar-los-perif%C3%A9ricos)) y
+   pon la tarjeta grabada en la Pi.
+9. **Cierra** con la tapa inferior y sus 4 tornillos cortos.
+
 ---
 
 ## Piezas de las cajas de corte láser
