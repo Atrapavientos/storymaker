@@ -15,7 +15,7 @@ construir una: el programa, la placa, las cajas y los manuales.
 
 | | | | |
 |:-:|:-:|:-:|:-:|
-| <img src="docs/galeria/portada-02-caja-carton.jpg" width="180" alt="Caja de cartón con ilustraciones de estilo antiguo y el rótulo «La asombrosa máquina de generar ideas», con el hueco del botón y la ranura de la impresora arriba"> | <img src="docs/galeria/usuario-03-tique.jpg" width="180" alt="Tique recién impreso con una premisa"> | <img src="docs/galeria/usuario-02-eink-premisa.jpg" width="180" alt="Pantalla de tinta electrónica con una premisa"> | <img src="docs/galeria/usuario-05-panel-movil.png" width="100" alt="Panel de control de la máquina en un móvil"> |
+| <img src="docs/galeria/portada-02-caja-madera.jpg" width="180" alt="Caja de madera de corte láser con uniones de dedos, una interrogación grabada en el frontal y, arriba, la ranura de la impresora y el hueco del botón"> | <img src="docs/galeria/usuario-03-tique.jpg" width="180" alt="Tique recién impreso con una premisa"> | <img src="docs/galeria/usuario-02-eink-premisa.jpg" width="180" alt="Pantalla de tinta electrónica con una premisa"> | <img src="docs/galeria/usuario-05-panel-movil.png" width="100" alt="Panel de control de la máquina en un móvil"> |
 | Una caja cualquiera... | ...que imprime historias | o las muestra en pantalla | y se maneja desde el móvil |
 
 ---
