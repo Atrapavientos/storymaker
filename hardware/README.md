@@ -110,7 +110,8 @@ Qué comprar para cada opción, en la [lista de materiales](bom/).
 - **El cargador necesita un puente para arrancar con el interruptor.** Tal
   como viene, el MH-CD42 no da salida hasta que se pulsa su botón lateral
   (`KEY`). Quítale el pulsador y une sus contactos con un hilo, como el de la
-  izquierda en la foto.
+  izquierda en la foto: así se activa en cuanto recibe tensión al cerrar el
+  interruptor, que es lo que hacía el pulsador.
 
 [<img src="../docs/galeria/hardware-05-puente-cargador.jpg" width="420" alt="Dos módulos MH-CD42 de cerca: el de la izquierda sin el pulsador lateral y con un hilo soldado entre sus contactos; el de la derecha, de serie, con el pulsador">](../docs/galeria/hardware-05-puente-cargador.jpg)
 
