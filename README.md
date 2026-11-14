@@ -31,6 +31,13 @@ nada de informática.
 
 ### Quiero construir una
 
+> **No hay que programar nada.** El programa viene ya instalado en una imagen
+> de tarjeta: la descargas, la grabas con Raspberry Pi Imager (un programa
+> gratuito de Raspberry Pi, para Windows, Mac y Linux) y la máquina funciona.
+> Lo demás se configura desde el móvil. El código está publicado para quien
+> quiera estudiarlo o cambiarlo, pero no hace falta abrirlo ni para montar ni
+> para usar la máquina.
+
 En este orden:
 
 1. **Decide qué salidas quieres.** Pantalla de tinta electrónica, impresora de
@@ -44,14 +51,17 @@ En este orden:
 4. **Fabrica la caja.** [Impresa en 3D, de madera o de
    acrílico](envolvente/README.md), o [de cartón con uno de los seis
    diseños](artes-graficas/README.md).
-5. **Graba la tarjeta y configura la máquina.** El [manual de
-   despliegue](docs/manuales/despliegue.md), Ruta A, lo hace en unos veinte
-   minutos sin tocar una terminal.
+5. **Graba la tarjeta y configura la máquina.** Descargar la imagen,
+   grabarla y elegir la WiFi desde el móvil: unos veinte minutos, casi todo
+   esperando. Paso a paso en el [manual de
+   despliegue](docs/manuales/despliegue.md), Ruta A.
 
 <!-- PENDIENTE: coste orientativo de una máquina completa y de la mínima,
      cuando el BOM tenga precios. Iría aquí, en una frase. -->
 
-### Quiero entender cómo funciona o modificarla
+### Quiero ver el código o modificarla
+
+Opcional: nada de esto hace falta para construir ni para usar una máquina.
 
 - El programa: [`firmware/`](firmware/README.md), en Python, y [por qué está
   hecho así](docs/decisiones.md).
@@ -74,8 +84,8 @@ desde el móvil, sin internet.
 También funciona, solo con voz, en una Raspberry Pi 3 con el Voice HAT de
 Google (kit AIY V1), sin placa ni soldaduras.
 
-> **Estado:** firmware, documentación, placa, artes gráficas y envolventes
-> publicados; lista de materiales en borrador.
+> **Estado:** imagen lista para grabar, manuales, placa, artes gráficas y
+> envolventes publicados; lista de materiales en borrador.
 
 ---
 
@@ -84,7 +94,7 @@ Google (kit AIY V1), sin placa ni soldaduras.
 | Carpeta | Contenido |
 |---|---|
 | `docs/` | Manuales, referencia técnica y galería de imágenes |
-| `firmware/` | Código Python que corre en el dispositivo, y los scripts de instalación |
+| `firmware/` | El código del programa, en Python. Ya va dentro de la imagen: solo hace falta para estudiarlo o modificarlo |
 | `hardware/` | Placa base: esquema, Gerber para fabricarla, diseño editable en Fritzing y lista de materiales |
 | `envolvente/` | Caja impresa en 3D en siete versiones, con sus accesorios, y cajas de madera y acrílico para corte láser (IES Virgen del Pilar) |
 | `artes-graficas/` | Diseños de la caja de cartón: troqueles, fuentes de Illustrator, PDF para imprimir y fotos de prototipos (IES Pilar Lorengar) |

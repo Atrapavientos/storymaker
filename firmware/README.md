@@ -1,5 +1,11 @@
 # Firmware
 
+> **¿Solo quieres montar y usar una máquina?** No necesitas nada de esta
+> carpeta. El programa ya va instalado en la imagen de tarjeta: descárgala,
+> grábala y sigue la Ruta A del [manual de
+> despliegue](../docs/manuales/despliegue.md). Esto es el código, para quien
+> quiera estudiarlo o cambiarlo.
+
 Código Python que corre en la Raspberry Pi Zero 2W con la placa del proyecto, o
 en una Raspberry Pi 3 con el Voice HAT de Google (kit AIY V1, solo voz).
 Gestiona el botón físico, las salidas (e-ink, impresora térmica, audio) y el

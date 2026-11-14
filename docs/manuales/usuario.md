@@ -336,8 +336,10 @@ de una, entra por la IP de cada una.
 Sí. Es una Raspberry Pi pequeña, así que con diez o quince a la vez irá lenta,
 pero funciona.
 
-**¿Se pierde lo que escribo si actualizo el firmware?**
-No. La actualización conserva la configuración y los perfiles.
+**¿Se pierde lo que escribo si actualizo la máquina?**
+Si la actualizas grabando la imagen nueva, sí: la tarjeta empieza de cero.
+Copia antes tus listas a un `.txt` y vuelve a importarlas después (8). Quien
+la actualiza desde el código conserva la configuración y los perfiles.
 
 **La impresora saca el papel en blanco.**
 Casi siempre es el rollo puesto del revés. El papel térmico sólo imprime por
@@ -349,7 +351,8 @@ nada por estar ahí.
 
 **¿Y si olvido el PIN?**
 Haciendo un reset de fábrica desde... el panel, al que no puedes entrar.
-Si ocurre, hay que entrar por SSH al dispositivo o volver a grabar la tarjeta.
+Si ocurre, hay que volver a grabar la tarjeta (o, si sabes manejar SSH,
+entrar al dispositivo y cambiarlo desde ahí).
 Apúntalo en algún sitio.
 
 ---

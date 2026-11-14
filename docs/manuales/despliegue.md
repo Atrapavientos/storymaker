@@ -21,13 +21,17 @@ Hay **dos caminos**, y conviene elegir antes de empezar:
 
 | | **Ruta A — desde la imagen publicada** | **Ruta B — desde cero** |
 |---|---|---|
-| Para quién | Centros educativos, talleres, cualquiera que quiera un aparato funcionando | Quien modifique el firmware o replique el proyecto desde el código |
+| Para quién | Centros educativos, talleres, cualquiera que quiera un aparato funcionando | Quien quiera modificar el programa o reconstruir la imagen desde el código |
 | Qué hace falta | Un ordenador con Raspberry Pi Imager y un móvil | Linux, terminal, SSH y algo de paciencia |
 | Cuánto tarda | 15–20 minutos, casi todo esperando | 45–60 minutos |
 | Conocimientos | Ninguno | Soltura con la línea de órdenes |
 
-Si sólo quieres usar el dispositivo, **Ruta A**. La Ruta B existe porque el
-proyecto es libre y la imagen tiene que poder reconstruirse desde el código.
+Si sólo quieres usar el dispositivo, **Ruta A**: no hay que instalar nada a
+mano ni saber programar. La Ruta B existe porque el proyecto es libre y la
+imagen tiene que poder reconstruirse desde el código.
+
+Si la máquina ya está montada, sáltate el apartado 1 y ve directo a la
+[Ruta A](#2-ruta-a--instalar-desde-la-imagen-publicada).
 
 <img src="../galeria/despliegue-00-dispositivo.jpg" width="420" alt="StoryMaker terminado: caja cúbica turquesa impresa en 3D con el pulsador y la rejilla del altavoz arriba, y en el frontal la pantalla e-ink mostrando una premisa">
 
@@ -386,7 +390,13 @@ asistente son los mismos.
 
 ## 4. Actualizar un dispositivo ya instalado
 
-Para llevar cambios del código a una máquina que ya funciona:
+**Con la Ruta A**, actualizar es grabar la imagen nueva en la tarjeta, como la
+primera vez. Se pierden los perfiles que hayas escrito en la máquina: copia
+antes tus listas a un `.txt` para volver a importarlas (ver el [manual de
+usuario](usuario.md), 8).
+
+**Desde el código** (Ruta B), se actualiza conservando la configuración y los
+perfiles:
 
 ```bash
 cd firmware/deploy
