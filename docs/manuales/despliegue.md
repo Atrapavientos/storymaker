@@ -59,6 +59,8 @@ soldaduras. Sin pantalla ni impresora, la caja dice en voz alta a qué red
 conectarse y en qué dirección está su panel. Se elige en el asistente (2.8);
 pines y detalles en [`docs/hardware.md`](../hardware.md).
 
+<img src="../galeria/despliegue-01b-voicehat.jpg" width="300" alt="Caja de cartón del kit AIY de Google con el pulsador rojo arriba y los agujeros del altavoz en un lateral">
+
 ### Conexiones
 
 Con la placa base del proyecto no hay que mirar pines: cada periférico va a
@@ -150,6 +152,7 @@ Cuando esté lista:
   conectarte y ese mismo QR.
 - Si hay **altavoz**, dice en voz alta a qué red conectarte.
 
+<img src="../galeria/despliegue-05-eink-bienvenida.jpg" width="360" alt="Pantalla e-ink en la caja: «La asombrosa máquina de generar historias», el logo de Atrapavientos, un QR y debajo «Escanea el QR para configurar el WiFi»">
 <img src="../galeria/despliegue-06-tique-bienvenida.jpg" width="360" alt="Tique de primera configuración saliendo de la impresora: pide conectar el móvil a la red StoryMaker-Setup, abierta y sin clave, y trae un QR con la dirección http://10.42.0.1:8080">
 
 Con el **Voice HAT** en una Raspberry Pi 3, la caja reconoce el HAT y se
@@ -196,6 +199,7 @@ propia máquina, que en unos segundos anuncia su nueva dirección:
 
 Apunta la dirección numérica: es la que funciona en cualquier red.
 
+<img src="../galeria/despliegue-09b-eink-portal.jpg" width="360" alt="Pantalla e-ink tras conectarse a la red: el logo de Atrapavientos, un QR y debajo «Bienvenido. Escanea el QR para abrir el portal»">
 <img src="../galeria/despliegue-09-tique-direccion.jpg" width="480" alt="Tique impreso tras conectarse a la red: «Bienvenido. Escanea el QR para abrir el portal», un QR y debajo la dirección numérica http://192.168.1.206:5000 y la alternativa http://storymaker.local:5000">
 
 ### 2.7 Entrar al panel de control

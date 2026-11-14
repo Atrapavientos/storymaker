@@ -30,7 +30,7 @@ C02,ALIM-CARG,BAT/USB,Cable USB con hilos a borne,PENDIENTE: conector de entrada
 W01,ALIM-PB,BAT/USB,Powerbank de dos celdas 18650,"Salida de 5 V; mín. 2 A, o 2,5 A con impresora",,,1,equivalente,probado,,,,,"J1 en SÓLO USB. No se monta el MH-CD42. En la caja impresa en 3D va sobre las patas altas, con tornillos M3 × 6. PENDIENTE: confirmar el requisito de corriente."
 W02,ALIM-PB,,Celda 18650,PENDIENTE: capacidad,,,2,genérico,pendiente,,,,,Si el powerbank no las incluye.
 W03,ALIM-PB,BAT/USB,Cable USB con hilos a borne,PENDIENTE: longitud,,,1,equivalente,pendiente,,,,,Respetar + y − de la serigrafía: la entrada no tiene protección de polaridad.
-L01,ALIM-LIPO,CARGADOR,Módulo de carga y descarga MH-CD42,"Salida de 5 V, 2 A",,MH-CD42,1,exacto,pendiente,,,,,J1 en BAT+CARG. Solo sin impresora. PENDIENTE: puente necesario para arrancar con el interruptor.
+L01,ALIM-LIPO,CARGADOR,Módulo de carga y descarga MH-CD42,"Salida de 5 V, 2 A",,MH-CD42,1,exacto,probado,,,,,J1 en BAT+CARG. Solo sin impresora. Hay que quitarle el pulsador KEY y puentear sus contactos para que arranque con el interruptor (ver el README de hardware).
 L06,ALIM-LIPO,CARGADOR,Zócalo hembra 1×6,"Paso 2,54 mm",,,1,genérico,probado,,,,,Recibe el MH-CD42. Puede soldarse siempre y quedar vacío si no se usa.
 L02,ALIM-LIPO,BAT/USB,Batería LiPo de una celda,"3,7 V; PENDIENTE: capacidad y tamaño",,,1,equivalente,pendiente,,,,,Respetar + y − de la serigrafía.
 L03,ALIM-LIPO,USB,Borne de 2 polos,"Paso 5,08 mm",,,1,equivalente,pendiente,,,,,

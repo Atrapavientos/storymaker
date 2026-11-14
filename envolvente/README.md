@@ -35,17 +35,19 @@ gráficos en [`artes-graficas/`](../artes-graficas/README.md).
 
 Modelos de cada versión. Pulsa una imagen para verla a tamaño completo.
 
-**Impresa en 3D.** Vistas del modelo tal como sale de la impresora: boca
-arriba, con la cara abierta hacia arriba. Esa cara la cierra después la tapa
-inferior.
+**Impresa en 3D.** Vistas del diseño en su posición de uso: el botón arriba
+y la cara abierta abajo, que cierra la tapa inferior. Para imprimir se ponen
+al revés (ver [Parámetros de impresión](#par%C3%A1metros-de-impresi%C3%B3n)).
+
+[<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/set_completo.png" width="480" alt="Las siete cajas juntas, cada una de un color, con sus ventanas para la pantalla y la impresora y sus rejillas de altavoz">](03%20im%C3%A1genes/00%20Impresa%20en%203D/set_completo.png)
 
 | E-ink | Impresora | Altavoz | Impresora + e-ink |
 |:-:|:-:|:-:|:-:|
-| [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_eink.png" width="160" alt="Caja cúbica abierta por arriba, con una ventana rectangular en un lateral">](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_eink.png) | [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp.png" width="160" alt="Caja cúbica abierta por arriba, versión con impresora">](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp.png) | [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_alt.png" width="160" alt="Caja cúbica abierta por arriba, con una rejilla de agujeros en un lateral">](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_alt.png) | [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-eink.png" width="160" alt="Caja cúbica abierta por arriba, versión con impresora y pantalla">](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-eink.png) |
+| [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_eink.png" width="160" alt="Caja cúbica con el hueco del botón arriba y una ventana rectangular para la pantalla en un lateral">](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_eink.png) | [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp.png" width="160" alt="Caja cúbica con el hueco del botón y la ranura de la impresora arriba">](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp.png) | [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_alt.png" width="160" alt="Caja cúbica con el hueco del botón y la rejilla del altavoz arriba">](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_alt.png) | [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-eink.png" width="160" alt="Caja cúbica con el hueco del botón y la ranura de la impresora arriba, y la ventana de la pantalla en un lateral">](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-eink.png) |
 
 | Altavoz + e-ink | Impresora + altavoz | Las tres | Accesorios |
 |:-:|:-:|:-:|:-:|
-| [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_alt-eink.png" width="160" alt="Caja cúbica abierta por arriba, versión con altavoz y pantalla">](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_alt-eink.png) | [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-alt.png" width="160" alt="Caja cúbica abierta por arriba, versión con impresora y altavoz">](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-alt.png) | [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-alt-eink.png" width="160" alt="Caja cúbica abierta por arriba, con ventana rectangular y rejilla de altavoz en dos laterales">](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-alt-eink.png) | [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/accesorios.png" width="160" alt="Dos rejillas redondas, un soporte alargado, patas de tres brazos, una llave, tornillos moleteados y tuercas cuadradas">](03%20im%C3%A1genes/00%20Impresa%20en%203D/accesorios.png) |
+| [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_alt-eink.png" width="160" alt="Caja cúbica con el hueco del botón y la rejilla del altavoz arriba, y la ventana de la pantalla en un lateral">](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_alt-eink.png) | [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-alt.png" width="160" alt="Caja cúbica con el hueco del botón y la ranura de la impresora arriba, y la rejilla del altavoz en un lateral">](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-alt.png) | [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-alt-eink.png" width="160" alt="Caja cúbica con el hueco del botón y la ranura de la impresora arriba, la ventana de la pantalla en un lateral y la rejilla del altavoz en otro">](03%20im%C3%A1genes/00%20Impresa%20en%203D/caja_imp-alt-eink.png) | [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/accesorios.png" width="160" alt="Dos rejillas redondas, un soporte alargado, patas de tres brazos, una llave, tornillos moleteados y tuercas cuadradas">](03%20im%C3%A1genes/00%20Impresa%20en%203D/accesorios.png) |
 
 **Corte láser.**
 
@@ -109,7 +111,7 @@ tres. Cada pieza se llama igual en todas: `tapa.dxf`, `tapa.iges` y
 | Las tres | ✔ | ✔ | ✔ | `caja_imp-alt-eink.stl` | 7 | Marco del e-ink |
 
 Todas las cajas miden 160 × 160 × 160 mm. `accesorios.stl` agrupa los 38
-accesorios en una sola placa (467 × 497 × 36). Cada fichero tiene su vista con
+accesorios en una sola placa (199 × 497 × 36). Cada fichero tiene su vista con
 el mismo nombre en `03 imágenes/00 Impresa en 3D/`; las placas 8 a 10 del 3MF,
 en `marco_eink.png`, `accesorios.png` y `tapa_tornillos.png`.
 
@@ -135,7 +137,7 @@ Todos van juntos en `accesorios.stl`, ya colocados para imprimir.
 | Pata baja | 14 × 12 × 6 | 8 | Patas de tres brazos para la placa base: 4 por caja, las demás de repuesto |
 | Pata alta | 14 × 12 × 12 | 8 | Patas de tres brazos para el powerbank, si lo usas: 4 por caja, las demás de repuesto |
 | Llave | 70 × 20 × 7 | 1 | Para poner y quitar las patas |
-| Marco del e-ink | 120 × 120 × 6 | 1 | Marco interior de la pantalla e-ink |
+| Marco del e-ink | 120 × 120 × 4 | 1 | Marco interior de la pantalla e-ink |
 | Rejilla grande | Ø 93 × 6 | 1 | Para las cajas de madera o acrílico: en lugar de mecanizar la rejilla del altavoz, se hace un agujero grande y se tapa con esta. Altavoz de 78 mm |
 | Rejilla pequeña | Ø 52 × 6 | 1 | Lo mismo, para altavoz de 40 mm |
 | Soporte de Pi Zero | 64 × 29 × 6 | 1 | Para montar la Raspberry Pi Zero sin la placa base, con el sistema de conexión que elijas (cables a los pines, etc.) |
@@ -174,9 +176,9 @@ Orientativos: son los del proyecto 3MF, preparado para una Bambu Lab P1S.
 | Perímetros | 2 |
 | Capas sólidas | 5 arriba, 3 abajo |
 | Relleno | 15 %, en rejilla |
-| Soportes | En árbol, solo donde se marcan. En el 3MF solo los lleva la versión de las tres salidas |
-| Adherencia | Borde automático. El 3MF usa la placa *High Temp Plate* de Bambu |
-| Orientación | La de los STL: cada caja boca arriba, con la cara abierta hacia arriba; los accesorios, planos |
+| Soportes | En árbol, solo donde se marcan. En el 3MF los llevan pintados las cuatro versiones con e-ink; las demás no los necesitan |
+| Adherencia | Borde automático. El 3MF usa la placa *Textured PEI Plate* de Bambu |
+| Orientación | Cada caja boca abajo, con la cara abierta hacia arriba y el techo sobre la cama, como en el 3MF. **Los STL vienen en posición de uso** (cara abierta abajo): dales la vuelta al importarlos. Los accesorios, planos |
 
 El 3MF no está laminado, así que no da tiempo ni filamento: te los calculará
 el laminador para tu impresora.

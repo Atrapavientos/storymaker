@@ -107,6 +107,12 @@ Qué comprar para cada opción, en la [lista de materiales](bom/).
   raíl de 5 V.
 - **Para cargar la LiPo, el interruptor tiene que estar cerrado.** `INT` está
   entre la batería y el cargador; abierto, la batería queda desconectada.
+- **El cargador necesita un puente para arrancar con el interruptor.** Tal
+  como viene, el MH-CD42 no da salida hasta que se pulsa su botón lateral
+  (`KEY`). Quítale el pulsador y une sus contactos con un hilo, como el de la
+  izquierda en la foto.
+
+[<img src="../docs/galeria/hardware-05-puente-cargador.jpg" width="420" alt="Dos módulos MH-CD42 de cerca: el de la izquierda sin el pulsador lateral y con un hilo soldado entre sus contactos; el de la derecha, de serie, con el pulsador">](../docs/galeria/hardware-05-puente-cargador.jpg)
 
 ---
 
