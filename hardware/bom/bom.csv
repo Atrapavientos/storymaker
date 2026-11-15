@@ -26,15 +26,15 @@ P01,PAN,E-INK LCD,"Pantalla e-ink 4,2"" blanco y negro",Controlador SSD1683,WeAc
 P02,PAN,E-INK LCD,Tira de pines macho acodada 1×8,"Paso 2,54 mm",,,1,genérico,probado,,,,,En la PCB va macho acodada; la pieza de Fritzing figura como hembra.
 P03,PAN,E-INK LCD,Cable de 8 hilos,El que viene con la pantalla,,,1,genérico,probado,,,,,"Conectar por el nombre de cada señal, no por su posición."
 P04,PAN,,Tornillos para la pantalla,M2 × 12 o M3 × 12,,,4,genérico,probado,,,,,"Fijan la pantalla por dentro contra el marco de la ventana (integrado en la caja impresa; suelto, en los accesorios, para otros materiales)."
-C01,ALIM-CARG,BAT/USB,Cargador USB,"5 V; mín. 2 A, o 2,5 A con impresora",,,1,genérico,pendiente,,,,,"J1 en SÓLO USB. No se monta el MH-CD42. Con toma USB-C, el cargador ha de ir con cable USB-A a USB-C: con USB-C a USB-C no reconoce la máquina y no carga ni alimenta."
+C01,ALIM-CARG,BAT/USB,Cargador USB,"5 V; mín. 2 A, o 2,5 A con impresora",,,1,genérico,probado,,,,,"J1 en SÓLO USB. No se monta el MH-CD42. Con toma USB-C, el cargador ha de ir con cable USB-A a USB-C: con USB-C a USB-C no reconoce la máquina y no carga ni alimenta."
 C02,ALIM-CARG,BAT/USB,Cable USB con hilos a borne,Según la toma instalada (USB-C o micro-USB),,,1,equivalente,probado,,,,,"Respetar + y − de la serigrafía: la entrada no tiene protección de polaridad. Con toma USB-C, el cargador ha de ir con cable USB-A a USB-C: con USB-C a USB-C no reconoce la máquina y no carga ni alimenta."
-W01,ALIM-PB,BAT/USB,Powerbank de dos celdas 18650,"Salida de 5 V; mín. 2 A, o 2,5 A con impresora",,,1,equivalente,probado,,,,,"J1 en SÓLO USB. No se monta el MH-CD42. En la caja impresa en 3D va sobre las patas altas, con tornillos M3 × 6. PENDIENTE: confirmar el requisito de corriente."
+W01,ALIM-PB,BAT/USB,Powerbank de dos celdas 18650,"Salida de 5 V; mín. 2 A, recomendado más de 2,5 A",,,1,equivalente,probado,,,,,"J1 en SÓLO USB. No se monta el MH-CD42. En la caja impresa en 3D va sobre las patas altas, con tornillos M3 × 6. Con impresora térmica, uno de 2 A puede ir justo."
 W02,ALIM-PB,,Celda 18650,Estándar,,,2,genérico,probado,,,,,Si el powerbank no las incluye.
 W03,ALIM-PB,BAT/USB,Cable USB con hilos a borne,Según la toma instalada (USB-C o micro-USB),,,1,equivalente,probado,,,,,Respetar + y − de la serigrafía: la entrada no tiene protección de polaridad.
 L01,ALIM-LIPO,CARGADOR,Módulo de carga y descarga MH-CD42,"Salida de 5 V, 2 A",,MH-CD42,1,exacto,probado,,,,,J1 en BAT+CARG. Solo sin impresora. Hay que quitarle el pulsador KEY y puentear sus contactos para que arranque con el interruptor (ver el README de hardware).
 L06,ALIM-LIPO,CARGADOR,Zócalo hembra 1×6,"Paso 2,54 mm",,,1,genérico,probado,,,,,Recibe el MH-CD42. Puede soldarse siempre y quedar vacío si no se usa.
 L02,ALIM-LIPO,BAT/USB,Batería LiPo de una celda,"3,7 V; 2000 mAh como mínimo",,,1,equivalente,probado,,,,,Respetar + y − de la serigrafía.
-L03,ALIM-LIPO,USB,Borne de 2 polos,"Paso 5,08 mm",,,1,equivalente,pendiente,,,,,
+L03,ALIM-LIPO,USB,Borne de 2 polos,"Paso 5,08 mm",,,1,equivalente,probado,,,,,
 L04,ALIM-LIPO,USB,Toma USB hembra de panel,De atornillar en panel; USB-C o micro-USB,,,1,equivalente,probado,,,,,"Es la entrada de carga. Con toma USB-C, el cargador ha de ir con cable USB-A a USB-C: con USB-C a USB-C no reconoce la máquina y no carga ni alimenta."
-L05,ALIM-LIPO,,Cargador USB,5 V; mín. 2 A,,,1,genérico,pendiente,,,,,"Con toma USB-C, ha de ir con cable USB-A a USB-C: con USB-C a USB-C no reconoce la máquina y no carga."
+L05,ALIM-LIPO,,Cargador USB,5 V; mín. 2 A,,,1,genérico,probado,,,,,"Con toma USB-C, ha de ir con cable USB-A a USB-C: con USB-C a USB-C no reconoce la máquina y no carga."
 X01,OPC,INTERFAZ GPIO's RASPBERRY PI,Tira de pines 1×14,"Paso 2,54 mm",,,1,genérico,probado,,,,,Acceso opcional a las señales; en las máquinas montadas va sin soldar.

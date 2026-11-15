@@ -2,7 +2,7 @@
 
 Todas las versiones de la máquina usan la misma PCB. Lo que cambia es qué se monta en ella y qué se conecta. La lista completa está en [`bom.csv`](bom.csv), organizada por bloques.
 
-> Borrador: lo marcado como **PENDIENTE** está sin confirmar. Los precios y los proveedores están por completar.
+> Faltan los precios y los proveedores.
 
 ## Cómo hacer tu lista de compra
 
@@ -25,7 +25,7 @@ Compra siempre el bloque `BASE` y añade los de las salidas que quieras:
 | Bloque | Alimentación | Con impresora | Sin impresora | Corriente mínima |
 |---|---|---|---|---|
 | `ALIM-CARG` | Cargador USB de 5 V | Sí | Sí | 2 A; 2,5 A con impresora |
-| `ALIM-PB` | Powerbank de dos celdas 18650 | Sí | Sí | 2 A; 2,5 A con impresora |
+| `ALIM-PB` | Powerbank de dos celdas 18650 | Sí | Sí | 2 A; recomendado más de 2,5 A, sobre todo con impresora |
 | `ALIM-LIPO` | MH-CD42 + LiPo | **No** | Sí | Cargador de 2 A |
 
 Una sola celda no cubre los picos de consumo de la impresora.
