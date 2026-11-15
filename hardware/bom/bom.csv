@@ -11,7 +11,7 @@ B07,BASE,JUMPER (J1),Puente (jumper),"Paso 2,54 mm",,,1,genérico,probado,,,,,
 B08,BASE,"INT (S1, S2)",Interruptor de encendido,Unipolar; mín. 3 A a 5 V,,,1,equivalente,pendiente,,,,,Corta la alimentación general: va en serie con BAT/USB en todas las configuraciones. Se conecta con terminales faston (B18). PENDIENTE: modelo.
 B09,BASE,"INT, BAT/USB",Borne de tornillo de 2 polos,"Paso 5,08 mm",,,2,equivalente,probado,,,,,
 B10,BASE,"PULS (P1, P2), LED (Led+, GND)",Pulsador de panel con LED integrado,Normalmente abierto; LED con su resistencia incorporada,,,1,equivalente,probado,,,,,El pulsador va a PULS (GPIO5) y su LED a LED (GPIO23). Pulsación corta: genera; pulsación larga: apaga. Se conecta con terminales faston (B18).
-B18,BASE,"PULS, LED, INT",Terminales faston hembra,"PENDIENTE: medida, según el pulsador y el interruptor",,,6,genérico,probado,,,,,4 para el pulsador (contacto y LED) y 2 para el interruptor.
+B18,BASE,"PULS, LED, INT",Terminales faston hembra,"2 de 6,3 mm y 4 de 4,8 mm",,,6,genérico,probado,,,,,"Pulsador: 2 de 6,3 mm y 2 de 4,8 mm. Interruptor: 2 de 4,8 mm."
 B13,BASE,"PULS, LED",Borne de tornillo de 2 polos,"Paso 2,54 mm",,,2,equivalente,probado,,,,,
 B14,BASE,Taladros,Tornillos M3,M3 × 6,,,4,genérico,probado,,,,,"Fijan la PCB a sus patas de soporte impresas, que se pegan a la tapa inferior. Otras envolventes, en su README."
 B15,BASE,,Cable para conexiones internas,PENDIENTE: sección y longitud,,,1,genérico,pendiente,,,,,
