@@ -83,6 +83,29 @@ Los PDF están en CMYK.
 
 ---
 
+## Montar la caja
+
+Las cajas de cartón tienen los mismos huecos, y de las mismas medidas, que la
+caja impresa en 3D, así que los componentes se colocan igual: sigue [Montar
+la caja](../envolvente/README.md#montar-la-caja) de la envolvente.
+
+El cartón aguanta menos que el plástico o la madera, y cada caja pide su
+propia solución. Algunas ideas que funcionan:
+
+- **Una base rígida.** La tapa inferior impresa, con las patas de soporte
+  pegadas, sirve de chasis: lleva la placa y la batería, y la caja de cartón
+  solo la cubre. Los tornillos largos y las tuercas de los
+  [accesorios](../envolvente/README.md#accesorios) la sujetan a través del
+  cartón.
+- **Refuerzos por dentro** donde haya peso o tornillos, sobre todo alrededor
+  de la impresora y la pantalla: un recorte de cartón doble o de contrachapado
+  fino, pegado detrás del hueco.
+- **Pegar mejor que atornillar** las piezas ligeras, como el altavoz, con cola
+  caliente.
+- La pantalla, sobre el marco suelto de los accesorios, pegado por dentro.
+
+---
+
 ## Editar los diseños
 
 Los `.ai` de `01 fuentes/` se guardaron compatibles con PDF. Así se abren

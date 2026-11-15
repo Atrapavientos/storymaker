@@ -102,13 +102,13 @@ tres. Cada pieza se llama igual en todas: `tapa.dxf`, `tapa.iges` y
 
 | Versión | E-ink | Impresora | Altavoz | STL de la caja | Placa del 3MF | Accesorios de la versión |
 |---|:-:|:-:|:-:|---|:-:|---|
-| E-ink | ✔ | | | `caja_eink.stl` | 1 | Marco del e-ink |
+| E-ink | ✔ | | | `caja_eink.stl` | 1 | — |
 | Impresora | | ✔ | | `caja_imp.stl` | 2 | — |
 | Altavoz | | | ✔ | `caja_alt.stl` | 3 | — |
-| Impresora + e-ink | ✔ | ✔ | | `caja_imp-eink.stl` | 4 | Marco del e-ink |
-| Altavoz + e-ink | ✔ | | ✔ | `caja_alt-eink.stl` | 5 | Marco del e-ink |
+| Impresora + e-ink | ✔ | ✔ | | `caja_imp-eink.stl` | 4 | — |
+| Altavoz + e-ink | ✔ | | ✔ | `caja_alt-eink.stl` | 5 | — |
 | Impresora + altavoz | | ✔ | ✔ | `caja_imp-alt.stl` | 6 | — |
-| Las tres | ✔ | ✔ | ✔ | `caja_imp-alt-eink.stl` | 7 | Marco del e-ink |
+| Las tres | ✔ | ✔ | ✔ | `caja_imp-alt-eink.stl` | 7 | — |
 
 Todas las cajas miden 160 × 160 × 160 mm. `accesorios.stl` agrupa los 38
 accesorios en una sola placa (199 × 497 × 36). Cada fichero tiene su vista con
@@ -117,8 +117,9 @@ en `marco_eink.png`, `accesorios.png` y `tapa_tornillos.png`.
 
 Todas llevan además la **tapa inferior** y **4 tornillos cortos** (placa 10),
 **4 patas bajas** para la placa base y, si usas powerbank, **4 patas altas**
-(placa 9). El marco del e-ink está en la placa 8. La tornillería comercial,
-en [Tornillería](#torniller%C3%ADa).
+(placa 9). Las cajas con e-ink traen el marco de la pantalla integrado en la
+ventana; el marco suelto de la placa 8 es para montar la pantalla en cajas de
+otros materiales. La tornillería comercial, en [Tornillería](#torniller%C3%ADa).
 
 En el 3MF cada placa lleva el nombre de su versión (*Display*, *Impresora +
 altavoz*...); las tres de accesorios son *Marco interior display e-ink*,
@@ -134,10 +135,10 @@ Todos van juntos en `accesorios.stl`, ya colocados para imprimir.
 | Tornillo corto | 25 × 18 × 18 | 8 | Tornillo moleteado que fija la tapa inferior: 4 por caja |
 | Tornillo largo | 36 × 18 × 18 | 4 | Como el corto, para cajas que lo necesiten más largo, como las de cartón o madera |
 | Tuerca | 16 × 16 × 8 | 4 | Tuerca cuadrada para los tornillos, en esas mismas cajas |
-| Pata baja | 14 × 12 × 6 | 8 | Patas de tres brazos para la placa base: 4 por caja, las demás de repuesto |
-| Pata alta | 14 × 12 × 12 | 8 | Patas de tres brazos para el powerbank, si lo usas: 4 por caja, las demás de repuesto |
+| Pata baja | 14 × 12 × 6 | 8 | Patas de soporte de tres brazos para la placa base: 4 por caja, las demás de repuesto. Se atornillan a la placa y se pegan a la tapa inferior |
+| Pata alta | 14 × 12 × 12 | 8 | Como las bajas, para el powerbank o la batería, si los usas |
 | Llave | 70 × 20 × 7 | 1 | Para poner y quitar las patas |
-| Marco del e-ink | 120 × 120 × 4 | 1 | Marco interior de la pantalla e-ink |
+| Marco del e-ink | 120 × 120 × 4 | 1 | Para poner la pantalla en una caja de madera, acrílico o cartón: se recorta un hueco donde vaya la pantalla, se pega el marco por dentro y la pantalla se atornilla a él. Las cajas impresas con e-ink ya lo llevan integrado |
 | Rejilla grande | Ø 93 × 6 | 1 | Para las cajas de madera o acrílico: en lugar de mecanizar la rejilla del altavoz, se hace un agujero grande y se tapa con esta. Altavoz de 78 mm |
 | Rejilla pequeña | Ø 52 × 6 | 1 | Lo mismo, para altavoz de 40 mm |
 | Soporte de Pi Zero | 64 × 29 × 6 | 1 | Para montar la Raspberry Pi Zero sin la placa base, con el sistema de conexión que elijas (cables a los pines, etc.) |
@@ -156,13 +157,17 @@ lamina el resto. En el 3MF ya vienen separadas por placas.
 
 ### Tornillería
 
-La caja se cierra con sus tornillos impresos. Solo hacen falta tornillos
-comerciales para fijar los componentes:
+La caja se cierra con sus tornillos impresos, que hacen también de pies. Solo
+hacen falta tornillos comerciales para fijar los componentes:
 
 | Tornillo | Para qué |
 |---|---|
-| M3 × 6, los habituales de PCB | Placa base y powerbank, sobre sus patas |
-| M2 × 15 | Pantalla e-ink |
+| M3 × 6, los habituales de PCB | Placa base y powerbank, sobre sus patas de soporte |
+| M2 × 12 o M3 × 12 | Pantalla e-ink, 4 |
+| M3 × 12 | Altavoz, si tiene agujeros para tornillo (opcional) |
+
+Además, **pegamento de cianoacrilato** para fijar las patas de soporte a la
+tapa inferior y, si el altavoz no tiene agujeros, **cola caliente**.
 
 ### Parámetros de impresión
 
@@ -189,28 +194,29 @@ Con la placa ya soldada y comprobada (ver [Montar la
 placa](../hardware/README.md#montar-la-placa)):
 
 1. **Imprime** la caja de tu versión, la tapa inferior, 4 tornillos cortos y
-   4 patas bajas; si usas powerbank, también 4 patas altas, y si llevas
-   pantalla, el marco del e-ink.
-2. **Patas.** Coloca las patas con la llave impresa: las bajas para la placa
-   y, si hay powerbank, las altas para él.
-   <!-- PENDIENTE (Héctor): ¿las patas van en la tapa inferior? ¿a presión,
-   roscadas? -->
-3. **Placa y powerbank**, cada uno sobre sus patas con tornillos M3 × 6.
-4. **Pantalla** (versiones con e-ink): por dentro de la ventana, sujeta con el
-   marco del e-ink y 4 tornillos M2 × 15.
-   <!-- PENDIENTE (Héctor): orden exacto pantalla/marco/caja y por dónde
-   entran los tornillos. -->
-5. **Botón** en el agujero de arriba, con su tuerca.
+   4 patas bajas; si usas powerbank o batería, también 4 patas altas.
+2. **Patas de soporte.** Atornilla las patas bajas a la placa con tornillos
+   M3 × 6, y las altas al powerbank si lo llevas. Coloca cada pieza en la
+   tapa inferior donde mejor te venga y pega las patas con cianoacrilato. Así
+   repartes los elementos con libertad según tu versión.
+3. **Pantalla** (versiones con e-ink): por dentro de la caja, contra el marco
+   de la ventana, con 4 tornillos M2 × 12 o M3 × 12.
+4. **Botón** en el agujero de arriba, con su tuerca.
    <!-- PENDIENTE (Héctor): ¿el LED va dentro del pulsador o en otro agujero? -->
-6. **Altavoz** (versiones con altavoz) detrás de la rejilla.
-   <!-- PENDIENTE (Héctor): cómo se fija (pegamento, tornillos, a presión). -->
-7. **Impresora** (versiones con impresora) en la ranura de arriba, desde
-   fuera.
-   <!-- PENDIENTE (Héctor): confirmar en la QR701 y la QR204. -->
-8. **Conecta** los periféricos a la placa (ver [Conectar los
+5. **Altavoz** (versiones con altavoz) por dentro, contra la rejilla: con
+   tornillos M3 × 12 si tiene agujeros, o con cola caliente, que también
+   queda firme.
+6. **Impresora** (versiones con impresora) en la ranura de arriba. Trae su
+   propia fijación: dos pestañas con tornillo que la sujetan por dentro.
+7. **Conecta** los periféricos a la placa (ver [Conectar los
    periféricos](../hardware/README.md#4-conectar-los-perif%C3%A9ricos)) y
    pon la tarjeta grabada en la Pi.
-9. **Cierra** con la tapa inferior y sus 4 tornillos cortos.
+8. **Cierra** la caja con la tapa inferior y sus 4 tornillos cortos, que
+   quedan debajo como pies.
+
+**En las cajas de madera y acrílico** se monta igual, con dos diferencias: la
+pantalla va sobre el marco suelto de los accesorios, pegado por dentro, y el
+altavoz, detrás de una de las rejillas redondas.
 
 ---
 

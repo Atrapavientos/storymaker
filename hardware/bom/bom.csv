@@ -4,6 +4,7 @@ B02,BASE,RASPBERRY PI ZERO 2W,Raspberry Pi Zero 2 W,Sin pines soldados (no la «
 B03,BASE,,Tarjeta microSD,"8 GB o más, clase 10 o mejor",,,1,genérico,probado,,,,,
 B04,BASE,RASPBERRY PI ZERO 2W,Tira de pines macho 2×20,"Paso 2,54 mm",,,1,genérico,probado,,,,,"Se suelda en la Pi, por debajo, para pincharla encima de la PCB con los componentes hacia arriba."
 B16,BASE,RASPBERRY PI ZERO 2W,Zócalo hembra 2×20,"Paso 2,54 mm",,,1,genérico,probado,,,,,Se suelda en la PCB y recibe la Pi.
+B17,BASE,,Pegamento de cianoacrilato,Gel o líquido,,,1,genérico,probado,,,,,"Pega las patas de soporte a la tapa inferior, donde convenga a cada versión."
 B05,BASE,C1,Condensador electrolítico,"1000 µF, 10 V, low-ESR, 105 °C",,,1,equivalente,probado,,,,,"Se monta en todas las versiones, por estabilidad. Polarizado. Las pistas de la huella están a 2,54 mm: un condensador de este valor suele tener más separación entre patas, así que puede requerir doblarlas."
 B06,BASE,JUMPER (J1),Tira de pines macho 1×3,"Paso 2,54 mm",,,1,genérico,probado,,,,,Selector de alimentación. En la PCB va macho; la pieza de Fritzing figura como hembra.
 B07,BASE,JUMPER (J1),Puente (jumper),"Paso 2,54 mm",,,1,genérico,probado,,,,,
@@ -13,18 +14,19 @@ B10,BASE,"PULS (P1, P2)",Pulsador principal,"Normalmente abierto, de panel",,,1,
 B11,BASE,"LED (Led+, GND)",LED indicador,PENDIENTE: color y tamaño,,,1,genérico,pendiente,,,,,GPIO23.
 B12,BASE,LED,Resistencia para el LED,PENDIENTE: valor,,,1,genérico,pendiente,,,,,"La PCB no tiene huella de resistencia. PENDIENTE: dónde va, o si el LED la lleva integrada."
 B13,BASE,"PULS, LED",Borne de tornillo de 2 polos,"Paso 2,54 mm",,,2,equivalente,probado,,,,,
-B14,BASE,Taladros,Tornillos M3,M3 × 6,,,4,genérico,probado,,,,,"Fijan la PCB. En la caja impresa en 3D van sobre sus patas impresas, sin separadores; otras envolventes, en su README."
+B14,BASE,Taladros,Tornillos M3,M3 × 6,,,4,genérico,probado,,,,,"Fijan la PCB a sus patas de soporte impresas, que se pegan a la tapa inferior. Otras envolventes, en su README."
 B15,BASE,,Cable para conexiones internas,PENDIENTE: sección y longitud,,,1,genérico,pendiente,,,,,
 I01,IMP,,Impresora térmica UART,"QR701-N32-2011, 5 V, 9600 baudios",,QR701,1,equivalente,probado,,,,,"Compatible sin cambios: QR204 (TTL + USB), conectada por TTL a 9600 baudios. No se puede alimentar con MH-CD42 + LiPo."
 I02,IMP,"PRINTER (VIN, GND, Tx)",Borne de tornillo de 3 polos,"Paso 2,54 mm",,,1,equivalente,probado,,,,,Tx sale de GPIO14 y va a la RX de la impresora. GPIO15 no está conectado en la PCB.
 I03,IMP,,Rollo de papel térmico,PENDIENTE: confirmar 58 mm de ancho y diámetro máximo,,,1,genérico,pendiente,,,,,Consumible.
 A01,AUD,AUDIO,Módulo amplificador I2S MAX98357A,Huella de Adafruit #3006,Adafruit,3006,1,equivalente,probado,,,,,Otro módulo compatible debe tener el mismo orden de pines; compruébalo con la serigrafía.
 A03,AUD,AUDIO,Zócalo hembra 1×7,"Paso 2,54 mm",,,1,genérico,probado,,,,,"Recibe el módulo amplificador, que trae su tira de pines."
+A04,AUD,,Fijación del altavoz,"Tornillos M3 × 12 si el altavoz tiene agujeros; si no, cola caliente",,,4,genérico,probado,,,,,"Por dentro, contra la rejilla."
 A02,AUD,,Altavoz,4 Ω; PENDIENTE: potencia y tamaño,,,1,equivalente,probado,,,,,"Se conecta a la salida del propio módulo, no a la PCB."
 P01,PAN,E-INK LCD,"Pantalla e-ink 4,2"" blanco y negro",Controlador SSD1683,WeAct Studio,,1,exacto,probado,,,,,El firmware usa la secuencia de inicio de WeAct; otra pantalla no está garantizada.
 P02,PAN,E-INK LCD,Tira de pines macho acodada 1×8,"Paso 2,54 mm",,,1,genérico,probado,,,,,En la PCB va macho acodada; la pieza de Fritzing figura como hembra.
 P03,PAN,E-INK LCD,Cable de 8 hilos,PENDIENTE: longitud,,,1,genérico,pendiente,,,,,"Conectar por el nombre de cada señal, no por su posición."
-P04,PAN,,Tornillos M2,M2 × 15,,,4,genérico,pendiente,,,,,Fijan la pantalla en la caja impresa en 3D. PENDIENTE: confirmar cantidad.
+P04,PAN,,Tornillos para la pantalla,M2 × 12 o M3 × 12,,,4,genérico,probado,,,,,"Fijan la pantalla por dentro contra el marco de la ventana (integrado en la caja impresa; suelto, en los accesorios, para otros materiales)."
 C01,ALIM-CARG,BAT/USB,Cargador USB,"5 V; mín. 2 A, o 2,5 A con impresora",,,1,genérico,pendiente,,,,,J1 en SÓLO USB. No se monta el MH-CD42.
 C02,ALIM-CARG,BAT/USB,Cable USB con hilos a borne,PENDIENTE: conector de entrada y longitud,,,1,equivalente,pendiente,,,,,Respetar + y − de la serigrafía: la entrada no tiene protección de polaridad.
 W01,ALIM-PB,BAT/USB,Powerbank de dos celdas 18650,"Salida de 5 V; mín. 2 A, o 2,5 A con impresora",,,1,equivalente,probado,,,,,"J1 en SÓLO USB. No se monta el MH-CD42. En la caja impresa en 3D va sobre las patas altas, con tornillos M3 × 6. PENDIENTE: confirmar el requisito de corriente."
