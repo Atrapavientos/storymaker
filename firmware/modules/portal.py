@@ -1346,7 +1346,7 @@ def _render_pagina(perfiles, perfil_activo, perfil_sel, tipo_sel, config, premis
     for p in perfiles:
         cls    = 'activo' if p == perfil_sel else ''
         badge  = '<span class="badge-activo">activo</span>' if p == perfil_activo else ''
-        nav_perfiles += f'<a href="/perfil/{p}" class="nav-perfil {cls}">{p.upper()}{badge}</a>'
+        nav_perfiles += f'<a href="/perfil/{p}" class="nav-perfil {cls}" data-perfil="{p}">{p.upper()}{badge}</a>'
     if not nav_perfiles:
         nav_perfiles = '<span class="nav-empty">Sin perfiles</span>'
 
@@ -1885,18 +1885,38 @@ async function generarPremisa() {
     fb.textContent = '';
   }, 3000);
 }
+// Perfil confirmado por la caja. El selector ya muestra el nuevo; la etiqueta
+// «activo» de la barra lateral se movía solo al recargar la página.
+var _perfilActivo = (document.getElementById('perfil-sel') || {}).value;
 async function cambiarPerfil(p) {
-  const r = await fetch('/api/cambiar_perfil', {
-    method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({perfil: p})
-  });
-  const d = await r.json();
-  if (d.ok) {
-    const sel = document.getElementById('perfil-sel');
-    if (sel) {
-      sel.style.outline = '2px solid #9be6a8';
-      setTimeout(() => sel.style.outline = '', 1400);
-    }
+  const sel = document.getElementById('perfil-sel');
+  let d = {ok: false};
+  try {
+    const r = await fetch('/api/cambiar_perfil', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({perfil: p})
+    });
+    d = await r.json();
+  } catch (e) {
+    d.error = 'Sin respuesta de la caja';
+  }
+  if (!d.ok) {
+    if (sel) sel.value = _perfilActivo;
+    alert('No se ha podido cambiar el perfil activo' + (d.error ? ': ' + d.error : '.'));
+    return;
+  }
+  _perfilActivo = p;
+  document.querySelectorAll('.nav-perfil .badge-activo').forEach(b => b.remove());
+  const enlace = document.querySelector('.nav-perfil[data-perfil="' + CSS.escape(p) + '"]');
+  if (enlace) {
+    const b = document.createElement('span');
+    b.className = 'badge-activo';
+    b.textContent = 'activo';
+    enlace.appendChild(b);
+  }
+  if (sel) {
+    sel.style.outline = '2px solid #9be6a8';
+    setTimeout(() => sel.style.outline = '', 1400);
   }
 }
 async function confirmarApagado() {

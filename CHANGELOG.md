@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.0.1 — actualización
+
+Se instala desde el panel (**⟳ Actualizar**), sin grabar la tarjeta. Paquete
+`storymaker-actualizacion-1.0.1.tar`, adjunto a la release `v1.0`.
+
+- Al cambiar el perfil activo desde el panel, la etiqueta «activo» de la barra
+  lateral pasa al perfil nuevo al momento. Antes había que recargar la página.
+  Si la máquina no confirma el cambio, el selector vuelve al perfil anterior y
+  lo avisa.
+
+---
+
 ## v1.0 — imagen distribuible, con actualizaciones desde el panel
 
 Release [`v1.0`](https://codeberg.org/atrapavientos/storymaker/releases/tag/v1.0),

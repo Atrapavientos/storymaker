@@ -3,5 +3,10 @@
     "version": "1.0",
     "url": "https://codeberg.org/atrapavientos/storymaker/releases/tag/v1.0"
   },
-  "actualizacion": null
+  "actualizacion": {
+    "version": "1.0.1",
+    "url": "https://codeberg.org/atrapavientos/storymaker/releases/download/v1.0/storymaker-actualizacion-1.0.1.tar",
+    "sha256": "e56b534cc999dbe525979e35d94dcadf261806591b8d1d41b7cefd86a04ba034",
+    "notas": "Al cambiar el perfil activo desde el panel, la etiqueta «activo» pasa al perfil nuevo al momento, sin recargar la página."
+  }
 }
