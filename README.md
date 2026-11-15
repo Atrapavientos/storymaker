@@ -27,7 +27,8 @@ construir una: el programa, la placa, las cajas y los manuales.
 Enchúfala, espera a que el LED se quede fijo y pulsa el botón. Todo lo demás,
 cambiar las frases, preparar un perfil para cada grupo o apagarla bien, está
 en el **[manual de usuario](docs/manuales/usuario.md)**. No hace falta saber
-nada de informática.
+nada de informática. Para tenerlo a mano en el aula hay una
+**[guía rápida](docs/manuales/guia-rapida.pdf)** de una hoja, para imprimir.
 
 ### Quiero construir una
 

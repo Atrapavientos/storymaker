@@ -7,6 +7,7 @@ Toda la documentación de este repositorio se publica bajo **CC BY-SA 4.0**
 
 | Documento | Para quién |
 |---|---|
+| [**Guía rápida**](manuales/guia-rapida.md) ([PDF](manuales/guia-rapida.pdf)) | Una hoja para imprimir y dejar junto a la máquina en el aula |
 | [**Manual de usuario**](manuales/usuario.md) | Quien usa la máquina en el taller |
 | [**Despliegue e instalación**](manuales/despliegue.md) | Quien graba la tarjeta y pone en marcha una máquina, desde la imagen publicada o desde el código |
 

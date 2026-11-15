@@ -39,10 +39,6 @@ cada cable de un color según su función (en [SVG](esquemas/v2-croquis.svg)):
 
 [![Croquis de montaje de la placa v2, con los módulos y la Raspberry Pi dibujados y los cables coloreados](esquemas/v2-croquis.png)](esquemas/v2-croquis.png)
 
-> **C1 es de 1000 µF**, como dice la serigrafía. En el esquema y en el
-> fichero de Fritzing figura como 1 µF: es el valor por defecto de la pieza.
-> Va en la línea de 5 V, así que vale cualquier electrolítico de 10 V o más.
-
 ---
 
 ## Estructura
@@ -166,7 +162,7 @@ mientras sueldas:
    1×8, con las puntas hacia el borde de la placa).
 4. **Bornas de tornillo**, con la boca hacia fuera de la placa: `INT`,
    `BAT/USB` y `USB` (las grandes), y `PULS`, `LED` y `PRINTER`.
-5. **C1**, el condensador, el último porque es lo más alto. **Tiene
+5. **C1**, el condensador electrolítico de 1000 µF, el último porque es lo más alto. **Tiene
    polaridad:** la pata corta, la del lado de la franja con signos «−», es
    el negativo; colócalo según la marca de polaridad de su huella en la
    serigrafía. Si estorba, se puede tumbar

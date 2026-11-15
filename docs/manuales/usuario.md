@@ -18,7 +18,8 @@ Si todavía no la has instalado, empieza por el
 >   corta ([punto 9](#9-cuando-se-agotan-las-combinaciones)).
 >
 > El resto del manual es eso mismo con detalle, y lo que hacer cuando algo no
-> va.
+> va. Para dejar junto a la máquina hay una
+> [guía rápida de una hoja](guia-rapida.pdf), para imprimir.
 
 ---
 
