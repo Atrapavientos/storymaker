@@ -137,7 +137,7 @@ Todos van juntos en `accesorios.stl`, ya colocados para imprimir.
 | Tuerca | 16 × 16 × 8 | 4 | Tuerca cuadrada para los tornillos, en esas mismas cajas |
 | Pata baja | 14 × 12 × 6 | 8 | Patas de soporte de tres brazos para la placa base: 4 por caja, las demás de repuesto. Se atornillan a la placa y se pegan a la tapa inferior |
 | Pata alta | 14 × 12 × 12 | 8 | Como las bajas, para el powerbank o la batería, si los usas |
-| Llave | 70 × 20 × 7 | 1 | Para poner y quitar las patas |
+| Llave | 70 × 20 × 7 | 1 | Sujeta las patas de soporte mientras atornillas la placa o el powerbank a ellas |
 | Marco del e-ink | 120 × 120 × 4 | 1 | Para poner la pantalla en una caja de madera, acrílico o cartón: se recorta un hueco donde vaya la pantalla, se pega el marco por dentro y la pantalla se atornilla a él. Las cajas impresas con e-ink ya lo llevan integrado |
 | Rejilla grande | Ø 93 × 6 | 1 | Para las cajas de madera o acrílico: en lugar de mecanizar la rejilla del altavoz, se hace un agujero grande y se tapa con esta. Altavoz de 78 mm |
 | Rejilla pequeña | Ø 52 × 6 | 1 | Lo mismo, para altavoz de 40 mm |
@@ -196,13 +196,15 @@ placa](../hardware/README.md#montar-la-placa)):
 1. **Imprime** la caja de tu versión, la tapa inferior, 4 tornillos cortos y
    4 patas bajas; si usas powerbank o batería, también 4 patas altas.
 2. **Patas de soporte.** Atornilla las patas bajas a la placa con tornillos
-   M3 × 6, y las altas al powerbank si lo llevas. Coloca cada pieza en la
-   tapa inferior donde mejor te venga y pega las patas con cianoacrilato. Así
-   repartes los elementos con libertad según tu versión.
+   M3 × 6, sujetando cada pata con la llave impresa mientras aprietas; las
+   altas, igual, al powerbank si lo llevas. Con las cuatro patas puestas, pon
+   pegamento de cianoacrilato en sus bases y pega el conjunto en la tapa
+   inferior, donde mejor te venga. Así repartes los elementos con libertad
+   según tu versión.
 3. **Pantalla** (versiones con e-ink): por dentro de la caja, contra el marco
    de la ventana, con 4 tornillos M2 × 12 o M3 × 12.
-4. **Botón** en el agujero de arriba, con su tuerca.
-   <!-- PENDIENTE (Héctor): ¿el LED va dentro del pulsador o en otro agujero? -->
+4. **Botón** en el agujero de arriba, con su tuerca. El LED de estado va
+   dentro del propio pulsador.
 5. **Altavoz** (versiones con altavoz) por dentro, contra la rejilla: con
    tornillos M3 × 12 si tiene agujeros, o con cola caliente, que también
    queda firme.

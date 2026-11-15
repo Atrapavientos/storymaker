@@ -49,8 +49,7 @@ Si la máquina ya está montada, sáltate el apartado 1 y ve directo a la
 | Pantalla e-ink WeAct 4.2" B&N (SSD1683) | Opcional |
 | Impresora térmica QR701 UART o QR204 TTL | Opcional. La QR204 se conecta por TTL, no por USB |
 | Amplificador I2S MAX98357A + altavoz | Opcional |
-| Pulsador momentáneo | Botón de generar |
-| LED + resistencia | Indicador de estado |
+| Pulsador de panel con LED integrado | Botón de generar; el LED, con su resistencia incorporada, indica el estado |
 | Condensador 1000 µF low-ESR (105 °C, 10 V) | **Muy recomendable**: evita reinicios en los picos de corriente |
 
 Las tres salidas son opcionales e independientes. El aparato arranca y funciona

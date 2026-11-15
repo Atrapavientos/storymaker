@@ -213,11 +213,13 @@ La alimentación entra por la borna `BAT/USB`, no por el micro-USB de la Pi.
 
 | Periférico | Dónde | Cómo |
 |---|---|---|
-| Interruptor | `INT` | Sus dos cables, en cualquier orden |
+| Interruptor | `INT` | Sus dos cables, en cualquier orden. Al interruptor van con terminales faston |
 | Cargador USB, powerbank o LiPo | `BAT/USB` | **Respeta `+` y `−`:** la placa no tiene protección contra la polaridad invertida |
 | Toma de carga (solo LiPo) | `USB` | `+` y `−` |
-| Botón | `PULS` | Sus dos cables, en cualquier orden |
-| LED | `LED` | Pata larga (ánodo) a `Led+`, corta a `GND`. La placa no lleva la resistencia del LED: ver la fila B12 de la [lista de materiales](bom/) |
+| Botón | `PULS` | Los dos cables del contacto, en cualquier orden |
+| LED del botón | `LED` | El `+` del LED a `Led+` y el `−` a `GND`. Va dentro del propio pulsador, con su resistencia incorporada |
+
+Al pulsador, los cuatro cables van con terminales faston.
 | Impresora | `PRINTER` | `VIN` y `GND` a su alimentación; `Tx`, al RX de la impresora |
 | Pantalla e-ink | `E-INK LCD` | Cable de 8 hilos, **cada uno por el nombre de su señal**, no por la posición: el orden de los pines de la pantalla no coincide con el de la placa |
 | Altavoz | La borna del propio amplificador | Sus dos cables |
