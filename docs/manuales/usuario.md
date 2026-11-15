@@ -375,6 +375,11 @@ después (8).
 Casi siempre es el rollo puesto del revés. El papel térmico sólo imprime por
 una cara.
 
+**Con el cargador enchufado, no carga ni enciende.**
+Si la toma de la caja es USB-C, usa un cargador con cable **USB-A a USB-C**
+(USB-A es el conector rectangular de siempre). Con un cable USB-C en los dos
+extremos la máquina no recibe corriente.
+
 **La pantalla se ha quedado con una premisa antigua.**
 Es normal: el e-ink mantiene la última imagen aunque esté apagada. No gasta
 nada por estar ahí.

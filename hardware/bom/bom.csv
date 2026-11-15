@@ -1,5 +1,5 @@
 id,bloque,ref_pcb,descripcion,especificacion,fabricante,mpn,cantidad,sustitucion,estado,proveedor,enlace,precio_unit_eur,pack_min,notas
-B01,BASE,,PCB StoryMaker,"80 × 70 mm, 2 capas, 4 taladros de 3,2 mm",,,1,exacto,pendiente,,,,,"Gerbers en hardware/pcb/gerber. Versión v2, la de la serigrafía. El fabricante impone un pedido mínimo."
+B01,BASE,,PCB StoryMaker,"80 × 70 mm, 2 capas, 4 taladros de 3,2 mm",,,1,exacto,probado,,,,,"Gerbers en hardware/pcb/gerber. Versión v2, la de la serigrafía. El fabricante impone un pedido mínimo."
 B02,BASE,RASPBERRY PI ZERO 2W,Raspberry Pi Zero 2 W,Sin pines soldados (no la «WH»),Raspberry Pi,,1,exacto,probado,,,,,"El conector de 40 pines se suelda por debajo de la Pi, al revés de lo habitual (ver B04)."
 B03,BASE,,Tarjeta microSD,"8 GB o más, clase 10 o mejor",,,1,genérico,probado,,,,,
 B04,BASE,RASPBERRY PI ZERO 2W,Tira de pines macho 2×20,"Paso 2,54 mm",,,1,genérico,probado,,,,,"Se suelda en la Pi, por debajo, para pincharla encima de la PCB con los componentes hacia arriba."
@@ -17,24 +17,24 @@ B14,BASE,Taladros,Tornillos M3,M3 × 6,,,4,genérico,probado,,,,,"Fijan la PCB a
 B15,BASE,,Cable para conexiones internas,AWG 22 para alimentación y AWG 28 para señal,,,1,genérico,probado,,,,,
 I01,IMP,,Impresora térmica UART,"QR701-N32-2011, 5 V, 9600 baudios",,QR701,1,equivalente,probado,,,,,"Compatible sin cambios: QR204 (TTL + USB), conectada por TTL a 9600 baudios. No se puede alimentar con MH-CD42 + LiPo."
 I02,IMP,"PRINTER (VIN, GND, Tx)",Borne de tornillo de 3 polos,"Paso 2,54 mm",,,1,equivalente,probado,,,,,Tx sale de GPIO14 y va a la RX de la impresora. GPIO15 no está conectado en la PCB.
-I03,IMP,,Rollo de papel térmico,PENDIENTE: confirmar 58 mm de ancho y diámetro máximo,,,1,genérico,pendiente,,,,,Consumible.
+I03,IMP,,Rollo de papel térmico,Estándar de 58 mm,,,1,genérico,probado,,,,,Consumible.
 A01,AUD,AUDIO,Módulo amplificador I2S MAX98357A,Huella de Adafruit #3006,Adafruit,3006,1,equivalente,probado,,,,,Otro módulo compatible debe tener el mismo orden de pines; compruébalo con la serigrafía.
 A03,AUD,AUDIO,Zócalo hembra 1×7,"Paso 2,54 mm",,,1,genérico,probado,,,,,"Recibe el módulo amplificador, que trae su tira de pines."
 A04,AUD,,Fijación del altavoz,"Tornillos M3 × 12 si el altavoz tiene agujeros; si no, cola caliente",,,4,genérico,probado,,,,,"Por dentro, contra la rejilla."
-A02,AUD,,Altavoz,"8 Ω, 5 W; probados de 40 mm y de 78 mm de diámetro",,,1,equivalente,probado,,,,,"Se conecta a la salida del propio módulo, no a la PCB. La envolvente trae rejilla para los dos tamaños."
+A02,AUD,,Altavoz,"4 Ω, 5 W; probados de 40 mm y de 78 mm de diámetro",,,1,equivalente,probado,,,,,"Se conecta a la salida del propio módulo, no a la PCB. La envolvente trae rejilla para los dos tamaños. Uno de 8 Ω también funciona, con menos volumen."
 P01,PAN,E-INK LCD,"Pantalla e-ink 4,2"" blanco y negro",Controlador SSD1683,WeAct Studio,,1,exacto,probado,,,,,El firmware usa la secuencia de inicio de WeAct; otra pantalla no está garantizada.
 P02,PAN,E-INK LCD,Tira de pines macho acodada 1×8,"Paso 2,54 mm",,,1,genérico,probado,,,,,En la PCB va macho acodada; la pieza de Fritzing figura como hembra.
-P03,PAN,E-INK LCD,Cable de 8 hilos,PENDIENTE: longitud,,,1,genérico,pendiente,,,,,"Conectar por el nombre de cada señal, no por su posición."
+P03,PAN,E-INK LCD,Cable de 8 hilos,El que viene con la pantalla,,,1,genérico,probado,,,,,"Conectar por el nombre de cada señal, no por su posición."
 P04,PAN,,Tornillos para la pantalla,M2 × 12 o M3 × 12,,,4,genérico,probado,,,,,"Fijan la pantalla por dentro contra el marco de la ventana (integrado en la caja impresa; suelto, en los accesorios, para otros materiales)."
-C01,ALIM-CARG,BAT/USB,Cargador USB,"5 V; mín. 2 A, o 2,5 A con impresora",,,1,genérico,pendiente,,,,,J1 en SÓLO USB. No se monta el MH-CD42.
-C02,ALIM-CARG,BAT/USB,Cable USB con hilos a borne,PENDIENTE: conector de entrada y longitud,,,1,equivalente,pendiente,,,,,Respetar + y − de la serigrafía: la entrada no tiene protección de polaridad.
+C01,ALIM-CARG,BAT/USB,Cargador USB,"5 V; mín. 2 A, o 2,5 A con impresora",,,1,genérico,pendiente,,,,,"J1 en SÓLO USB. No se monta el MH-CD42. Con toma USB-C, el cargador ha de ir con cable USB-A a USB-C: con USB-C a USB-C no reconoce la máquina y no carga ni alimenta."
+C02,ALIM-CARG,BAT/USB,Cable USB con hilos a borne,Según la toma instalada (USB-C o micro-USB),,,1,equivalente,probado,,,,,"Respetar + y − de la serigrafía: la entrada no tiene protección de polaridad. Con toma USB-C, el cargador ha de ir con cable USB-A a USB-C: con USB-C a USB-C no reconoce la máquina y no carga ni alimenta."
 W01,ALIM-PB,BAT/USB,Powerbank de dos celdas 18650,"Salida de 5 V; mín. 2 A, o 2,5 A con impresora",,,1,equivalente,probado,,,,,"J1 en SÓLO USB. No se monta el MH-CD42. En la caja impresa en 3D va sobre las patas altas, con tornillos M3 × 6. PENDIENTE: confirmar el requisito de corriente."
 W02,ALIM-PB,,Celda 18650,Estándar,,,2,genérico,probado,,,,,Si el powerbank no las incluye.
-W03,ALIM-PB,BAT/USB,Cable USB con hilos a borne,PENDIENTE: longitud,,,1,equivalente,pendiente,,,,,Respetar + y − de la serigrafía: la entrada no tiene protección de polaridad.
+W03,ALIM-PB,BAT/USB,Cable USB con hilos a borne,Según la toma instalada (USB-C o micro-USB),,,1,equivalente,probado,,,,,Respetar + y − de la serigrafía: la entrada no tiene protección de polaridad.
 L01,ALIM-LIPO,CARGADOR,Módulo de carga y descarga MH-CD42,"Salida de 5 V, 2 A",,MH-CD42,1,exacto,probado,,,,,J1 en BAT+CARG. Solo sin impresora. Hay que quitarle el pulsador KEY y puentear sus contactos para que arranque con el interruptor (ver el README de hardware).
 L06,ALIM-LIPO,CARGADOR,Zócalo hembra 1×6,"Paso 2,54 mm",,,1,genérico,probado,,,,,Recibe el MH-CD42. Puede soldarse siempre y quedar vacío si no se usa.
-L02,ALIM-LIPO,BAT/USB,Batería LiPo de una celda,"3,7 V; PENDIENTE: capacidad y tamaño",,,1,equivalente,pendiente,,,,,Respetar + y − de la serigrafía.
+L02,ALIM-LIPO,BAT/USB,Batería LiPo de una celda,"3,7 V; 2000 mAh como mínimo",,,1,equivalente,probado,,,,,Respetar + y − de la serigrafía.
 L03,ALIM-LIPO,USB,Borne de 2 polos,"Paso 5,08 mm",,,1,equivalente,pendiente,,,,,
-L04,ALIM-LIPO,USB,Toma USB hembra de panel,PENDIENTE: tipo de conector,,,1,equivalente,pendiente,,,,,Es la entrada de carga.
-L05,ALIM-LIPO,,Cargador USB,5 V; mín. 2 A,,,1,genérico,pendiente,,,,,
+L04,ALIM-LIPO,USB,Toma USB hembra de panel,De atornillar en panel; USB-C o micro-USB,,,1,equivalente,probado,,,,,"Es la entrada de carga. Con toma USB-C, el cargador ha de ir con cable USB-A a USB-C: con USB-C a USB-C no reconoce la máquina y no carga ni alimenta."
+L05,ALIM-LIPO,,Cargador USB,5 V; mín. 2 A,,,1,genérico,pendiente,,,,,"Con toma USB-C, ha de ir con cable USB-A a USB-C: con USB-C a USB-C no reconoce la máquina y no carga."
 X01,OPC,INTERFAZ GPIO's RASPBERRY PI,Tira de pines 1×14,"Paso 2,54 mm",,,1,genérico,probado,,,,,Acceso opcional a las señales; en las máquinas montadas va sin soldar.

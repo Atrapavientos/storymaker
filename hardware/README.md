@@ -214,11 +214,16 @@ La alimentación entra por la borna `BAT/USB`, no por el micro-USB de la Pi.
 | Toma de carga (solo LiPo) | `USB` | `+` y `−` |
 | Botón | `PULS` | Los dos cables del contacto, en cualquier orden |
 | LED del botón | `LED` | El `+` del LED a `Led+` y el `−` a `GND`. Va dentro del propio pulsador, con su resistencia incorporada |
-
-Al pulsador, los cuatro cables van con terminales faston.
 | Impresora | `PRINTER` | `VIN` y `GND` a su alimentación; `Tx`, al RX de la impresora |
 | Pantalla e-ink | `E-INK LCD` | Cable de 8 hilos, **cada uno por el nombre de su señal**, no por la posición: el orden de los pines de la pantalla no coincide con el de la placa |
 | Altavoz | La borna del propio amplificador | Sus dos cables |
+
+Al pulsador, los cuatro cables van con terminales faston.
+
+> **Toma de carga USB-C:** el cargador tiene que llevar un cable **USB-A a
+> USB-C**. Con un cable USB-C en los dos extremos no carga ni alimenta: la toma
+> de panel no lleva las resistencias con las que un cargador USB-C reconoce el
+> dispositivo, así que no da corriente. Con toma micro-USB no pasa.
 
 Con todo conectado, graba la tarjeta (Ruta A del [manual de
 despliegue](../docs/manuales/despliegue.md)), métela en la Pi y cierra el

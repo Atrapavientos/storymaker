@@ -39,6 +39,12 @@ Modelos de cada versión. Pulsa una imagen para verla a tamaño completo.
 y la cara abierta abajo, que cierra la tapa inferior. Para imprimir se ponen
 al revés (ver [Parámetros de impresión](#par%C3%A1metros-de-impresi%C3%B3n)).
 
+Así queda montada la versión con las tres salidas:
+
+[<img src="../docs/galeria/envolvente-00-impresa.jpg" width="360" alt="Caja impresa en 3D en azul, montada y encendida: arriba el pulsador iluminado y la impresora sacando un tique; en el frente, la pantalla e-ink con una premisa, sujeta por cuatro tornillos en su marco; en el lateral, la rejilla del altavoz">](../docs/galeria/envolvente-00-impresa.jpg)
+
+Y estas son las vistas del diseño de cada versión:
+
 [<img src="03%20im%C3%A1genes/00%20Impresa%20en%203D/set_completo.png" width="480" alt="Las siete cajas juntas, cada una de un color, con sus ventanas para la pantalla y la impresora y sus rejillas de altavoz">](03%20im%C3%A1genes/00%20Impresa%20en%203D/set_completo.png)
 
 | E-ink | Impresora | Altavoz | Impresora + e-ink |
@@ -215,6 +221,11 @@ placa](../hardware/README.md#montar-la-placa)):
    pon la tarjeta grabada en la Pi.
 8. **Cierra** la caja con la tapa inferior y sus 4 tornillos cortos, que
    quedan debajo como pies.
+
+[<img src="../docs/galeria/envolvente-03-interior.jpg" width="360" alt="Caja impresa en 3D abierta. Sobre la tapa inferior, la placa con la Raspberry Pi Zero 2W y el powerbank de dos baterías 18650, cada uno sobre sus patas; dentro de la caja, la impresora, el altavoz pegado con cola caliente, el pulsador y el interruptor, con los cables agrupados con bridas y unidos con terminales faston">](../docs/galeria/envolvente-03-interior.jpg)
+
+*Una caja con impresora, altavoz y pantalla, antes de cerrarla: a la tapa
+inferior van la placa y el powerbank; a la caja, los periféricos.*
 
 **En las cajas de madera y acrílico** se monta igual, con dos diferencias: la
 pantalla va sobre el marco suelto de los accesorios, pegado por dentro, y el

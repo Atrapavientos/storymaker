@@ -37,6 +37,9 @@ vuelve al anterior.
 **El tique sale en blanco.** El rollo está del revés: el papel térmico solo
 imprime por una cara.
 
+**Con el cargador enchufado, no carga ni enciende.** Si la toma es USB-C, usa
+un cable USB-A a USB-C: con USB-C en los dos extremos no le llega corriente.
+
 **La pantalla sigue mostrando una premisa con la máquina apagada.** Es normal:
 conserva la última imagen sin gastar nada.
 
