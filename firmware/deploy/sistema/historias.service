@@ -10,6 +10,9 @@ WorkingDirectory=/home/storymaker/proyecto
 Environment="PATH=/home/storymaker/proyecto/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 Environment="PYTHONPATH=/home/storymaker/proyecto"
 Environment="PYTHONUNBUFFERED=1"
+# Guardián de actualizaciones: revierte una versión que no arranca. El «-»
+# hace que un fallo suyo no impida arrancar el servicio.
+ExecStartPre=-/usr/local/bin/storymaker-arranque /home/storymaker/proyecto
 ExecStart=/home/storymaker/proyecto/venv/bin/python3 /home/storymaker/proyecto/main.py
 Restart=on-failure
 RestartSec=5

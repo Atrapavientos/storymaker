@@ -1,7 +1,8 @@
 # Para quien desarrolle el firmware
 
 Lo que no necesita quien monta o usa una máquina: generar la imagen de tarjeta
-que se publica en las releases, y dónde está la referencia técnica.
+que se publica en las releases, publicar actualizaciones, y dónde está la
+referencia técnica.
 
 Antes de esto, la Ruta B del [manual de despliegue](manuales/despliegue.md)
 explica cómo instalar desde el código y cómo actualizar una máquina con
@@ -58,8 +59,38 @@ precisamente porque nadie miraba.
 Por último, genera la huella que acompaña a la descarga:
 
 ```bash
-sha256sum storymaker-$(date +%F).img.xz | tee storymaker-$(date +%F).img.xz.sha256
+sha256sum storymaker-v1.0.img.xz | tee storymaker-v1.0.img.xz.sha256
 ```
 
-La imagen y su `.sha256` se publican como adjuntos de una release en Codeberg,
-nunca dentro del repositorio.
+La imagen se nombra con la versión de `firmware/VERSION` (`X.Y`). Ella y su
+`.sha256` se publican como adjuntos de una release en Codeberg, nunca dentro
+del repositorio.
+
+## Publicar una actualización
+
+Las máquinas instalan desde el panel las versiones `X.Y.Z` que solo cambian el
+firmware de `/home/storymaker/proyecto`, sin tocar perfiles ni configuración
+(ver [`decisiones.md`](decisiones.md)). Lo que toque `firmware/deploy/sistema/`,
+`setup_sd.sh` o paquetes del sistema necesita una imagen nueva, `X.(Y+1)`.
+
+```bash
+cd firmware/deploy
+./crear_actualizacion.sh --clave            # una sola vez: par de claves Ed25519
+# firmware/VERSION = 1.0.1, commit, y que exista el tag v1.0 de la imagen
+./crear_actualizacion.sh "Qué cambia"
+```
+
+El script empaqueta el firmware de `HEAD`, lo firma con la clave privada
+(`~/.config/storymaker/`, fuera del repositorio) y deja en `releases/` el
+`.tar`, su `.sha256` y `actualizacion.json`. Se niega a seguir si hay cambios
+de sistema desde la imagen. El `.tar` se adjunta a la release **de la imagen**
+y `actualizacion.json` va a la raíz de este repositorio, que es donde lo leen
+las máquinas. Con una imagen nueva, `--manifiesto-imagen` genera un
+`actualizacion.json` sin actualización, que hace que las máquinas avisen de
+que tienen que regrabar.
+
+**Si replicas el proyecto con tus propias actualizaciones:** genera tu par de
+claves (la pública, `firmware/clave_actualizaciones.pem`, viaja en tu imagen)
+y cambia `MANIFIESTO` en `modules/actualizador.py` para que apunte a tu
+repositorio. Si no, tus máquinas buscarán actualizaciones de este proyecto, y
+rechazarán por la firma las que publique.

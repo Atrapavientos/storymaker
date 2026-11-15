@@ -8,10 +8,12 @@ Rutas:
   /setup        → configuración de hardware (primer arranque)
   /perfil/<n>/<tipo>  → ver/editar premisas
   /importar     → importar premisas en bloque desde .txt (3 pasos)
+  /actualizar   → versión del firmware y actualizaciones (modules/actualizador.py)
   /api/*        → endpoints JSON
 Se lanza en un hilo separado (daemon) para no bloquear main.py.
 """
 import html
+import json
 import logging
 import os
 import secrets
@@ -23,6 +25,7 @@ from flask import Flask, request, session, redirect, url_for, jsonify
 from modules.config_manager import cargar_config, guardar_config
 from modules.placas import PLACAS, placa_activa
 from modules import importador
+from modules import actualizador
 
 BASE_DIR     = os.path.join(os.path.dirname(__file__), '..')
 PERFILES_DIR = os.path.join(BASE_DIR, 'data', 'perfiles')
@@ -731,11 +734,84 @@ def importar_deshacer():
 
 @app.errorhandler(413)
 def _demasiado_grande(e):
+    if request.path.startswith('/actualizar'):
+        return _render_actualizar(cargar_config(), 'El fichero es demasiado grande '
+                                  'para ser una actualización de StoryMaker.', ok=False), 413
     return _render_mensaje(
         'El archivo es demasiado grande',
         'El dispositivo acepta hasta 3 MB por envío, que son muchísimas frases. '
         'Divide la lista en dos archivos e impórtalos uno detrás de otro.',
         ok=False), 413
+
+
+# ------------------------------------------------------------------ #
+# Actualizaciones del firmware                                        #
+# ------------------------------------------------------------------ #
+# La lógica está en modules/actualizador.py; aquí solo las pantallas. Instalar
+# reinicia el servicio: la página «Actualizando» espera a que vuelva.
+@app.route('/actualizar')
+@login_requerido
+def actualizar():
+    return _render_actualizar(cargar_config())
+
+
+@app.route('/actualizar/buscar', methods=['POST'])
+@login_requerido
+def actualizar_buscar():
+    r = actualizador.comprobar()
+    if not r['ok']:
+        return _render_actualizar(cargar_config(), r['error'], ok=False)
+    if r['disponible']:
+        return redirect(url_for('actualizar'))
+    return _render_actualizar(cargar_config(), 'No hay actualizaciones: esta caja '
+                              'tiene la última versión.', ok=True)
+
+
+@app.route('/actualizar/instalar', methods=['POST'])
+@login_requerido
+def actualizar_instalar():
+    try:
+        version = actualizador.instalar_disponible()
+    except actualizador.ErrorActualizacion as e:
+        return _render_actualizar(cargar_config(), str(e), ok=False)
+    return _render_actualizando(version)
+
+
+@app.route('/actualizar/subir', methods=['POST'])
+@login_requerido
+def actualizar_subir():
+    f = request.files.get('paquete')
+    if not f or not f.filename:
+        return _render_actualizar(cargar_config(), 'Elige el fichero de la actualización.', ok=False)
+    os.makedirs(actualizador.ESTADO_DIR, exist_ok=True)
+    ruta = os.path.join(actualizador.ESTADO_DIR, 'subida.tar')
+    try:
+        f.save(ruta)
+        version = actualizador.aplicar(ruta)
+    except actualizador.ErrorActualizacion as e:
+        return _render_actualizar(cargar_config(), str(e), ok=False)
+    finally:
+        try:
+            os.unlink(ruta)
+        except OSError:
+            pass
+    return _render_actualizando(version)
+
+
+@app.route('/actualizar/ajustes', methods=['POST'])
+@login_requerido
+def actualizar_ajustes():
+    config = cargar_config()
+    config['buscar_actualizaciones'] = request.form.get('buscar') == 'si'
+    guardar_config(config)
+    return redirect(url_for('actualizar'))
+
+
+@app.route('/api/version')
+@login_requerido
+def api_version():
+    return jsonify({'version': actualizador.leer_version(),
+                    'fase': actualizador.leer_estado().get('fase')})
 
 
 # ------------------------------------------------------------------ #
@@ -1409,6 +1485,15 @@ body { display: flex; flex-direction: column; }
   font-family: var(--serif); font-size: 1.3rem; font-weight: 600; line-height: 1;
 }
 .header-logo em { color: var(--accent2); font-style: italic; }
+.header-ver {
+  font-family: var(--sans); font-size: .68rem; letter-spacing: .04em;
+  color: #888; margin-left: .35rem; vertical-align: middle;
+}
+.hlink-nueva { color: var(--accent2); }
+.hlink-nueva::after {
+  content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent2); margin-left: .3rem; vertical-align: 2px;
+}
 .header-right { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
 .hw-tags { display: flex; gap: .35rem; flex-wrap: wrap; }
 .header-right .tag { border-color: rgba(255,255,255,.15); }
@@ -1834,7 +1919,7 @@ async function confirmarApagado() {
 
     body = f"""
 <header class="header">
-  <div class="header-logo">Story<em>Maker</em></div>
+  <div class="header-logo">Story<em>Maker</em><span class="header-ver">v{html.escape(actualizador.leer_version())}</span></div>
   <div class="header-right">
     <div class="hw-tags">{hw_tags}</div>
     {vol_control}
@@ -1844,6 +1929,8 @@ async function confirmarApagado() {
     </div>
     <div class="header-links">
       <a href="/setup" class="hlink">⚙ Hardware</a>
+      <a href="/actualizar" class="hlink{' hlink-nueva' if actualizador.ultima_comprobacion().get('disponible') else ''}"
+         title="Versión del firmware y actualizaciones">⟳ Actualizar</a>
       <button class="hlink hlink-apagar" onclick="confirmarApagado()" title="Apagar el dispositivo">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px"><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
         Apagar
@@ -2362,6 +2449,158 @@ def _render_mensaje(titulo, texto, ok=True, perfil=None):
   </div>
 </div>'''
     return _page_wrap(titulo, body, CSS_IMPORTAR)
+
+
+# ------------------------------------------------------------------ #
+# Pantallas de actualización                                          #
+# ------------------------------------------------------------------ #
+CSS_ACTUALIZAR = """
+.act-version { font-family: var(--serif); font-size: 2.4rem; font-weight: 600; line-height: 1; }
+.act-version small { font-family: var(--sans); font-size: .8rem; font-weight: 400; color: var(--ink2); margin-left: .5rem; }
+.act-notas { white-space: pre-line; font-size: .88rem; line-height: 1.55; color: var(--ink); margin: .6rem 0 0; }
+.act-fichero { font-size: .85rem; margin-top: .3rem; max-width: 100%; }
+.act-espera { display: inline-block; width: .8rem; height: .8rem; border: 2px solid var(--border2);
+  border-top-color: var(--accent); border-radius: 50%; animation: giro 1s linear infinite;
+  vertical-align: -1px; margin-right: .5rem; }
+@keyframes giro { to { transform: rotate(360deg); } }
+"""
+
+
+def _render_actualizar(config, mensaje=None, ok=True):
+    version = actualizador.leer_version()
+    estado  = actualizador.leer_estado()
+    ultima  = actualizador.ultima_comprobacion()
+    buscar  = config.get('buscar_actualizaciones', True)
+    esc     = html.escape
+
+    aviso = ''
+    if mensaje:
+        clase = 'imp-ok' if ok else 'imp-error'
+        aviso = f'<div class="{clase}">{esc(mensaje)}</div>'
+
+    historial = ''
+    if estado.get('fase') == 'revertida':
+        historial = (f'<div class="imp-aviso"><strong>La última actualización no se ha '
+                     f'quedado</strong>La caja intentó pasar a la versión '
+                     f'{esc(str(estado.get("version_nueva")))} y volvió sola a la '
+                     f'{esc(str(estado.get("version_anterior")))}: '
+                     f'{esc(str(estado.get("motivo", "")))}.</div>')
+    elif estado.get('fase') == 'ok' and estado.get('version_nueva') == version:
+        historial = (f'<p class="imp-nota">Actualizada desde la '
+                     f'{esc(str(estado.get("version_anterior")))} el '
+                     f'{esc(str(estado.get("fecha", "")))}.</p>')
+
+    disp = ultima.get('disponible')
+    if disp:
+        notas = f'<p class="act-notas">{esc(disp["notas"])}</p>' if disp.get('notas') else ''
+        novedad = f'''
+  <div class="imp-paso">
+    <div class="imp-paso-cab"><span class="imp-paso-tit">Hay una versión nueva: {esc(disp["version"])}</span></div>
+    <div class="imp-paso-cuerpo">
+      {notas}
+      <p class="imp-nota" style="margin-top:.8rem">Tus perfiles, premisas y ajustes se conservan.
+        La caja se reinicia y vuelve en menos de un minuto.</p>
+      <form method="POST" action="/actualizar/instalar" class="imp-acciones"
+            onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').textContent='Instalando…'">
+        <button type="submit" class="imp-btn">Instalar la {esc(disp["version"])}</button>
+      </form>
+    </div>
+  </div>'''
+    else:
+        if ultima.get('fecha') and ultima.get('ok'):
+            texto = f'Comprobado el {esc(ultima["fecha"])}: no hay actualizaciones.'
+        elif ultima.get('fecha'):
+            texto = f'Última comprobación ({esc(ultima["fecha"])}): {esc(ultima.get("error") or "")}'
+        else:
+            texto = ('Todavía no se ha comprobado. La caja lo hace sola cuando está '
+                     'conectada a una WiFi con internet.' if buscar else
+                     'La comprobación automática está desactivada.')
+        novedad = f'''
+  <div class="imp-paso">
+    <div class="imp-paso-cab"><span class="imp-paso-tit">Buscar actualizaciones</span></div>
+    <div class="imp-paso-cuerpo">
+      <p class="imp-nota">{texto}</p>
+      <form method="POST" action="/actualizar/buscar" class="imp-acciones"
+            onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').textContent='Buscando…'">
+        <button type="submit" class="imp-btn2">Buscar ahora</button>
+      </form>
+    </div>
+  </div>'''
+
+    imagen = ''
+    if ultima.get('imagen'):
+        img = ultima['imagen']
+        enlace = (f' <a href="{esc(img["url"])}" target="_blank" rel="noopener" '
+                  f'style="text-decoration:underline">Descargar la imagen</a>.' if img.get('url') else '')
+        imagen = (f'<div class="imp-aviso"><strong>Hay una imagen nueva: '
+                  f'{esc(img["version"])}</strong>Trae cambios que no caben en una '
+                  f'actualización y se instala regrabando la tarjeta. Al regrabar se '
+                  f'pierden los perfiles: guarda antes tus listas.{enlace}</div>')
+
+    marcado = ' checked' if buscar else ''
+    body = f'''
+{_imp_cabecera()}
+<div class="imp-wrap">
+  <h1 class="imp-titulo serif">Actualizaciones</h1>
+  <p class="act-version">v{esc(version)}<small>versión instalada</small></p>
+  {historial}
+  <div style="margin-top:1.5rem">{aviso}{imagen}</div>
+  {novedad}
+  <div class="imp-paso">
+    <div class="imp-paso-cab"><span class="imp-paso-tit">Instalar desde un fichero</span></div>
+    <div class="imp-paso-cuerpo">
+      <p class="imp-nota">Para cajas sin internet: descarga en otro equipo el fichero
+        <code>storymaker-actualizacion-….tar</code> de la página de releases de StoryMaker
+        y súbelo aquí. Solo se aceptan actualizaciones firmadas por el proyecto.</p>
+      <form method="POST" action="/actualizar/subir" enctype="multipart/form-data" class="imp-acciones"
+            onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').textContent='Instalando…'">
+        <input type="file" name="paquete" accept=".tar" class="act-fichero" required>
+        <button type="submit" class="imp-btn2">Subir e instalar</button>
+      </form>
+    </div>
+  </div>
+  <form method="POST" action="/actualizar/ajustes">
+    <label class="imp-check">
+      <input type="checkbox" name="buscar" value="si"{marcado} onchange="this.form.submit()">
+      Buscar actualizaciones automáticamente (una vez al día, solo con internet)
+    </label>
+  </form>
+</div>'''
+    return _page_wrap("Actualizaciones", body, CSS_IMPORTAR + CSS_ACTUALIZAR)
+
+
+def _render_actualizando(version):
+    v = html.escape(version)
+    body = f'''
+{_imp_cabecera()}
+<div class="imp-wrap">
+  <h1 class="imp-titulo serif">Actualizando a la {v}</h1>
+  <div class="imp-ok"><strong><span class="act-espera"></span><span id="act-txt">Reiniciando la caja…</span></strong>
+    Tus perfiles y ajustes se conservan. Esta página se recarga sola cuando vuelva.</div>
+</div>
+<script>
+const objetivo = {json.dumps(version)};
+const inicio = Date.now();
+async function sondear() {{
+  try {{
+    const r = await fetch('/api/version', {{cache: 'no-store'}});
+    if (r.ok) {{
+      const d = await r.json();
+      if (d.version === objetivo || d.fase === 'revertida') {{
+        location.href = '/actualizar'; return;
+      }}
+    }}
+  }} catch (e) {{}}
+  if (Date.now() - inicio > 120000) {{
+    document.getElementById('act-txt').textContent =
+      'Está tardando más de lo normal. Recarga la página en un momento.';
+    return;
+  }}
+  setTimeout(sondear, 3000);
+}}
+setTimeout(sondear, 6000);
+</script>'''
+    return _page_wrap("Actualizando", body, CSS_IMPORTAR + CSS_ACTUALIZAR)
 
 
 # ------------------------------------------------------------------ #

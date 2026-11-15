@@ -58,6 +58,8 @@ SETPASS_SRC="${SCRIPT_DIR}/sistema/storymaker-setpass"
 SUDOERS_SRC="${SCRIPT_DIR}/sistema/storymaker-shutdown"
 PERFIL_SRC="${SCRIPT_DIR}/sistema/storymaker-perfil.sh"
 PERFIL_SUDOERS_SRC="${SCRIPT_DIR}/sistema/storymaker-perfil.sudoers"
+ARRANQUE_SRC="${SCRIPT_DIR}/sistema/storymaker-arranque"
+SERVICIO_SRC="${SCRIPT_DIR}/sistema/historias.service"
 ASOUND_SRC_DIR="${SCRIPT_DIR}/sistema/asound"
 
 echo "╔══════════════════════════════════════════╗"
@@ -69,6 +71,7 @@ echo ""
 
 # [0] Verificar que los ficheros de sistema existen en local
 for F in "$CAPTIVE_SRC" "$SETPASS_SRC" "$SUDOERS_SRC" "$PERFIL_SRC" "$PERFIL_SUDOERS_SRC" \
+         "$ARRANQUE_SRC" "$SERVICIO_SRC" \
          "$ASOUND_SRC_DIR/storymaker_pcb.conf" "$ASOUND_SRC_DIR/voicehat_pi3.conf"; do
     if [ ! -f "$F" ]; then
         echo "ERROR: no se encuentra ${F}"
@@ -128,6 +131,8 @@ else
     scp "$SUDOERS_SRC" "${DESTINO}:/tmp/storymaker-shutdown"
     scp "$PERFIL_SRC"  "${DESTINO}:/tmp/storymaker-perfil.sh"
     scp "$PERFIL_SUDOERS_SRC" "${DESTINO}:/tmp/storymaker-perfil.sudoers"
+    scp "$ARRANQUE_SRC" "${DESTINO}:/tmp/storymaker-arranque"
+    scp "$SERVICIO_SRC" "${DESTINO}:/tmp/historias.service"
     ssh "$DESTINO" "mkdir -p /tmp/storymaker-asound"
     scp "$ASOUND_SRC_DIR"/*.conf "${DESTINO}:/tmp/storymaker-asound/"
     # El sudoers se valida ANTES de instalarlo: un fichero malformado en
@@ -143,10 +148,14 @@ else
         install -m 440 -o root -g root /tmp/storymaker-perfil.sudoers /etc/sudoers.d/storymaker-perfil
         install -d -m 755 -o root -g root /usr/local/share/storymaker/asound
         install -m 644 -o root -g root /tmp/storymaker-asound/*.conf /usr/local/share/storymaker/asound/
+        install -m 755 -o root -g root /tmp/storymaker-arranque   /usr/local/bin/storymaker-arranque
+        install -m 644 -o root -g root /tmp/historias.service     /etc/systemd/system/historias.service
+        systemctl daemon-reload
         systemctl restart storymaker-captive.service
     ' ; rm -rf /tmp/storymaker-captive.py /tmp/storymaker-setpass /tmp/storymaker-shutdown \
-             /tmp/storymaker-perfil.sh /tmp/storymaker-perfil.sudoers /tmp/storymaker-asound"
-    echo "      → Captivo, ayudante, cambio de placa y permisos actualizados"
+             /tmp/storymaker-perfil.sh /tmp/storymaker-perfil.sudoers /tmp/storymaker-asound \
+             /tmp/storymaker-arranque /tmp/historias.service"
+    echo "      → Captivo, ayudantes, guardián de actualizaciones, servicio y permisos actualizados"
 fi
 
 # [6] Reiniciar servicio principal

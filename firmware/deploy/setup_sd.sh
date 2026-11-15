@@ -56,7 +56,7 @@ fi
 
 for f in historias.service storymaker-wifi.service storymaker-captive.service \
           storymaker-wifi.sh storymaker-captive.py storymaker-shutdown \
-          storymaker-perfil.sh storymaker-perfil.sudoers \
+          storymaker-perfil.sh storymaker-perfil.sudoers storymaker-arranque \
           asound/storymaker_pcb.conf asound/voicehat_pi3.conf; do
     if [ ! -f "$SISTEMA_DIR/$f" ]; then
         echo "ERROR: falta $SISTEMA_DIR/$f"
@@ -251,6 +251,7 @@ scp $SSH_OPTS "$SISTEMA_DIR/storymaker-shutdown"        "${PI}:/tmp/"
 scp $SSH_OPTS "$SISTEMA_DIR/storymaker-setpass"         "${PI}:/tmp/"
 scp $SSH_OPTS "$SISTEMA_DIR/storymaker-perfil.sh"       "${PI}:/tmp/"
 scp $SSH_OPTS "$SISTEMA_DIR/storymaker-perfil.sudoers"  "${PI}:/tmp/"
+scp $SSH_OPTS "$SISTEMA_DIR/storymaker-arranque"        "${PI}:/tmp/"
 
 ssh $SSH_OPTS "$PI" bash <<'REMOTE'
 set -euo pipefail
@@ -267,7 +268,9 @@ sudo install -m 755 -o root -g root /tmp/storymaker-setpass  /usr/local/bin/stor
 sudo visudo -c -f /tmp/storymaker-perfil.sudoers
 sudo install -m 440 -o root -g root /tmp/storymaker-perfil.sudoers /etc/sudoers.d/storymaker-perfil
 sudo install -m 755 -o root -g root /tmp/storymaker-perfil.sh /usr/local/bin/storymaker-perfil.sh
-rm -f /tmp/storymaker-perfil.sudoers /tmp/storymaker-perfil.sh
+# Guardián de actualizaciones (ExecStartPre de historias.service)
+sudo install -m 755 -o root -g root /tmp/storymaker-arranque /usr/local/bin/storymaker-arranque
+rm -f /tmp/storymaker-perfil.sudoers /tmp/storymaker-perfil.sh /tmp/storymaker-arranque
 
 sudo systemctl daemon-reload
 sudo systemctl enable avahi-daemon
@@ -362,6 +365,7 @@ check "sudoers"               "test -f /etc/sudoers.d/storymaker-shutdown"
 check "storymaker-setpass"    "test -x /usr/local/bin/storymaker-setpass"
 check "asound.conf"           "test -f /etc/asound.conf"
 check "storymaker-perfil.sh"  "test -x /usr/local/bin/storymaker-perfil.sh"
+check "storymaker-arranque"   "test -x /usr/local/bin/storymaker-arranque"
 check "sudoers perfil"        "test -f /etc/sudoers.d/storymaker-perfil"
 check "asound de placas"      "test -f /usr/local/share/storymaker/asound/voicehat_pi3.conf"
 

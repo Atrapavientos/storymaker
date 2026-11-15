@@ -21,9 +21,13 @@ Los pasos están en [`manuales/despliegue.md`](manuales/despliegue.md).
 | `deploy/sistema/storymaker-perfil.sh` | `/usr/local/bin/` | Aplica la placa elegida: overlay de audio en `config.txt` y `asound.conf` (lo llama el portal) |
 | `deploy/sistema/storymaker-perfil.sudoers` | `/etc/sudoers.d/storymaker-perfil` | NOPASSWD sólo para `storymaker-perfil.sh` con sus dos argumentos exactos |
 | `deploy/sistema/asound/*.conf` | `/usr/local/share/storymaker/asound/` | `asound.conf` de cada placa; root:root para que el servicio no pueda alterar lo que copia el script |
+| `deploy/sistema/storymaker-arranque` | `/usr/local/bin/` | Guardián de actualizaciones: `ExecStartPre` de `historias.service`; revierte una versión que no arranca |
 
 El firmware en sí vive en `/home/storymaker/proyecto/`, con su entorno virtual
-en `proyecto/venv/`.
+en `proyecto/venv/`. El estado de las actualizaciones, en
+`/home/storymaker/.storymaker-actualizacion/`: `estado.json` y una copia de la
+versión anterior para poder volver a ella. La limpieza previa a una imagen lo
+borra.
 
 ## Acceso y credenciales
 

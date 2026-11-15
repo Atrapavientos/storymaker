@@ -133,8 +133,9 @@ Si esa dirección no funciona, es que la red del centro no resuelve nombres
 
 ### Qué hay en la pantalla
 
-- **Arriba:** las salidas activas, el deslizador de volumen (sólo si hay
-  altavoz), el selector de **perfil activo**, el acceso a **⚙ Hardware**,
+- **Arriba:** la versión de la máquina junto al nombre (por ejemplo `v1.0`),
+  las salidas activas, el deslizador de volumen (sólo si hay altavoz), el
+  selector de **perfil activo**, el acceso a **⚙ Hardware**, **⟳ Actualizar**,
   **Apagar** y **Salir**.
 - **La barra GENERAR**, a todo lo ancho.
 - **A la izquierda:** la lista de perfiles y el botón de crear uno nuevo.
@@ -287,6 +288,33 @@ dejas en blanco, se queda el que había.
 
 <img src="../galeria/usuario-10-hardware.png" width="520" alt="Página Configuración de hardware: placa, salidas, volumen, PIN y contraseña SSH, que se dejan en blanco para no cambiarlos, y el botón Guardar cambios">
 
+### Actualizar
+
+Cuando hay una versión nueva, **⟳ Actualizar** en la cabecera lleva un punto
+de color. Dentro se ve qué versión tiene la máquina, qué trae la nueva y el
+botón para instalarla.
+
+- **Se conservan los perfiles, las premisas y los ajustes.** No hace falta
+  copiar nada antes.
+- La máquina se reinicia y vuelve en menos de un minuto. La página espera sola
+  y se recarga cuando termina. Mejor no hacerlo en mitad de una sesión.
+- **Nunca se instala nada sin que alguien pulse el botón.** La máquina solo
+  mira si hay novedades, una vez al día y cuando tiene internet. Se puede
+  desactivar en la misma página, y también buscar en el momento con **Buscar
+  ahora**.
+- Si una versión nueva no arranca bien, la máquina vuelve sola a la anterior
+  y lo explica en esa página.
+
+**Sin internet** (por ejemplo, en una red sin salida al exterior): descarga en
+otro equipo el fichero `storymaker-actualizacion-….tar` de la sección
+**Releases** del proyecto y súbelo en **Instalar desde un fichero**. Solo se
+aceptan actualizaciones firmadas por el proyecto, así que un fichero de otra
+procedencia se rechaza sin tocar nada.
+
+Hay cambios que no caben en una actualización. Entonces la página avisa de
+que hay una **imagen nueva**, que se instala grabando la tarjeta otra vez
+([manual de despliegue](despliegue.md), 4).
+
 ---
 
 ## 11. Llevar la máquina a otro sitio
@@ -337,9 +365,10 @@ Sí. Es una Raspberry Pi pequeña, así que con diez o quince a la vez irá lent
 pero funciona.
 
 **¿Se pierde lo que escribo si actualizo la máquina?**
-Si la actualizas grabando la imagen nueva, sí: la tarjeta empieza de cero.
-Copia antes tus listas a un `.txt` y vuelve a importarlas después (8). Quien
-la actualiza desde el código conserva la configuración y los perfiles.
+Desde **⟳ Actualizar**, no: se conservan perfiles, premisas y ajustes (10).
+Si hay que grabar una imagen nueva en la tarjeta, sí, porque la tarjeta
+empieza de cero. Copia antes tus listas a un `.txt` y vuelve a importarlas
+después (8).
 
 **La impresora saca el papel en blanco.**
 Casi siempre es el rollo puesto del revés. El papel térmico sólo imprime por

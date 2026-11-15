@@ -220,6 +220,14 @@ def main():
     portal = Portal(config)
     portal.iniciar()
 
+    # 2.5 Actualizaciones: confirmar la versión recién instalada si el portal
+    # aguanta en pie, y buscar versiones nuevas en segundo plano
+    from modules import actualizador
+    from modules.netinfo import get_wifi_mode as _modo_red_act
+    print(f"[Main] Firmware v{actualizador.leer_version()}")
+    actualizador.programar_confirmacion()
+    actualizador.iniciar_comprobacion_periodica(cargar_config, _modo_red_act)
+
     # 3. Si el setup no está completo, esperamos a que se configure desde el portal
     if not config.get('setup_completado', False):
         print("[Main] Setup no completado. Accede al portal para configurar el hardware.")
@@ -403,4 +411,11 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"[Main] Excepción fatal: {e}")
         traceback.print_exc()
-        cleanup()
+        # Código 1, no el 0 de cleanup(): systemd solo reinicia el servicio
+        # tras un fallo, y el guardián de actualizaciones cuenta esos arranques
+        # para revertir una versión rota.
+        try:
+            cleanup()
+        except SystemExit:
+            pass
+        sys.exit(1)

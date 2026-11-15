@@ -1,10 +1,43 @@
 # Changelog
 
-## v2026-11-11 — imagen distribuible
+## v1.0 — imagen distribuible, con actualizaciones desde el panel
 
-Release [`v2026-11-11`](https://codeberg.org/atrapavientos/storymaker/releases/tag/v2026-11-11),
-con la imagen de tarjeta y su checksum SHA256. Probada en una Raspberry Pi 3
-con el Voice HAT y en una Zero 2W con la placa del proyecto.
+Release [`v1.0`](https://codeberg.org/atrapavientos/storymaker/releases/tag/v1.0),
+con la imagen de tarjeta y su checksum SHA256. Primera versión numerada: a
+partir de aquí, las actualizaciones (`v1.0.1`, `v1.0.2`…) se instalan desde el
+panel, sin grabar la tarjeta y sin perder perfiles ni premisas. Las máquinas con
+una imagen anterior necesitan grabar esta una vez.
+
+### Firmware
+
+- **⟳ Actualizar** en el panel: muestra la versión instalada, busca
+  actualizaciones una vez al día cuando hay internet (desactivable) y las
+  instala cuando alguien pulsa el botón. Sin internet, se sube el fichero de la
+  actualización desde el propio panel.
+- Las actualizaciones van **firmadas** por el proyecto; la máquina rechaza
+  cualquier otro fichero sin tocar nada.
+- **Vuelta atrás automática:** si una versión nueva no arranca bien, o la
+  instalación se corta a medias, la máquina vuelve sola a la anterior y lo
+  explica en el panel.
+- La versión aparece junto al logo del panel. La imagen se llama ahora
+  `storymaker-v1.0.img.xz`, no por fecha.
+- Si el programa se detiene por un error, el sistema lo reinicia (antes se
+  quedaba parado hasta apagar y encender).
+
+### Documentación
+
+- Manual de usuario: cómo actualizar desde el panel. Manual de despliegue:
+  actualizaciones frente a imagen nueva. `docs/desarrollo.md`: cómo publicar
+  una actualización.
+
+---
+
+## v2026-11-11 — imagen distribuible (retirada)
+
+Release `v2026-11-11`, con la imagen de tarjeta y su checksum SHA256. Probada
+en una Raspberry Pi 3 con el Voice HAT y en una Zero 2W con la placa del
+proyecto. Checksum `d201b91e…eebf`. **Retirada al publicarse `v1.0`**: aquí
+solo se mantiene la release más reciente.
 
 ### Firmware
 

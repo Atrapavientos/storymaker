@@ -5,6 +5,7 @@
 # Elimina todo dato personal/específico de la instalación:
 #   • flask_secret, setup_completado y PIN en config.json
 #   • Copias .txt.bak que deja el importador de premisas
+#   • Estado de actualizaciones (~/.storymaker-actualizacion)
 #   • Claves SSH autorizadas del usuario storymaker
 #   • Claves SSH host del sistema (se regeneran en el siguiente arranque)
 #   • Logs del sistema y bash history
@@ -43,6 +44,7 @@ with open(path, encoding='utf-8') as f:
 cfg['setup_completado'] = False
 cfg.pop('flask_secret', None)
 cfg.pop('placa', None)       # la imagen sale sin placa: se elige en el primer arranque
+cfg.pop('buscar_actualizaciones', None)   # de fábrica, activada
 cfg['pin'] = '1234'          # el asistente de primer arranque pedirá otro
 
 # Perfil activo de fábrica. Sin esto, la imagen hereda el perfil que estuviera
@@ -75,6 +77,10 @@ fi
 # Copias de seguridad que deja el importador de premisas del portal: no tienen
 # por qué viajar en una imagen distribuible.
 sudo find "/home/storymaker/proyecto/data/perfiles" -name '*.txt.bak' -delete 2>/dev/null || true
+
+# Estado de actualizaciones de la caja usada para capturar: la imagen sale
+# limpia, sin «última actualización» ni copia de la versión anterior.
+sudo rm -rf /home/storymaker/.storymaker-actualizacion
 
 # La imagen sale para la PCB: config.json ya no lleva placa, y config.txt y
 # asound.conf tienen que coincidir. Si la Pi usada tenía el Voice HAT, la
@@ -154,7 +160,14 @@ if ! sudo grep -q storymaker-setpass /etc/sudoers.d/storymaker-shutdown; then
     echo "        Despliega con deploy.sh y repite la limpieza."
     exit 1
 fi
-echo "      → ayudante y sudoers en su sitio"
+# Sin el guardián, la imagen no podría revertir una actualización rota
+if [ ! -x /usr/local/bin/storymaker-arranque ] \
+        || ! grep -q storymaker-arranque /etc/systemd/system/historias.service; then
+    echo "      ✗ ABORTADO: falta el guardián de actualizaciones (storymaker-arranque)"
+    echo "        Despliega con deploy.sh (sin --solo-firmware) y repite la limpieza."
+    exit 1
+fi
+echo "      → ayudante, sudoers y guardián de actualizaciones en su sitio"
 
 # ── [8] Perfiles WiFi, recorte de sudo y apagado ─────────────────────
 echo "[8/8] Borrando perfiles WiFi, recortando sudo y apagando..."

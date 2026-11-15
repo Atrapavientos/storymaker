@@ -56,7 +56,15 @@ fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FECHA=$(date +%Y-%m-%d)
-NOMBRE="storymaker-${FECHA}.img"
+# Desde la v1.0 las imágenes se nombran por versión (firmware/VERSION, X.Y).
+# Comprueba antes que la Pi tiene desplegado ese mismo firmware.
+VERSION=$(tr -d '[:space:]' < "${SCRIPT_DIR}/../VERSION" 2>/dev/null || true)
+if [[ "$VERSION" =~ ^[0-9]+\.[0-9]+$ ]]; then
+    NOMBRE="storymaker-v${VERSION}.img"
+else
+    echo "AVISO: firmware/VERSION es «${VERSION}», no X.Y: la imagen se nombra por fecha."
+    NOMBRE="storymaker-${FECHA}.img"
+fi
 DESTINO="${SCRIPT_DIR}/../../${NOMBRE}.xz"
 
 echo "╔══════════════════════════════════════════════════════╗"

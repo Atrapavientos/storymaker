@@ -40,6 +40,37 @@
   - Revisión pendiente en memoria (token + sesión, 15 min), no en campos ocultos:
     menos RAM y menos tráfico en la Pi Zero
   - `MAX_CONTENT_LENGTH` 3 MB; 5000 líneas y 300 caracteres por línea
+- Actualizaciones menores desde el portal, sin regrabar la tarjeta
+  (`modules/actualizador.py`, desde la `v1.0`). Antes, cualquier arreglo
+  obligaba a grabar la imagen nueva en cada máquina y se perdían sus perfiles
+  - **Versionado:** `firmware/VERSION`. El tercer número llega por
+    actualización; cambiar el primero o el segundo es imagen nueva
+  - **Qué cabe:** solo el firmware de `proyecto/`. Nunca `data/config.json` ni
+    `data/perfiles/`, y tampoco ficheros de sistema ni paquetes, que el servicio
+    no puede escribir sin root
+  - **Firma Ed25519 verificada con `openssl`**, que ya trae Raspberry Pi OS: sin
+    dependencias nuevas. Sin firma, el PIN de fábrica bastaría para meter código
+    en la máquina a través del portal
+  - **Dos caminos, un solo aplicador:** subir el fichero desde el panel (sin
+    internet) o buscar en `actualizacion.json`, en la raíz del repositorio. La
+    máquina mira una vez al día, pero **nunca instala sin que alguien pulse el
+    botón**: no se actualiza en mitad de un taller
+  - **Los paquetes cuelgan de la release de la imagen vigente:** aquí solo se
+    mantiene la última release, y una release propia para la `v1.0.1` borraría
+    la imagen `v1.0`
+  - **La vuelta atrás vive fuera del firmware.** Un código actualizado no puede
+    vigilarse a sí mismo: si viene roto, no llega a ejecutarse. El guardián
+    `storymaker-arranque` es de root, no lo toca ninguna actualización y se
+    ejecuta antes de cada arranque del servicio. `main.py` confirma la versión
+    cuando el portal lleva 45 s en marcha; si no se confirma en 3 arranques, o
+    la copia se cortó a medias, restaura la anterior
+  - Antes de tocar nada se comprueban la firma, las rutas (sin `..`, sin
+    enlaces, sin datos de la máquina), la versión y la sintaxis de todos los
+    `.py`. La copia es fichero a fichero con `os.replace`, y `VERSION` va la
+    última
+  - Descartado: actualización de imagen completa en dos particiones (RAUC,
+    Mender, SWUpdate). Obliga a reparticionar, pesa para la Zero 2W y, en el
+    caso de Mender, necesita un servidor aparte
 
 ## Estructura interna de `firmware/`
 

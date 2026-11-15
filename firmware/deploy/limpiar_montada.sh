@@ -49,6 +49,7 @@ with open(path, encoding='utf-8') as f:
 cfg['setup_completado'] = False
 cfg.pop('flask_secret', None)
 cfg.pop('placa', None)       # la imagen sale sin placa: se elige en el primer arranque
+cfg.pop('buscar_actualizaciones', None)   # de fábrica, activada
 cfg['pin'] = '1234'          # el asistente de primer arranque pedirá otro
 
 # Perfil activo de fábrica. Sin esto, la imagen hereda el perfil que estuviera
@@ -80,6 +81,10 @@ fi
 # Copias de seguridad que deja el importador de premisas del portal: no tienen
 # por qué viajar en una imagen distribuible.
 find "${ROOTFS}/home/storymaker/proyecto/data/perfiles" -name '*.txt.bak' -delete 2>/dev/null || true
+
+# Estado de actualizaciones de la caja usada para capturar: la imagen sale
+# limpia, sin «última actualización» ni copia de la versión anterior.
+rm -rf "${ROOTFS}/home/storymaker/.storymaker-actualizacion"
 
 # asound.conf de la PCB, como en limpiar_pi.sh; config.txt está en la
 # partición de arranque y lo devuelve crear_imagen.sh

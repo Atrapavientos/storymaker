@@ -1,0 +1,105 @@
+#!/usr/bin/python3
+"""
+storymaker-arranque — Guardián de las actualizaciones del firmware.
+
+Se ejecuta antes de cada arranque de historias.service (ExecStartPre, como el
+usuario storymaker). Si hay una actualización recién instalada sin confirmar,
+cuenta el intento; al superar INTENTOS_MAX, o si la copia se quedó a medias
+(corte de luz), devuelve el firmware a la versión anterior.
+
+Vive en /usr/local/bin y es de root a propósito: el firmware lo sustituyen las
+actualizaciones, y este script tiene que funcionar aunque la versión nueva
+esté rota. Por eso no importa nada del proyecto y solo usa la biblioteca
+estándar del python3 del sistema.
+
+El formato de estado.json lo define modules/actualizador.py.
+Nunca falla hacia fuera: en el peor caso, el servicio arranca como siempre.
+"""
+import json
+import os
+import shutil
+import sys
+import tempfile
+import time
+
+INTENTOS_MAX = 3   # igual que en modules/actualizador.py
+
+PROYECTO   = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else '/home/storymaker/proyecto')
+ESTADO_DIR = os.path.join(os.path.dirname(PROYECTO), '.storymaker-actualizacion')
+ESTADO     = os.path.join(ESTADO_DIR, 'estado.json')
+ANTERIOR   = os.path.join(ESTADO_DIR, 'anterior')
+
+
+def log(msg):
+    print(f"[storymaker-arranque] {msg}", flush=True)
+
+
+def guardar(estado):
+    fd, tmp = tempfile.mkstemp(dir=ESTADO_DIR, suffix='.tmp')
+    with os.fdopen(fd, 'w', encoding='utf-8') as f:
+        json.dump(estado, f, ensure_ascii=False, indent=2)
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp, ESTADO)
+
+
+def dentro_del_proyecto(rel):
+    ruta = os.path.abspath(os.path.join(PROYECTO, rel))
+    return ruta.startswith(PROYECTO + os.sep), ruta
+
+
+def revertir(estado, motivo):
+    log(f"Volviendo a la versión {estado.get('version_anterior')}: {motivo}")
+    # Lo que la versión nueva añadió y antes no existía
+    for rel in estado.get('nuevos', []):
+        ok, ruta = dentro_del_proyecto(rel)
+        if ok and os.path.isfile(ruta):
+            os.unlink(ruta)
+    # Lo que sobrescribió, desde la copia
+    for raiz, _, ficheros in os.walk(ANTERIOR):
+        for nombre in ficheros:
+            copia = os.path.join(raiz, nombre)
+            ok, destino = dentro_del_proyecto(os.path.relpath(copia, ANTERIOR))
+            if not ok:
+                continue
+            os.makedirs(os.path.dirname(destino), exist_ok=True)
+            tmp = destino + '.storymaker-tmp'
+            shutil.copy2(copia, tmp)
+            os.replace(tmp, destino)
+    os.sync()
+    estado.update(fase='revertida', motivo=motivo,
+                  revertida=time.strftime('%Y-%m-%d %H:%M'))
+    estado.pop('intentos', None)
+    guardar(estado)
+
+
+def main():
+    try:
+        with open(ESTADO, encoding='utf-8') as f:
+            estado = json.load(f)
+    except FileNotFoundError:
+        return
+    except (OSError, ValueError) as e:
+        log(f"estado.json ilegible, se ignora: {e}")
+        return
+
+    fase = estado.get('fase')
+    if fase == 'aplicando':
+        revertir(estado, "la instalación se interrumpió a medias")
+    elif fase == 'pendiente':
+        estado['intentos'] = int(estado.get('intentos', 0)) + 1
+        if estado['intentos'] > INTENTOS_MAX:
+            revertir(estado, f"la versión {estado.get('version_nueva')} no ha "
+                             f"arrancado bien en {INTENTOS_MAX} intentos")
+        else:
+            log(f"Arranque {estado['intentos']}/{INTENTOS_MAX} de la versión "
+                f"{estado.get('version_nueva')}, sin confirmar todavía")
+            guardar(estado)
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except Exception as e:   # nunca bloquear el arranque del servicio
+        log(f"ERROR inesperado: {e}")
+    sys.exit(0)

@@ -89,10 +89,14 @@ va por su conector `PRINTER`; sin ella, directa a los 5 V de la fuente.
 ### 2.1 Descargar la imagen
 
 Ve a la sección **Releases** de este repositorio en Codeberg, abre la versión
-más reciente (`vAAAA-MM-DD`) y descarga los dos ficheros:
+más reciente (`vX.Y`, por ejemplo `v1.0`) y descarga los dos ficheros:
 
-- `storymaker-AAAA-MM-DD.img.xz` — la imagen (alrededor de 1 GB)
-- `storymaker-AAAA-MM-DD.img.xz.sha256` — su huella
+- `storymaker-vX.Y.img.xz` — la imagen (alrededor de 1 GB)
+- `storymaker-vX.Y.img.xz.sha256` — su huella
+
+Si la release lleva además algún `storymaker-actualizacion-….tar`, no lo
+necesitas para instalar: la máquina lo ofrecerá ella misma desde el panel
+(sección 4).
 
 **Codeberg es el único sitio de descarga.** Si algún día este repositorio se
 replica en otra forja, la imagen se seguirá bajando de aquí: los espejos de git
@@ -105,7 +109,7 @@ copian el código y los tags, no los adjuntos de las releases.
 En la carpeta donde hayas dejado los dos ficheros:
 
 ```bash
-sha256sum -c storymaker-AAAA-MM-DD.img.xz.sha256
+sha256sum -c storymaker-vX.Y.img.xz.sha256
 ```
 
 Debe responder `: La suma coincide` (o `: OK`). Si no coincide, **no sigas**:
@@ -114,7 +118,7 @@ la descarga está corrupta o incompleta. Bórrala y repítela.
 En Windows, desde PowerShell:
 
 ```powershell
-Get-FileHash storymaker-AAAA-MM-DD.img.xz -Algorithm SHA256
+Get-FileHash storymaker-vX.Y.img.xz -Algorithm SHA256
 ```
 
 y compara a ojo el resultado con el contenido del fichero `.sha256`.
@@ -390,10 +394,21 @@ asistente son los mismos.
 
 ## 4. Actualizar un dispositivo ya instalado
 
-**Con la Ruta A**, actualizar es grabar la imagen nueva en la tarjeta, como la
-primera vez. Se pierden los perfiles que hayas escrito en la máquina: copia
+Las versiones se numeran `vX.Y.Z`. Cambia el tercer número (`v1.0` →
+`v1.0.1`) en una **actualización**, y el primero o el segundo (`v1.0` →
+`v1.1`) en una **imagen nueva**.
+
+**Actualizaciones (`v1.0.1`, `v1.0.2`…), con cualquiera de las dos rutas:**
+desde el panel, en **⟳ Actualizar**. Conservan perfiles, premisas y
+configuración, y la máquina vuelve sola a la versión anterior si la nueva no
+arranca. Van firmadas por el proyecto. Detalles para quien la usa en el
+[manual de usuario](usuario.md), 10. Las máquinas con una imagen anterior a la
+`v1.0` no tienen esta opción: hay que grabarles la `v1.0` una vez.
+
+**Imagen nueva (`v1.1`…), con la Ruta A:** grabar la imagen en la tarjeta, como
+la primera vez. Se pierden los perfiles que hayas escrito en la máquina: copia
 antes tus listas a un `.txt` para volver a importarlas (ver el [manual de
-usuario](usuario.md), 8).
+usuario](usuario.md), 8). El panel avisa cuando hay una.
 
 **Desde el código** (Ruta B), se actualiza conservando la configuración y los
 perfiles:
