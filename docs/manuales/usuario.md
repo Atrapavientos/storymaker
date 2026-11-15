@@ -295,6 +295,10 @@ Cuando hay una versión nueva, **⟳ Actualizar** en la cabecera lleva un punto
 de color. Dentro se ve qué versión tiene la máquina, qué trae la nueva y el
 botón para instalarla.
 
+<img src="../galeria/usuario-10a-aviso.png" width="700" alt="Cabecera del panel con la versión v1.0 junto al nombre StoryMaker y un punto naranja al lado de Actualizar">
+
+<img src="../galeria/usuario-10b-actualizar.png" width="520" alt="Página Actualizaciones: versión instalada v1.0 en grande; recuadro Hay una versión nueva: 1.0.1 con lo que cambia, el aviso de que se conservan perfiles y ajustes y el botón Instalar la 1.0.1; debajo, Instalar desde un fichero y la casilla Buscar actualizaciones automáticamente">
+
 - **Se conservan los perfiles, las premisas y los ajustes.** No hace falta
   copiar nada antes.
 - La máquina se reinicia y vuelve en menos de un minuto. La página espera sola
