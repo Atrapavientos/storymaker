@@ -7,16 +7,24 @@ que continuarla.**
 
 Es un aparato para talleres de escritura y fomento de la lectura. Lo ha hecho
 la asociación Atrapavientos con alumnado y profesorado de FP de tres
-institutos de Zaragoza, y en este repositorio está todo lo necesario para
-construir una: el programa, la placa, las cajas y los manuales.
+institutos de Aragón, de Andorra y Zaragoza, y en este repositorio está todo
+lo necesario para construir una: el programa, la placa, las cajas y los
+manuales.
 
 > **¿Has llegado aquí escaneando un QR?** Es el de la máquina, el que sale al
 > apagarla o en el tique de despedida. Estás en el sitio correcto.
 
+| | | | | |
+|:-:|:-:|:-:|:-:|:-:|
+| <img src="docs/galeria/portada-02-caja-madera.jpg" width="180" alt="Caja de madera de corte láser con uniones de dedos, una interrogación grabada en el frontal y, arriba, la ranura de la impresora y el hueco del botón"> | <img src="docs/galeria/usuario-03-tique.jpg" width="180" alt="Tique recién impreso con una premisa"> | <img src="docs/galeria/usuario-02-eink-premisa.jpg" width="180" alt="Pantalla de tinta electrónica con una premisa"> | <img src="docs/galeria/usuario-05-panel-movil.png" width="100" alt="Panel de control de la máquina en un móvil"> | <img src="docs/galeria/usuario-03a-premisa-pc.png" width="180" alt="Panel de control de la máquina en el navegador de un ordenador, con una premisa en grande"> |
+| Una caja cualquiera... | ...que imprime historias | o las muestra en pantalla | y se maneja desde el móvil | o desde el PC |
+
+**Centros participantes**
+
 | | | | |
 |:-:|:-:|:-:|:-:|
-| <img src="docs/galeria/portada-02-caja-madera.jpg" width="180" alt="Caja de madera de corte láser con uniones de dedos, una interrogación grabada en el frontal y, arriba, la ranura de la impresora y el hueco del botón"> | <img src="docs/galeria/usuario-03-tique.jpg" width="180" alt="Tique recién impreso con una premisa"> | <img src="docs/galeria/usuario-02-eink-premisa.jpg" width="180" alt="Pantalla de tinta electrónica con una premisa"> | <img src="docs/galeria/usuario-05-panel-movil.png" width="100" alt="Panel de control de la máquina en un móvil"> |
-| Una caja cualquiera... | ...que imprime historias | o las muestra en pantalla | y se maneja desde el móvil |
+| <img src="docs/galeria/logo-ies-pablo-serrano.png" height="90" alt="Logotipo del IES Pablo Serrano"> | <img src="docs/galeria/logo-ies-virgen-del-pilar.png" height="60" alt="Logotipo del IES Virgen del Pilar"> | <img src="docs/galeria/logo-ies-pilar-lorengar.png" height="55" alt="Logotipo del IES Pilar Lorengar"> | <img src="docs/galeria/logo-cifpa.png" height="60" alt="Logotipo del CIFPA, Centro de Innovación para la Formación Profesional de Aragón"> |
+| IES Pablo Serrano<br>Andorra (Teruel), centro coordinador | IES Virgen del Pilar<br>Zaragoza | IES Pilar Lorengar<br>Zaragoza | CIFPA<br>Organiza los proyectos de innovación en FP |
 
 ---
 

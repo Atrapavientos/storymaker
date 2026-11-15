@@ -7,16 +7,19 @@ Departamento de Educación, Cultura y Deporte.
 
 **Centros de FP participantes:**
 
-- **IES Pablo Serrano**, centro coordinador del proyecto. Ciclo de Grado
+- **IES Pablo Serrano** (Andorra, Teruel), centro coordinador del proyecto. Ciclo de Grado
   Superior en Automatización y Robótica Industrial (ELE303).
   Responsable: Héctor Ríos.
-- **IES Virgen del Pilar**. Ciclo de Grado Medio en Conformado por Moldeo de
+- **IES Virgen del Pilar** (Zaragoza). Ciclo de Grado Medio en Conformado por Moldeo de
   Metales y Polímeros (FME201). Responsable: Juan Carlos Lacave.
-- **IES Pilar Lorengar**. Módulo Diseño Estructural de Envases y Embalajes,
+- **IES Pilar Lorengar** (Zaragoza). Módulo Diseño Estructural de Envases y Embalajes,
   de 2.º curso de Grado Superior de Artes Gráficas. Profesorado: Fernando
   Bueno, Jesús Fernández y Jonás Pérez.
 
-**Con la colaboración de:** CIFPA (Centro de Innovación para la FP de Aragón) e IDEA FP.
+**Organiza los proyectos de innovación:** CIFPA (Centro de Innovación para la
+Formación Profesional de Aragón).
+
+**Con la colaboración de:** IDEA FP.
 
 ---
 
