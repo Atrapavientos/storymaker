@@ -47,6 +47,13 @@ nada de informática. Para tenerlo a mano en el aula hay una
 > quiera estudiarlo o cambiarlo, pero no hace falta abrirlo ni para montar ni
 > para usar la máquina.
 
+¿Quieres ver cómo se maneja antes de comprar nada? **[Prueba el portal en el
+navegador](https://atrapavientos.codeberg.page/storymaker/)**: es el mismo
+panel que lleva la máquina, con sus perfiles de fábrica. Genera premisas,
+crea perfiles y recorre todas las pantallas; nada se guarda. PIN `1234`.
+También se puede [descargar](https://codeberg.org/atrapavientos/storymaker/releases/download/v1.0/storymaker-simulador-1.0.1.zip)
+para usarlo sin conexión: se descomprime y se abre `index.html` con el navegador.
+
 En este orden:
 
 1. **Decide qué salidas quieres.** Pantalla de tinta electrónica, impresora de
@@ -112,6 +119,9 @@ Google (kit AIY V1), sin placa ni soldaduras.
 
 La imagen de tarjeta lista para grabar se publica en la sección **Releases**,
 con su checksum SHA256. No va dentro del repositorio: pesa cerca de 1 GB.
+En la misma release van el paquete de actualización vigente y el
+[simulador del portal](https://atrapavientos.codeberg.page/storymaker/)
+comprimido, para probarlo sin conexión.
 
 ## Licencias
 
