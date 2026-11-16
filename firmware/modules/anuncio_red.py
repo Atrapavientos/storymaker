@@ -33,6 +33,7 @@ CIFRAS = ["cero", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "och
 TEXTO_AP = "Sin red wifi. Conéctate a la red Estóri Méiker guion Setap."
 TEXTO_CLIENTE = ("Conectada. Mi dirección es {ip}, dos puntos, cinco mil. "
                  "Repito: {ip}, dos puntos, cinco mil.")
+TEXTO_SIN_RED = "No estoy conectada a ninguna red wifi."
 
 
 def ip_a_texto(ip):
@@ -87,6 +88,14 @@ def _anunciar(audio, estado):
     texto = _texto(estado)
     if texto:
         audio.hablar_offline(texto, velocidad=VELOCIDAD)
+
+
+def decir(audio, modo, ip):
+    """A petición (doble pulsación): dice el estado aunque no haya cambiado."""
+    if modo == 'ap' or (modo == 'client' and ip):
+        _anunciar(audio, (modo, ip))
+    else:
+        audio.hablar_offline(TEXTO_SIN_RED, velocidad=VELOCIDAD)
 
 
 def _vigilar(audio):

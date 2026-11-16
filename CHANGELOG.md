@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.0.2 — actualización
+
+Se instala desde el panel (**⟳ Actualizar**), sin grabar la tarjeta. Paquete
+`storymaker-actualizacion-1.0.2.tar`, adjunto a la release `v1.0`. Desde una
+v1.0 se puede pasar directamente, sin instalar antes la v1.0.1.
+
+- **Dos pulsaciones rápidas** del botón dan la dirección del panel por las
+  salidas activas: por voz, en la pantalla (la dirección en grande bajo el QR)
+  y en una sola línea de tique, sin QR. Sirve cuando la red no resuelve
+  `storymaker.local` y la bienvenida ya no está a la vista. La pulsación corta
+  espera ahora 0,4 s por si llega la segunda; no se nota.
+- Al encender, la máquina espera hasta 30 s a que la WiFi le dé dirección antes
+  de la bienvenida. En redes lentas, la de los centros sobre todo, salía «sin
+  red» aunque se conectaba unos segundos después.
+- Corregido un falso aviso de pantalla desconectada justo después de arrancar:
+  saltaba cuando la máquina ponía en hora el reloj por internet.
+
+---
+
 ## v1.0.1 — actualización
 
 Se instala desde el panel (**⟳ Actualizar**), sin grabar la tarjeta. Paquete

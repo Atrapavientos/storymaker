@@ -210,6 +210,37 @@ class RouterSalidas:
             except Exception as e:
                 print(f"[Router] Error en bienvenida impresora: {e}")
 
+    def mostrar_direccion(self, modo, ip):
+        """Dirección del portal por todas las salidas activas (doble pulsación):
+        voz dictada, bienvenida con QR en la e-ink y una línea en papel."""
+        def _voz():
+            try:
+                from modules import anuncio_red
+                anuncio_red.decir(self.audio, modo, ip)
+            except Exception as e:
+                print(f"[Router] Error diciendo la dirección: {e}")
+
+        def _pantalla():
+            try:
+                self.eink.mostrar_bienvenida(modo=modo, ip=ip, con_direccion=True)
+            except Exception as e:
+                print(f"[Router] Error mostrando la dirección en e-ink: {e}")
+
+        hilos = []
+        if self.audio:
+            hilos.append(threading.Thread(target=_voz, daemon=True))
+        if self.eink:
+            hilos.append(threading.Thread(target=_pantalla, daemon=True))
+        for h in hilos:
+            h.start()
+        if self.impresora:
+            try:
+                self.impresora.imprimir_direccion(modo, ip)
+            except Exception as e:
+                print(f"[Router] Error imprimiendo la dirección: {e}")
+        for h in hilos:
+            h.join()
+
     def mostrar_despedida(self, solo_eink=False):
         """Muestra/imprime despedida en todas las salidas activas.
 

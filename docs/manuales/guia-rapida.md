@@ -54,8 +54,8 @@ Para cambiar las frases, los perfiles o las salidas. Con el móvil o el
 ordenador **en la misma WiFi** que la máquina, abre
 **`http://storymaker.local:5000`** y escribe el PIN.
 
-Si esa dirección no funciona, entra por la IP de esta máquina:
-`http://______________:5000`
+Si no funciona, pulsa el botón **dos veces seguidas** y entra por la
+dirección que te da.
 
 ---
 

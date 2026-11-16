@@ -134,9 +134,9 @@ class Audio:
 
     def _hablar(self, texto: str):
         global _edge_caido_hasta
-        if self._edge_ok and self._mpg123_ok and time.time() >= _edge_caido_hasta:
+        if self._edge_ok and self._mpg123_ok and time.monotonic() >= _edge_caido_hasta:
             if not _hay_ruta_edge():
-                _edge_caido_hasta = time.time() + PAUSA_EDGE
+                _edge_caido_hasta = time.monotonic() + PAUSA_EDGE
                 print(f"[Audio] Sin conexión con el servidor de edge-tts; "
                       f"espeak durante {PAUSA_EDGE} s...")
             else:
@@ -144,7 +144,7 @@ class Audio:
                     asyncio.run(self._hablar_edge(texto))
                     return
                 except Exception as e:
-                    _edge_caido_hasta = time.time() + PAUSA_EDGE
+                    _edge_caido_hasta = time.monotonic() + PAUSA_EDGE
                     print(f"[Audio] edge-tts fallo ({str(e) or type(e).__name__}); "
                           f"espeak durante {PAUSA_EDGE} s...")
         if self._espeak_ok:

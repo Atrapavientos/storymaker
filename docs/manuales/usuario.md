@@ -71,6 +71,7 @@ Todo lo que hace la máquina sin ordenador cabe en un botón.
 | Acción | Qué ocurre |
 |---|---|
 | **Pulsación corta** | Genera una premisa y la envía a las salidas activas |
+| **Dos pulsaciones rápidas** | Da la dirección del panel: la dice por el altavoz, la escribe bajo el QR en la pantalla y la imprime en una sola línea de tique |
 | **Pulsación de 2 segundos** | Apagado seguro |
 | **Pulsar mientras arranca** (unos 3 s) | Fuerza el modo de configuración WiFi |
 
@@ -80,6 +81,7 @@ Y el LED te dice en qué está:
 |---|---|
 | Fijo encendido | Lista, esperando |
 | Dos parpadeos rápidos | Ha recibido la pulsación, está generando |
+| Un parpadeo | Ha recibido la doble pulsación, está dando la dirección |
 | Cinco parpadeos lentos | Se han agotado las combinaciones (ver [punto 9](#9-cuando-se-agotan-las-combinaciones)) |
 | Parpadeo lento durante el arranque | Está detectando que mantienes el botón |
 | Parpadeo rápido durante el arranque | Confirmado: ya puedes soltar |
@@ -129,8 +131,8 @@ propia máquina.
 3. Escribe el PIN.
 
 Si esa dirección no funciona, es que la red del centro no resuelve nombres
-`.local`. Pide al responsable de informática la IP del dispositivo y entra por
-`http://<esa-ip>:5000`.
+`.local`. Pulsa el botón **dos veces seguidas**: la máquina te da su dirección
+numérica, del tipo `http://192.168.1.37:5000`. Entra por ella.
 
 ### Qué hay en la pantalla
 
@@ -363,7 +365,8 @@ segundos más, mientras la máquina lo comprueba.
 
 **¿Puedo tener varias máquinas en el mismo centro?**
 Sí, pero todas responderán al nombre `storymaker.local` y se pisarán. Con más
-de una, entra por la IP de cada una.
+de una, entra por la dirección numérica de cada una: dos pulsaciones rápidas
+del botón te la dan.
 
 **¿Pueden conectarse varios alumnos al panel a la vez?**
 Sí. Es una Raspberry Pi pequeña, así que con diez o quince a la vez irá lenta,

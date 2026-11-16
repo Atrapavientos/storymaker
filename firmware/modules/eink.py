@@ -86,9 +86,9 @@ class EPD_4IN2:
         Lanza TimeoutError si el panel no responde: permite al llamador
         reportar el fallo en lugar de continuar con el bus en estado indefinido.
         """
-        t0 = time.time()
+        t0 = time.monotonic()
         while GPIO.input(self.busy_pin) == GPIO.HIGH:
-            if time.time() - t0 > timeout_s:
+            if time.monotonic() - t0 > timeout_s:
                 raise TimeoutError(
                     f"[EInk] BUSY alto tras {timeout_s:.0f}s — "
                     "panel desconectado o defectuoso.")
@@ -446,11 +446,14 @@ class PantallaEInk:
         self.epd.mostrar(canvas)
         print("[EInk] Pantalla de despedida mostrada.")
 
-    def mostrar_bienvenida(self, modo=None, ip=None):
+    def mostrar_bienvenida(self, modo=None, ip=None, con_direccion=False):
         """
         Muestra pantalla de bienvenida al arrancar.
         Detecta el modo de red y muestra QR + logo o advertencia según el caso.
         Acepta modo/ip opcionales para evitar llamadas redundantes a nmcli.
+
+        Con con_direccion (doble pulsación), la instrucción de abajo se cambia
+        por la URL en grande: quien la pide quiere teclearla, no escanear.
         """
         import os
         try:
@@ -513,19 +516,32 @@ class PantallaEInk:
             url        = None
             instruccion = None
 
+        font_pie, alto_pie = font_inst, 19
+        if url and con_direccion and modo == 'client':
+            instruccion = url
+            # El tamaño mayor con el que la URL cabe en una línea
+            for tam in (26, 24, 22, 20, 18, 16):
+                try:
+                    f = ImageFont.truetype(self.FUENTE_PATH, tam)
+                except Exception:
+                    break
+                if draw.textbbox((0, 0), url, font=f)[2] <= W - 20:
+                    font_pie, alto_pie = f, tam + 6
+                    break
+
         if url:
             # ── Variante CON QR ───────────────────────────────────────────
             y_tit = dibujar_titulo()
 
             # Instrucción abajo
-            lineas_inst = wrap(instruccion, font_inst, W - 20)
-            inst_h = len(lineas_inst) * 19
+            lineas_inst = wrap(instruccion, font_pie, W - 20)
+            inst_h = len(lineas_inst) * alto_pie
             y_inst = H - inst_h - 18
             for l in lineas_inst:
-                bbox = draw.textbbox((0, 0), l, font=font_inst)
+                bbox = draw.textbbox((0, 0), l, font=font_pie)
                 draw.text(((W - (bbox[2]-bbox[0])) // 2, y_inst), l,
-                          font=font_inst, fill=0)
-                y_inst += 19
+                          font=font_pie, fill=0)
+                y_inst += alto_pie
 
             # Zona central
             y_medio_top = y_tit + 4

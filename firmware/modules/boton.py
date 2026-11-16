@@ -50,31 +50,31 @@ def detectar_boton_arranque(pin: int = 5, duracion: float = 3.0,
     print(f"[Boton] Pulsado al arranque — mantén {duracion}s para forzar AP...")
 
     # Fase 1: parpadeo lento mientras se espera la confirmación
-    t0 = time.time()
+    t0 = time.monotonic()
     blink_t = t0
     blink_state = False
     while True:
         if GPIO.input(pin) != GPIO.LOW:
             _led(False)
             return False  # soltado antes de tiempo
-        elapsed = time.time() - t0
+        elapsed = time.monotonic() - t0
         if elapsed >= duracion:
             break
-        if time.time() - blink_t >= 0.5:
+        if time.monotonic() - blink_t >= 0.5:
             blink_state = not blink_state
             _led(blink_state)
-            blink_t = time.time()
+            blink_t = time.monotonic()
         time.sleep(0.02)
 
     print("[Boton] Confirmado — suelta el botón.")
 
     # Fase 2: parpadeo rápido hasta que se suelte
-    blink_t = time.time()
+    blink_t = time.monotonic()
     while GPIO.input(pin) == GPIO.LOW:
-        if time.time() - blink_t >= 0.1:
+        if time.monotonic() - blink_t >= 0.1:
             blink_state = not blink_state
             _led(blink_state)
-            blink_t = time.time()
+            blink_t = time.monotonic()
         time.sleep(0.02)
 
     _led(False)
@@ -112,7 +112,11 @@ class Boton:
     Gestiona el botón físico con polling.
 
     Pulsación corta → accion_corta()
+    Doble pulsación → accion_doble() (si hay callback; si no, son dos cortas)
     Pulsación larga → accion_larga() + apagado seguro
+
+    Con callback doble, la corta espera `ventana_doble` segundos tras soltar
+    por si llega otra pulsación. Sin él, la corta sale al soltar, como antes.
     """
 
     def __init__(self, config_boton, config_led):
@@ -120,6 +124,11 @@ class Boton:
         self.tiempo_largo       = config_boton.get('tiempo_pulsacion_larga', 2)
         self._callback_corto: Optional[Callable] = None
         self._callback_largo: Optional[Callable] = None
+        self._callback_doble: Optional[Callable] = None
+        self.ventana_doble      = config_boton.get('ventana_doble', 0.4)
+        self._lock_pulsos       = threading.Lock()
+        self._timer_corto: Optional[threading.Timer] = None
+        self._doble_pendiente   = False
         self._parar   = False
         self._armado  = False
         self._largo_procesado = False
@@ -179,6 +188,12 @@ class Boton:
 
     def _al_presionar(self):
         print("[Boton] Pulsación detectada")
+        # Una corta esperando a que venga otra: esta pulsación la hace doble
+        with self._lock_pulsos:
+            if self._timer_corto:
+                self._timer_corto.cancel()
+                self._timer_corto = None
+                self._doble_pendiente = True
         threading.Thread(target=self._vigilar_pulsacion_larga, daemon=True).start()
 
     def _vigilar_pulsacion_larga(self):
@@ -198,14 +213,37 @@ class Boton:
 
     def _al_soltar(self):
         print("[Boton] Botón soltado")
-        if self._largo_procesado:          # ← añadir
-            self._largo_procesado = False  # ← añadir
-            return                         # ← añadir
-        if self._callback_corto:
+        if self._largo_procesado:
+            self._largo_procesado = False
+            self._doble_pendiente = False
+            return
+        with self._lock_pulsos:
+            if self._doble_pendiente:
+                self._doble_pendiente = False
+                print("[Boton] Doble pulsación")
+                self._lanzar(self._callback_doble)
+            elif self._callback_doble:
+                self._timer_corto = threading.Timer(self.ventana_doble, self._disparar_corto)
+                self._timer_corto.daemon = True
+                self._timer_corto.start()
+            else:
+                self._lanzar(self._callback_corto)
+
+    def _disparar_corto(self):
+        with self._lock_pulsos:
+            # cancel() no para un Timer que ya ha saltado: si la segunda
+            # pulsación llegó justo a la vez, ya no es este el timer vigente
+            if self._timer_corto is not threading.current_thread():
+                return
+            self._timer_corto = None
+            self._lanzar(self._callback_corto)
+
+    def _lanzar(self, cb):
+        if cb:
             try:
-                threading.Thread(target=self._callback_corto, daemon=True).start()
+                threading.Thread(target=cb, daemon=True).start()
             except Exception as e:
-                print(f"[Boton] Error en callback corto: {e}")
+                print(f"[Boton] Error en callback: {e}")
 
     def on_corto(self, cb: Callable):
         self._callback_corto = cb
@@ -213,6 +251,10 @@ class Boton:
 
     def on_largo(self, cb: Callable):
         self._callback_largo = cb
+        return self
+
+    def on_doble(self, cb: Callable):
+        self._callback_doble = cb
         return self
 
     def parpadear(self, veces=3, intervalo=0.2):

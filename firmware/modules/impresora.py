@@ -207,6 +207,29 @@ class Impresora:
         except Exception as e:
             print(f"[Impresora] ERROR en bienvenida: {e}")
 
+    def imprimir_direccion(self, modo, ip):
+        """Una sola línea con la dirección del portal, sin QR, para no gastar
+        papel: es lo que saca la doble pulsación del botón."""
+        if modo == 'client' and ip:
+            texto = f"http://{ip}:5000"
+        elif modo == 'ap':
+            texto = "WiFi: StoryMaker-Setup"
+        else:
+            texto = "Sin red WiFi"
+        if not SERIAL_DISPONIBLE:
+            print(f"[Impresora] Simulación dirección: {texto}")
+            return
+        if not self.conexion or not self.conexion.is_open:
+            return
+        try:
+            self._feed(1)
+            self._linea_centrada(texto)
+            self._feed(6)           # que la línea salga de la carcasa, como las premisas
+            time.sleep(0.5)
+            print(f"[Impresora] Dirección impresa: {texto}")
+        except Exception as e:
+            print(f"[Impresora] ERROR al imprimir la dirección: {e}")
+
     def imprimir_despedida(self):
         """
         Imprime pie de despedida con QR del repositorio.

@@ -99,6 +99,23 @@ def al_pulsar_largo():
         boton.shutdown_seguro()
 
 
+def al_pulsar_doble():
+    """Dice la dirección del portal por las salidas activas. Para cuando la
+    bienvenida del arranque no la dio (red lenta) o ya no está a la vista."""
+    if not router:
+        return
+    from modules.netinfo import get_wifi_mode, get_ip
+    modo = get_wifi_mode()
+    ip   = get_ip() if modo == 'client' else None
+    print(f"[Main] → Doble pulsación: dirección (modo={modo}, ip={ip})")
+    if boton:
+        boton.led.off()
+        boton.parpadear(1, 0.3)
+    router.mostrar_direccion(modo, ip)
+    if boton:
+        boton.led.on()
+
+
 def al_cambiar_perfil(nuevo_perfil):
     """Recarga el generador cuando el portal cambia el perfil activo."""
     global generador
@@ -366,12 +383,24 @@ def main():
         from modules import anuncio_red
         anuncio_red.iniciar(router.audio)
 
+    # 5.5 Esperar a la red antes de la bienvenida: en redes con DHCP lento
+    # (las de los centros) salía «sin red» y la dirección no se daba. Si no
+    # llega a tiempo, la doble pulsación la da después.
+    from modules.netinfo import get_wifi_mode as _modo_red_boot
+    for _ in range(15):
+        if _modo_red_boot() != 'none':
+            break
+        time.sleep(2)
+    else:
+        print("[Main] Sin red tras 30 s: bienvenida sin dirección.")
+
     # 6. Botón (pines según la placa; sin placa válida no se arma)
     if placa:
         boton = Boton({**config.get('boton', {}), 'pin_gpio': PLACAS[placa]['boton']},
                       {'pin_gpio': PLACAS[placa]['led']})
         boton.on_corto(al_pulsar_corto)
         boton.on_largo(al_pulsar_largo)
+        boton.on_doble(al_pulsar_doble)
     else:
         print(f"[Main] AVISO: placa '{config.get('placa')}' no válida. Botón y LED desactivados.")
 

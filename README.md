@@ -51,7 +51,7 @@ nada de informática. Para tenerlo a mano en el aula hay una
 navegador](https://atrapavientos.codeberg.page/storymaker/)**: es el mismo
 panel que lleva la máquina, con sus perfiles de fábrica. Genera premisas,
 crea perfiles y recorre todas las pantallas; nada se guarda. PIN `1234`.
-También se puede [descargar](https://codeberg.org/atrapavientos/storymaker/releases/download/v1.0/storymaker-simulador-1.0.1.zip)
+También se puede [descargar](https://codeberg.org/atrapavientos/storymaker/releases/download/v1.0/storymaker-simulador-1.0.2.zip)
 para usarlo sin conexión: se descomprime y se abre `index.html` con el navegador.
 
 En este orden:

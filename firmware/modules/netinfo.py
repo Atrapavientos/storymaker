@@ -10,7 +10,9 @@ def get_ip():
         result = subprocess.run(
             ['hostname', '-I'], capture_output=True, text=True, timeout=3
         )
-        ips = result.stdout.strip().split()
+        # Solo IPv4: si la IPv6 llega antes, no se puede dictar ni escribir
+        # como dirección del portal
+        ips = [ip for ip in result.stdout.split() if ':' not in ip]
         # Excluir rango del AP propio (10.42.x.x) para no devolver la IP del AP como IP de cliente
         real = next((ip for ip in ips if not ip.startswith('10.42.')), None)
         return real if real else (ips[0] if ips else None)

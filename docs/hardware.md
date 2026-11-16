@@ -85,6 +85,10 @@ asistente (`/setup` → Placa) y `storymaker-perfil.sh` cambia el overlay y el
   tique ni e-ink). Los avisos usan los clips de `data/voz/`, que suenan sin
   internet: en modo AP edge-tts no puede funcionar.
 - **Raspberry Pi 3 Model B (sin «+»):** su WiFi solo ve redes de 2,4 GHz.
+- **Dirección a petición:** dos pulsaciones rápidas del botón dan la dirección
+  por todas las salidas activas: voz, bienvenida con la URL en grande bajo el
+  QR en la e-ink y una línea sin QR en el tique. Por eso la pulsación corta
+  espera 0,4 s (`boton.ventana_doble` en `config.json`) a ver si llega otra.
 - **Dictado de la dirección:** sin e-ink ni impresora, la caja dice por voz el
   AP al que conectarse o su IP con el puerto 5000, cada vez que cambia la red
   (`modules/anuncio_red.py`). Si una premisa está sonando, el aviso espera.

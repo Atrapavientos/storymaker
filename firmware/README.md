@@ -17,7 +17,7 @@ firmware/
 ├── clave_actualizaciones.pem  # Clave pública que verifica las actualizaciones
 ├── config.json          # Configuración activa (hardware, perfil, portal, PIN)
 ├── modules/
-│   ├── boton.py         # Polling GPIO: pulsación corta/larga + LED
+│   ├── boton.py         # Polling GPIO: pulsación corta/doble/larga + LED
 │   ├── eink.py          # Pantalla e-ink WeAct 4.2" (SSD1683, SPI0)
 │   ├── audio.py         # Síntesis de voz edge-tts + reproducción mpg123
 │   ├── impresora.py     # Impresora térmica QR701 UART (ESC/POS)

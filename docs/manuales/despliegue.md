@@ -458,9 +458,9 @@ vuelve a configurar la red.
 
 **`storymaker.local` no resuelve.**
 La red del centro no pasa mDNS, cosa habitual con aislamiento de clientes.
-Entra por la dirección numérica, `http://<ip>:5000`. La máquina la anuncia al
-arrancar (en la e-ink, en el tique y por voz); si no tienes ninguna de esas
-salidas, búscala en el router.
+Entra por la dirección numérica, `http://<ip>:5000`. La máquina la da al
+arrancar en la e-ink o en el tique (por voz, si solo tiene altavoz), y en
+cualquier momento con **dos pulsaciones rápidas** del botón.
 
 **La e-ink se queda en blanco o con la imagen anterior.**
 Esta pantalla **no admite refresco parcial**; cada actualización es un refresco
