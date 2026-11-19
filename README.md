@@ -26,6 +26,10 @@ manuales.
 | <img src="docs/galeria/logo-ies-pablo-serrano.png" height="90" alt="Logotipo del IES Pablo Serrano"> | <img src="docs/galeria/logo-ies-virgen-del-pilar.png" height="60" alt="Logotipo del IES Virgen del Pilar"> | <img src="docs/galeria/logo-ies-pilar-lorengar.png" height="55" alt="Logotipo del IES Pilar Lorengar"> | <img src="docs/galeria/logo-cifpa.png" height="60" alt="Logotipo del CIFPA, Centro de Innovación para la Formación Profesional de Aragón"> |
 | IES Pablo Serrano<br>Andorra (Teruel), centro coordinador | IES Virgen del Pilar<br>Zaragoza | IES Pilar Lorengar<br>Zaragoza | CIFPA<br>Organiza los proyectos de innovación en FP |
 
+| | | |
+|:-:|:-:|:-:|
+| <img src="docs/galeria/logo-gobierno-de-espana.png" height="50" alt="Logotipo del Gobierno de España, Ministerio de Educación, Formación Profesional y Deportes"> | <img src="docs/galeria/logo-union-europea.png" height="50" alt="Logotipo «Cofinanciado por la Unión Europea»"> | <img src="docs/galeria/logo-gobierno-de-aragon.png" height="50" alt="Logotipo del Gobierno de Aragón"> |
+
 ---
 
 ## ¿Qué quieres hacer?
